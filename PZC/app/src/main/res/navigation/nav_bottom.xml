@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_bottom"
+    app:startDestination="@id/homePage">
+
+<!--将每个Fragment对应的ID，修改为menu文件中item对应的ID（最重要的一步）-->
+    <fragment
+        android:id="@+id/homePage"
+        android:name="cn.yangcy.pzc.fragment.home.HomePage"
+        android:label="home_page_fragment"
+        tools:layout="@layout/home_page_fragment" />
+    <fragment
+        android:id="@+id/studentUnionPage"
+        android:name="cn.yangcy.pzc.fragment.home.StudentUnionPage"
+        android:label="student_union_page_fragment"
+        tools:layout="@layout/student_union_page_fragment" />
+    <fragment
+        android:id="@+id/myPage"
+        android:name="cn.yangcy.pzc.fragment.home.MyPage"
+        android:label="my_page_fragment"
+        tools:layout="@layout/my_page_fragment" />
+</navigation>

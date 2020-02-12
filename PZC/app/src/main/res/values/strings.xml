@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">PZC</string>
+    <string name="register">注册</string>
+    <string name="image_logo">图标</string>
+    <string name="ic_account">用户名</string>
+    <string name="ic_password">密码</string>
+    <string name="bt_login">登录</string>
+    <string name="et_account_hint">请输入用户名</string>
+    <string name="et_password_hint">请输入密码</string>
+    <string name="tv_register">注册账号</string>
+    <string name="tv_spare">｜</string>
+    <string name="tv_forgetPassword">忘记密码？</string>
+
+    <string name="content_user_no_exist">该用户不存在</string>
+
+    <string name="bt_to_register_page2">下一步</string>
+    <string name="bt_back">返回</string>
+    <string name="tv_phone">手机号码</string>
+
+    <string name="register_check_password_hint">请再输入一次密码</string>
+    <string name="register_phone_hint">请输入手机号</string>
+    <string name="tv_register_page2_title">完善信息</string>
+    <string name="tv_register_page2_name"> 姓名</string>
+    <string name="tv_register_page2_department">系别</string>
+    <string name="tv_register_page2_major">专业</string>
+    <string name="tv_register_page2_classes">班级</string>
+    <string name="register_name_hint">请输入真实姓名</string>
+    <string name="register_major_hint">请输入所在专业</string>
+    <string name="register_classes_hint">请输入所在班级</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="bottom_nav_information">通知</string>
+    <string name="bottom_nav_student_union">学生组织</string>
+    <string name="bottom_nav_my">我的</string>
+
+
+    <string name="info_author">作者：</string>
+    <string name="info_hits">点击数</string>
+</resources>

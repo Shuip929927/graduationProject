@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homePage"
+        android:icon="@drawable/ic_home"
+        android:title="@string/bottom_nav_information" />
+    <item
+        android:id="@+id/studentUnionPage"
+        android:icon="@drawable/ic_student_union"
+        android:title="@string/bottom_nav_student_union" />
+    <item
+        android:id="@+id/myPage"
+        android:icon="@drawable/ic_my"
+        android:title="@string/bottom_nav_my" />
+</menu>

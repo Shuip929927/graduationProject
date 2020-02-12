@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_register"
+    app:startDestination="@id/registerPage1">
+
+    <fragment
+        android:id="@+id/registerPage1"
+        android:name="cn.yangcy.pzc.fragment.register.RegisterPage1"
+        android:label="register_page1_fragment"
+        tools:layout="@layout/register_page1_fragment" >
+        <action
+            android:id="@+id/action_registerPage1_to_registerPage2"
+            app:destination="@id/registerPage2"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/fragment_fade_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerPage2"
+        android:name="cn.yangcy.pzc.fragment.register.RegisterPage2"
+        android:label="register_page2_fragment"
+        tools:layout="@layout/register_page2_fragment" >
+        <action
+            android:id="@+id/action_registerPage2_to_registerPage1"
+            app:destination="@id/registerPage1"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+    </fragment>
+</navigation>
