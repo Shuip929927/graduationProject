@@ -38,4 +38,13 @@
 
     <string name="info_author">作者：</string>
     <string name="info_hits">点击数</string>
+    <string name="info_start_time">举办时间：</string>
+    <string name="info_hold_organization">举办部门：</string>
+    <string name="info_activities_state_ongoing">进行中</string>
+    <string name="info_activities_state_end">已结束</string>
+    <string name="paging_loading">加载中...</string>
+
+    <string name="tab_organization">学生组织</string>
+    <string name="tab_activities">活动</string>
+
 </resources>

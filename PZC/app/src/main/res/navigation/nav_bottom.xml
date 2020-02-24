@@ -13,7 +13,7 @@
         tools:layout="@layout/home_page_fragment" />
     <fragment
         android:id="@+id/studentUnionPage"
-        android:name="cn.yangcy.pzc.fragment.home.StudentUnionPage"
+        android:name="cn.yangcy.pzc.fragment.stundentunoin.StudentUnionPage"
         android:label="student_union_page_fragment"
         tools:layout="@layout/student_union_page_fragment" />
     <fragment

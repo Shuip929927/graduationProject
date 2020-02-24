@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -20,8 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.yangcy.pzc.R;
-import cn.yangcy.pzc.adapter.LooperPagerAdapter;
-import cn.yangcy.pzc.adapter.MyRecyclerViewAdapter;
+import cn.yangcy.pzc.adapter.MyInformationPagingAdapter;
+import cn.yangcy.pzc.adapter.MyLooperPagerAdapter;
+import cn.yangcy.pzc.adapter.MyInformationRecyclerViewAdapter;
 import cn.yangcy.pzc.model.imformation.Information;
 import cn.yangcy.pzc.viewmodel.HomeViewModel;
 
@@ -31,11 +33,12 @@ public class HomeListPage extends Fragment {
     private HomeViewModel mViewModel;
     private View view;
     private ViewPager mLoopPager;
-    private LooperPagerAdapter mLooperPagerAdapter;
+    private MyLooperPagerAdapter myLooperPagerAdapter;
     private static List<Integer> homePics = new ArrayList<>();
     private Handler mHandler;
     private RecyclerView mRecyclerView;
-    private MyRecyclerViewAdapter myRecyclerViewAdapter;
+    private MyInformationRecyclerViewAdapter myInformationRecyclerViewAdapter;
+    private MyInformationPagingAdapter myInformationPagingAdapter;
 
     static {
         homePics.add(R.drawable.loopager_img1);
@@ -55,14 +58,16 @@ public class HomeListPage extends Fragment {
         mViewModel = new ViewModelProvider(getActivity()).get(HomeViewModel.class);
 
         mLoopPager = view.findViewById(R.id.home_looper);
-        mLooperPagerAdapter = new LooperPagerAdapter();
-        mLooperPagerAdapter.setData(homePics);
-        mLoopPager.setAdapter(mLooperPagerAdapter);
-        mLoopPager.setCurrentItem(mLooperPagerAdapter.getDataRealSize(),false);
+        myLooperPagerAdapter = new MyLooperPagerAdapter();
+        myLooperPagerAdapter.setData(homePics);
+        mLoopPager.setAdapter(myLooperPagerAdapter);
+        mLoopPager.setCurrentItem(myLooperPagerAdapter.getDataRealSize(),false);
         mRecyclerView = view.findViewById(R.id.home_recyclerView);
-        myRecyclerViewAdapter = new MyRecyclerViewAdapter(mViewModel);
+//        myInformationRecyclerViewAdapter = new MyInformationRecyclerViewAdapter(mViewModel);
+        myInformationPagingAdapter = new MyInformationPagingAdapter(mViewModel);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
-        mRecyclerView.setAdapter(myRecyclerViewAdapter);
+//        mRecyclerView.setAdapter(myInformationRecyclerViewAdapter);
+        mRecyclerView.setAdapter(myInformationPagingAdapter);
         return view;
     }
 
@@ -75,11 +80,18 @@ public class HomeListPage extends Fragment {
         Log.d(TAG, "post ");
         mHandler.post(mLooperTask);
 
-        mViewModel.getInfoListLive().observe(getViewLifecycleOwner(), new Observer<List<Information>>() {
+//        mViewModel.getInfoListLive().observe(getViewLifecycleOwner(), new Observer<List<Information>>() {
+//            @Override
+//            public void onChanged(List<Information> information) {
+//                myInformationRecyclerViewAdapter.setInfoList(information);
+//                myInformationRecyclerViewAdapter.notifyDataSetChanged();
+//            }
+//        });
+
+        mViewModel.getInfoPagedList().observe(getViewLifecycleOwner(), new Observer<PagedList<Information>>() {
             @Override
-            public void onChanged(List<Information> information) {
-                myRecyclerViewAdapter.setInfoList(information);
-                myRecyclerViewAdapter.notifyDataSetChanged();
+            public void onChanged(PagedList<Information> information) {
+                myInformationPagingAdapter.submitList(information);
             }
         });
 

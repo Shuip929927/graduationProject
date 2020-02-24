@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(mLoginViewModel.doLogin()){
                     Intent login = new Intent(LoginActivity.this,HomeActivity.class);
                     startActivity(login);
+                    finish();
                 }
             }
         });

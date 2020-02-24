@@ -9,6 +9,7 @@ import java.io.Serializable;
 @Entity(tableName = "tb_information")
 public class Information implements Serializable {
 
+    private static final long serialVersionUID = 8453405988066159941L;
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int id;

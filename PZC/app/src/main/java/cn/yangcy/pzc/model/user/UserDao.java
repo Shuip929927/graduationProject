@@ -28,4 +28,7 @@ public interface UserDao {
     @Query("SELECT * FROM tb_user ORDER BY account DESC")
     LiveData<List<User>> queryAllUser();
 
+    @Query("SELECT * FROM tb_user WHERE account = :userAccount")
+    User queryPersonOfOrganizationCharge(int userAccount);
+
 }

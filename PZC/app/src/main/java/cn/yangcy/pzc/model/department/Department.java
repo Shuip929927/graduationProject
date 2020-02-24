@@ -11,7 +11,7 @@ public class Department {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    @ColumnInfo(name = "department")
+    @ColumnInfo(name = "department_name")
     @NonNull
     private String department;
 

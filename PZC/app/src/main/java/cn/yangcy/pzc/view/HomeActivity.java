@@ -23,7 +23,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         mViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         NavController navController = Navigation.findNavController(this,R.id.nav_host_fragment);
 //        AppBarConfiguration configuration = new AppBarConfiguration.Builder(bottomNavigationView.getMenu()).build();

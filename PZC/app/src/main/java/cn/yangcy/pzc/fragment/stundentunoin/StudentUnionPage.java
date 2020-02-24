@@ -1,5 +1,6 @@
-package cn.yangcy.pzc.fragment.home;
+package cn.yangcy.pzc.fragment.stundentunoin;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 
 import cn.yangcy.pzc.R;
 import cn.yangcy.pzc.viewmodel.HomeViewModel;
+import cn.yangcy.pzc.viewmodel.StudemtUnionViewModel;
 
 public class StudentUnionPage extends Fragment {
 
@@ -32,7 +34,8 @@ public class StudentUnionPage extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+//        mViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        mViewModel = new ViewModelProvider(getActivity()).get(HomeViewModel.class);
         // TODO: Use the ViewModel
     }
 

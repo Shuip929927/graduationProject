@@ -96,8 +96,8 @@ public class LoginViewModel extends AndroidViewModel {
             Toast.makeText(getApplication(), R.string.content_user_no_exist, Toast.LENGTH_SHORT).show();
             return false;
         } else {
-
             Log.d(TAG, "doLogin: queryUser Exist");
+            Log.d(TAG, "doLogin: "+ u.toPersonInCharge());
             return true;
         }
 

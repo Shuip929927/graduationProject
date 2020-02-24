@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
 
 import java.util.List;
 
@@ -15,15 +17,22 @@ public class InformationRepository {
     private final static String TAG = "InformationRepository";
     private InformationDao informationDao;
     private LiveData<List<Information>> infoListLive;
+    private LiveData<PagedList<Information>> infoPagedList;
 
     public InformationRepository(Context context) {
         DataBase dataBase = DataBase.getDataBase(context.getApplicationContext());
         informationDao = dataBase.getInformationDao();
         infoListLive = informationDao.queryNewInfo();
+        infoPagedList = new LivePagedListBuilder<>(informationDao.queryNewInfoByPaging(),1)
+                .build();
     }
 
     public LiveData<List<Information>> getInfoListLive() {
         return infoListLive;
+    }
+
+    public LiveData<PagedList<Information>> getInfoPagedList() {
+        return infoPagedList;
     }
 
     public void addInformationHit(Information information){

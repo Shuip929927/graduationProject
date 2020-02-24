@@ -1,6 +1,7 @@
 package cn.yangcy.pzc.model.imformation;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -18,13 +19,20 @@ public interface InformationDao {
     @Delete
     void deleteInformation(Information... information);
 
+
     @Update
     void updateInformation(Information information);
 
-    @Query("SELECT * FROM tb_information ORDER BY createOn DESC")
+    @Query("SELECT * FROM tb_information WHERE isDelete = 0 ORDER BY createOn DESC")
     LiveData<List<Information>> queryNewInfo();
 
-    @Query("SELECT * FROM tb_information ORDER BY hits DESC")
+    @Query("SELECT * FROM tb_information WHERE isDelete = 0 ORDER BY createOn DESC")
+    DataSource.Factory<Integer,Information> queryNewInfoByPaging();
+
+    @Query("SELECT * FROM tb_information WHERE isDelete = 0 ORDER BY hits DESC")
     LiveData<List<Information>> queryHotInfo();
+
+    @Query("SELECT * FROM tb_information WHERE isDelete = 0 ORDER BY hits DESC")
+    DataSource.Factory<Integer,Information> queryHotInfoByPaging();
 
 }

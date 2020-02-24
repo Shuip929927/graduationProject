@@ -3,6 +3,7 @@ package cn.yangcy.pzc.model.user;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "tb_user")
@@ -34,17 +35,17 @@ public class User {
     @ColumnInfo(name = "power")
     private int power;
 
-
-//    public User(String account, String password, String name, String phoneNumber, String department, String major, String classes) {
-//        this.account = account;
-//        this.password = password;
-//        this.name = name;
-//        this.phoneNumber = phoneNumber;
-//        this.department = department;
-//        this.major = major;
-//        this.classes = classes;
-//        this.power = 1;
-//    }
+    @Ignore
+    public User(String account, String password, String name, String phoneNumber, String department, String major, String classes) {
+        this.account = account;
+        this.password = password;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.department = department;
+        this.major = major;
+        this.classes = classes;
+        this.power = 1;
+    }
 
     public User(String account, String password, String name, String phoneNumber, String department, String major, String classes, int power) {
         this.account = account;
@@ -127,5 +128,10 @@ public class User {
                 "account='" + account + '\'' +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public String toPersonInCharge(){
+        String years = account.substring(0,4);
+        return  department+years+"级"+major+" "+name;
     }
 }

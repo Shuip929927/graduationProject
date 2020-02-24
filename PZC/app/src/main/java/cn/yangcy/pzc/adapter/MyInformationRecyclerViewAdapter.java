@@ -1,6 +1,6 @@
 package cn.yangcy.pzc.adapter;
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,29 +8,26 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.yangcy.pzc.R;
-import cn.yangcy.pzc.fragment.home.HomeListDetailPage;
 import cn.yangcy.pzc.model.imformation.Information;
 import cn.yangcy.pzc.viewmodel.HomeViewModel;
 
-public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder> {
+public class MyInformationRecyclerViewAdapter extends RecyclerView.Adapter<MyInformationRecyclerViewAdapter.MyViewHolder> {
 
-    private static final String TAG = "MyRecyclerViewAdapter";
+    private static final String TAG = "MyInformationAdapter";
     List<Information> infoList = new ArrayList<>();
     private static String infoAuthor;
     private static String infoHits;
     private HomeViewModel mHomeViewModel;
 
-    public MyRecyclerViewAdapter(HomeViewModel mHomeViewModel) {
+    public MyInformationRecyclerViewAdapter(HomeViewModel mHomeViewModel) {
         this.mHomeViewModel = mHomeViewModel;
     }
 
@@ -46,7 +43,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 //        return null;
         LayoutInflater mLayoutInflater = LayoutInflater.from(parent.getContext());
-        View cellView = mLayoutInflater.inflate(R.layout.recycler_cell, parent, false);
+        View cellView = mLayoutInflater.inflate(R.layout.home_page_recycler_cell, parent, false);
         infoAuthor = parent.getContext().getResources().getString(R.string.info_author);
         infoHits = parent.getContext().getResources().getString(R.string.info_hits);
         return new MyViewHolder(cellView);

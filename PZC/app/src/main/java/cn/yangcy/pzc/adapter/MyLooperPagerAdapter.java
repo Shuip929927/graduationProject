@@ -9,7 +9,7 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import java.util.List;
 
-public class LooperPagerAdapter extends PagerAdapter {
+public class MyLooperPagerAdapter extends PagerAdapter {
 
     private List<Integer> homePics = null;
 

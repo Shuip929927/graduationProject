@@ -16,7 +16,7 @@ public class DepartmentRepository {
         DataBase dataBase = DataBase.getDataBase(context.getApplicationContext());
         departmentDao = dataBase.getDepartmentDao();
 
-        //        使用LiveData 是异步查询，
+//        使用LiveData 是异步查询，
 //        查询结果还没返回时就getValues
 //        所以departmentList 为NULL
 //        departmentListLive = departmentDao.queryAllDepartment();

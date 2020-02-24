@@ -24,7 +24,7 @@ public interface DepartmentDao {
     @Update
     void updateDepartment(Department department);
 
-    @Query("SELECT department FROM tb_department ORDER BY id ASC")
+    @Query("SELECT department_name FROM tb_department ORDER BY id ASC")
 //        使用LiveData 是异步查询，
 //        查询结果还没返回时就getValues
 //        所以departmentList 为NULL

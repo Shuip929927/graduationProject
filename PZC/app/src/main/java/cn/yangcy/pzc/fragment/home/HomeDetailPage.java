@@ -14,8 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import cn.yangcy.pzc.R;
 import cn.yangcy.pzc.databinding.HomeDetailPageFragmentBinding;
 import cn.yangcy.pzc.model.imformation.Information;

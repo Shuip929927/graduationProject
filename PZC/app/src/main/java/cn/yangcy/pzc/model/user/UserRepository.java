@@ -19,7 +19,7 @@ public class UserRepository {
     public UserRepository(Context context) {
         DataBase dataBase = DataBase.getDataBase(context.getApplicationContext());
         userDao = dataBase.getUserDao();
-        Log.i(TAG, "RegisterViewModel: INSERT");
+        Log.i(TAG, "UserRepository: DB connect");
     }
 
     public void register(User... users){

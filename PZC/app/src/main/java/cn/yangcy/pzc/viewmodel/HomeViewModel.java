@@ -8,8 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.paging.PagedList;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +24,12 @@ public class HomeViewModel extends AndroidViewModel {
     private InformationRepository informationRepository;
     private LiveData<List<Information>> infoListLive;
     private Information clickInfo;
-
+    private LiveData<PagedList<Information>> infoPagedList;
     public HomeViewModel(@NonNull Application application) {
         super(application);
         informationRepository = new InformationRepository(application);
         infoListLive = informationRepository.getInfoListLive();
+        infoPagedList = informationRepository.getInfoPagedList();
     }
 
     public Information setClickInformation(Information clickInfo) {
@@ -49,4 +50,7 @@ public class HomeViewModel extends AndroidViewModel {
         return infoListLive;
     }
 
+    public LiveData<PagedList<Information>> getInfoPagedList() {
+        return infoPagedList;
+    }
 }
