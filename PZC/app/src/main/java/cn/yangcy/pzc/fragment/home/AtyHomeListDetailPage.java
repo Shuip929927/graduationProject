@@ -12,8 +12,9 @@ import cn.yangcy.pzc.model.imformation.Information;
 import cn.yangcy.pzc.view.HomeActivity;
 import cn.yangcy.pzc.viewmodel.HomeViewModel;
 
-public class HomeListDetailPage extends AppCompatActivity {
+public class AtyHomeListDetailPage extends AppCompatActivity {
 
+    private static final String TAG = "AtyHomeListDetailPage";
 //    private HomeViewModel mViewModel;
     private HomeDetailPageFragmentBinding homeDetailPageFragmentBinding;
 //    private View view;

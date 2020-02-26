@@ -26,7 +26,7 @@ import cn.yangcy.pzc.viewmodel.RegisterViewModel;
 
 public class RegisterPage2 extends Fragment {
 
-    private final String TAG = "RegisterPage2";
+    private static final String TAG = "RegisterPage2";
     private RegisterViewModel mViewModel;
     private RegisterPage2FragmentBinding registerPage2FragmentBinding;
     private List<String> departmentList;
@@ -86,7 +86,6 @@ public class RegisterPage2 extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 

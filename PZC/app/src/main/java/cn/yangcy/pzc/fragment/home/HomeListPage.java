@@ -29,7 +29,7 @@ import cn.yangcy.pzc.viewmodel.HomeViewModel;
 
 public class HomeListPage extends Fragment {
 
-    private static String TAG = "HomeListPage";
+    private static final String TAG = "HomeListPage";
     private HomeViewModel mViewModel;
     private View view;
     private ViewPager mLoopPager;

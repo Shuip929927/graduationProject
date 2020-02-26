@@ -3,10 +3,13 @@ package cn.yangcy.pzc.model.organization;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "tb_organization")
-public class Organization {
+import java.io.Serializable;
+
+@Entity(tableName = "tb_organization",indices = {@Index(value = "id")})
+public class Organization implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -18,7 +21,7 @@ public class Organization {
     private String personInCharge;
 
     @ColumnInfo(name = "person_id")
-    private String personAccount;
+    private int personAccount;
 
     @ColumnInfo(name = "number_of_people",defaultValue = "0")
     private int numberOfPeople;
@@ -28,6 +31,11 @@ public class Organization {
 
     @ColumnInfo(name = "isEnroll",defaultValue = "0")
     private int isEnroll;
+    /*
+     * 0 代表纳新 进行中
+     * 1 代表活动结束
+     * */
+
 
     public Organization(String organization, String personInCharge, String description) {
         this.organization = organization;
@@ -36,7 +44,7 @@ public class Organization {
     }
 
     @Ignore
-    public Organization(String organization, String personInCharge, String personAccount, int numberOfPeople, String description) {
+    public Organization(String organization, String personInCharge, int personAccount, int numberOfPeople, String description) {
         this.organization = organization;
         this.personInCharge = personInCharge;
         this.personAccount = personAccount;
@@ -68,11 +76,11 @@ public class Organization {
         this.personInCharge = personInCharge;
     }
 
-    public String getPersonAccount() {
+    public int getPersonAccount() {
         return personAccount;
     }
 
-    public void setPersonAccount(String personAccount) {
+    public void setPersonAccount(int personAccount) {
         this.personAccount = personAccount;
     }
 

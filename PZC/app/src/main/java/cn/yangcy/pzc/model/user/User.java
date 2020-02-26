@@ -12,7 +12,7 @@ public class User {
     @ColumnInfo(name = "account")
     @NonNull
     @PrimaryKey
-    private String account;
+    private int account;
 
     @ColumnInfo(name = "password")
     private String password;
@@ -32,11 +32,11 @@ public class User {
     @ColumnInfo(name = "classes")
     private String classes;
 
-    @ColumnInfo(name = "power")
+    @ColumnInfo(name = "power",defaultValue = "1")
     private int power;
 
     @Ignore
-    public User(String account, String password, String name, String phoneNumber, String department, String major, String classes) {
+    public User(int account, String password, String name, String phoneNumber, String department, String major, String classes) {
         this.account = account;
         this.password = password;
         this.name = name;
@@ -44,10 +44,9 @@ public class User {
         this.department = department;
         this.major = major;
         this.classes = classes;
-        this.power = 1;
     }
 
-    public User(String account, String password, String name, String phoneNumber, String department, String major, String classes, int power) {
+    public User(int account, String password, String name, String phoneNumber, String department, String major, String classes, int power) {
         this.account = account;
         this.password = password;
         this.name = name;
@@ -58,11 +57,11 @@ public class User {
         this.power = power;
     }
 
-    public String getAccount() {
+    public int getAccount() {
         return account;
     }
 
-    public void setAccount(String account) {
+    public void setAccount(int account) {
         this.account = account;
     }
 
@@ -131,7 +130,7 @@ public class User {
     }
 
     public String toPersonInCharge(){
-        String years = account.substring(0,4);
-        return  department+years+"级"+major+" "+name;
+        String years = String.valueOf(account).substring(2,4);
+        return  department+"\n20"+years+"级"+major+" "+name;
     }
 }

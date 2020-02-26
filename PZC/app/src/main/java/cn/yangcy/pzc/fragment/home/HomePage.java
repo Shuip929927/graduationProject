@@ -13,7 +13,7 @@ import cn.yangcy.pzc.R;
 
 public class HomePage extends Fragment {
 
-    private static String TAG = "HomePage";
+    private static final String TAG = "HomePage";
     private View view;
 
     public static HomePage newInstance() {

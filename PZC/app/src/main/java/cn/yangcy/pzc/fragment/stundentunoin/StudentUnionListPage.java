@@ -18,12 +18,13 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import cn.yangcy.pzc.R;
 import cn.yangcy.pzc.adapter.MyFragmentPagerAdapter;
-import cn.yangcy.pzc.viewmodel.StudemtUnionViewModel;
+import cn.yangcy.pzc.viewmodel.StudentUnionViewModel;
 
 public class StudentUnionListPage extends Fragment {
 
+    private static final String TAG = "SUListPage";
     private View view;
-    private StudemtUnionViewModel mViewModel;
+    private StudentUnionViewModel mViewModel;
 
     private MyFragmentPagerAdapter myFragmentPagerAdapter;
     private ViewPager2 mViewPager2;
@@ -67,8 +68,8 @@ public class StudentUnionListPage extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        mViewModel = ViewModelProviders.of(this).get(StudemtUnionViewModel.class);
-        mViewModel = new ViewModelProvider(getActivity()).get(StudemtUnionViewModel.class);
+//        mViewModel = ViewModelProviders.of(this).get(StudentUnionViewModel.class);
+        mViewModel = new ViewModelProvider(getActivity()).get(StudentUnionViewModel.class);
         // TODO: Use the ViewModel
     }
 

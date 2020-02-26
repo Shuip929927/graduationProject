@@ -9,6 +9,8 @@ import cn.yangcy.pzc.fragment.stundentunoin.StudentUnionListPageOrganization;
 
 public class MyFragmentPagerAdapter extends FragmentStateAdapter {
 
+    private static final String TAG = "MyFragmentPagerAdapter";
+    
     public MyFragmentPagerAdapter(@NonNull Fragment fragment) {
         super(fragment);
     }

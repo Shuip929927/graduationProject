@@ -17,6 +17,7 @@ import cn.yangcy.pzc.viewmodel.HomeViewModel;
 
 public class MyPage extends Fragment {
 
+    private static final String TAG = "MyPage";
     private HomeViewModel mViewModel;
 
     public static MyPage newInstance() {

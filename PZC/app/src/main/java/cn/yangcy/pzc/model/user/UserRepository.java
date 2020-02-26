@@ -1,11 +1,13 @@
 package cn.yangcy.pzc.model.user;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import java.util.List;
 
+import cn.yangcy.pzc.Config;
 import cn.yangcy.pzc.model.DataBase;
 import cn.yangcy.pzc.model.department.DepartmentDao;
 import cn.yangcy.pzc.viewmodel.LoginViewModel;
@@ -14,16 +16,29 @@ import cn.yangcy.pzc.viewmodel.LoginViewModel;
 public class UserRepository {
 
     private final static String TAG = "UserRepository";
+    private SharedPreferences sharedPreferences;
     private UserDao userDao;
 
     public UserRepository(Context context) {
         DataBase dataBase = DataBase.getDataBase(context.getApplicationContext());
         userDao = dataBase.getUserDao();
         Log.i(TAG, "UserRepository: DB connect");
+        sharedPreferences = context.getSharedPreferences(Config.SP_NAME,Context.MODE_PRIVATE);
     }
 
     public void register(User... users){
         new RegisterAsync(userDao).execute(users);
+    }
+
+    public String getOrganizationPersonInChargeName(int account){
+       return userDao.queryPersonOfOrganizationCharge(account).toPersonInCharge();
+    }
+
+    public void saveUserMessage(User user){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("user_account",user.getAccount());
+        editor.putInt("user_power",user.getPower());
+        editor.apply();
     }
 
     static class RegisterAsync extends AsyncTask<User,Void,Void> {
@@ -41,7 +56,8 @@ public class UserRepository {
         }
     }
 
-    public User queryUser(String string){
+
+    public User queryUser(String account){
         //异步查询获取数据
 //        QueryAsyncTask queryAsyncTask = new QueryAsyncTask(userDao);
 //        queryAsyncTask.execute(string);
@@ -63,7 +79,7 @@ public class UserRepository {
 //        return resultUser;
         Log.d(TAG, "queryUser: ");
         //主线程执行
-        return userDao.queryUser(string);
+        return userDao.queryUser(account);
     }
 
 

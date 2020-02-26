@@ -80,7 +80,7 @@ public class MyInformationPagingAdapter extends PagedListAdapter<Information, My
 
                     //选择使用Activity显示详细信息，但显示不够平滑
                     //看到List页面点击数更新，还没进行跳转
-//                Intent detail = new Intent(holder.itemView.getContext(), HomeListDetailPage.class);
+//                Intent detail = new Intent(holder.itemView.getContext(), AtyHomeListDetailPage.class);
 //                detail.putExtra("information", information);
 //                holder.itemView.getContext().startActivity(detail);
                 }

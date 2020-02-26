@@ -11,6 +11,7 @@ import java.util.List;
 
 public class MyLooperPagerAdapter extends PagerAdapter {
 
+    private static final String TAG = "MyLooperPagerAdapter";
     private List<Integer> homePics = null;
 
     @NonNull

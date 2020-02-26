@@ -3,12 +3,15 @@ package cn.yangcy.pzc.model.activities;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
+
+import java.io.Serializable;
 
 import cn.yangcy.pzc.model.organization.Organization;
 
-@Entity(tableName = "tb_activities")
-public class Activities {
+@Entity(tableName = "tb_activities",indices = {@Index(value = "id")})
+public class Activities implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -23,6 +26,9 @@ public class Activities {
     @ColumnInfo(name = "activity_name")
     private String name;
 
+    @ColumnInfo(name = "activity_create_time")
+    private String createOn;
+
     @ColumnInfo(name = "activity_start_time")
     private String startTime;
 
@@ -31,14 +37,24 @@ public class Activities {
 
     @ColumnInfo(name = "activity_state",defaultValue = "0")
     private int state;
+    /*
+    * 0 代表活动 进行中
+    * 1 代表活动结束
+    * 2 代表活动长期有效
+    * */
 
     @ColumnInfo(name = "isDelete",defaultValue = "0")
     private int isDelete;
+    /*
+     * 0 代表活动存在
+     * 1 代表活动删除
+     * */
 
-    public Activities(int organizationId, String organizationName, String name, String startTime, String description) {
+    public Activities(int organizationId, String organizationName, String name, String createOn,String startTime, String description) {
         this.organizationId = organizationId;
         this.organizationName = organizationName;
         this.name = name;
+        this.createOn = createOn;
         this.startTime = startTime;
         this.description = description;
     }
@@ -73,6 +89,14 @@ public class Activities {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCreateOn() {
+        return createOn;
+    }
+
+    public void setCreateOn(String createOn) {
+        this.createOn = createOn;
     }
 
     public String getStartTime() {

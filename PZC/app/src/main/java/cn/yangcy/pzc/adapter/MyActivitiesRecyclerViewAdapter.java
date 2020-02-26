@@ -1,5 +1,6 @@
 package cn.yangcy.pzc.adapter;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,27 +9,28 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.yangcy.pzc.R;
+import cn.yangcy.pzc.fragment.stundentunoin.AtyStudentUnionActivitiesDetailPage;
 import cn.yangcy.pzc.model.activities.Activities;
-import cn.yangcy.pzc.model.imformation.Information;
-import cn.yangcy.pzc.viewmodel.StudemtUnionViewModel;
+import cn.yangcy.pzc.viewmodel.StudentUnionViewModel;
 
 public class MyActivitiesRecyclerViewAdapter extends RecyclerView.Adapter<MyActivitiesRecyclerViewAdapter.MyViewHolder> {
 
-    private StudemtUnionViewModel mViewModel;
+    private static final String TAG = "MyActivitiesAdapter";
+    private StudentUnionViewModel mViewModel;
     private List<Activities> activitiesList = new ArrayList<>();
+    private static String infoCreateTime;
     private static String infoStartTime;
     private static String infoHoldOrganization;
-    private String TAG = "MyActivitiesRecyclerViewAdapter";
 
-    public MyActivitiesRecyclerViewAdapter(StudemtUnionViewModel studemtUnionViewModel) {
-        this.mViewModel = studemtUnionViewModel;
+
+    public MyActivitiesRecyclerViewAdapter(StudentUnionViewModel studentUnionViewModel) {
+        this.mViewModel = studentUnionViewModel;
     }
 
     public void setActivitiesList(List<Activities> activitiesList) {
@@ -44,26 +46,40 @@ public class MyActivitiesRecyclerViewAdapter extends RecyclerView.Adapter<MyActi
 //        return null;
         LayoutInflater mLayoutInflater = LayoutInflater.from(parent.getContext());
         View cellView = mLayoutInflater.inflate(R.layout.student_union_activities_cell, parent, false);
+        infoCreateTime = parent.getContext().getResources().getString(R.string.info_create_time);
         infoStartTime = parent.getContext().getResources().getString(R.string.info_start_time);
         infoHoldOrganization = parent.getContext().getResources().getString(R.string.info_hold_organization);
         return new MyViewHolder(cellView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         final Activities activities = activitiesList.get(position);
         holder.tv_title.setText(activities.getName());
+        holder.tv_createTime.setText(infoCreateTime + " "+ activities.getCreateOn());
         holder.tv_startTime.setText(infoStartTime +" "+ activities.getStartTime());
         holder.tv_holdOrganization.setText(infoHoldOrganization +" "+activities.getOrganizationName());
         int state = activities.getState();
         if(state == 0){
+            holder.bt_activitiesState.setBackgroundResource(R.drawable.btn_state_ongoing_or_long);
             holder.bt_activitiesState.setText(R.string.info_activities_state_ongoing);
         } else if(state == 1){
-            holder.bt_activitiesState.setBackgroundColor(R.drawable.btn_student_union_activities_state_end);
+            holder.bt_activitiesState.setBackgroundResource(R.drawable.btn_state_end);
             holder.bt_activitiesState.setText(R.string.info_activities_state_end);
+        } else if(state == 2){
+            holder.bt_activitiesState.setBackgroundResource(R.drawable.btn_state_ongoing_or_long);
+            holder.bt_activitiesState.setText(R.string.info_activities_state_long);
         } else {
             holder.bt_activitiesState.setVisibility(View.GONE);
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent detail = new Intent(holder.itemView.getContext(), AtyStudentUnionActivitiesDetailPage.class);
+                detail.putExtra("activities_id", activities.getId());
+                holder.itemView.getContext().startActivity(detail);
+            }
+        });
     }
 
     @Override
@@ -73,11 +89,12 @@ public class MyActivitiesRecyclerViewAdapter extends RecyclerView.Adapter<MyActi
 
     static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView tv_title,tv_startTime,tv_holdOrganization;
+        private TextView tv_title,tv_createTime,tv_startTime,tv_holdOrganization;
         private Button bt_activitiesState;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_title = itemView.findViewById(R.id.tv_student_union_activities_title);
+            tv_createTime = itemView.findViewById(R.id.tv_student_union_activities_createTime);
             tv_startTime = itemView.findViewById(R.id.tv_student_union_activities_startTime);
             tv_holdOrganization = itemView.findViewById(R.id.tv_student_union_activities_organization);
             bt_activitiesState = itemView.findViewById(R.id.bt_student_union_activities_state);

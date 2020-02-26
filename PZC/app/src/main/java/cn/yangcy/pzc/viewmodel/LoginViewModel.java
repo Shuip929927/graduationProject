@@ -20,7 +20,7 @@ import cn.yangcy.pzc.model.user.UserRepository;
 
 public class LoginViewModel extends AndroidViewModel {
 
-    private static String TAG = "LoginViewModel TAG";
+    private static final String TAG = "LoginViewModel";
     private UserRepository userRepository;
 
     private MutableLiveData<String> account;
@@ -41,7 +41,7 @@ public class LoginViewModel extends AndroidViewModel {
     public MutableLiveData<String> getAccount() {
         if (account == null) {
             account = new MutableLiveData<String>();
-            account.setValue("test");
+            account.setValue("1234");
             Log.d(TAG, "getAccount: " + account.getValue());
         }
         return account;
@@ -55,7 +55,7 @@ public class LoginViewModel extends AndroidViewModel {
     public MutableLiveData<String> getPassword() {
         if (password == null) {
             password = new MutableLiveData<String>();
-            password.setValue("test");
+            password.setValue("1234");
             Log.d(TAG, "getPassword: " + password.getValue());
         }
         return password;
@@ -98,6 +98,7 @@ public class LoginViewModel extends AndroidViewModel {
         } else {
             Log.d(TAG, "doLogin: queryUser Exist");
             Log.d(TAG, "doLogin: "+ u.toPersonInCharge());
+            userRepository.saveUserMessage(u);
             return true;
         }
 

@@ -1,7 +1,6 @@
 package cn.yangcy.pzc.fragment.stundentunoin;
 
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
 
@@ -15,10 +14,10 @@ import android.view.ViewGroup;
 
 import cn.yangcy.pzc.R;
 import cn.yangcy.pzc.viewmodel.HomeViewModel;
-import cn.yangcy.pzc.viewmodel.StudemtUnionViewModel;
 
 public class StudentUnionPage extends Fragment {
 
+    private static final String TAG = "StudentUnionPage";
     private HomeViewModel mViewModel;
 
     public static StudentUnionPage newInstance() {

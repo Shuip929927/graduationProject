@@ -23,7 +23,7 @@ import cn.yangcy.pzc.model.user.UserRepository;
 public class RegisterViewModel extends AndroidViewModel {
     // TODO: Implement the ViewModel
 
-    private String TAG = "mRegisterViewModel";
+    private static final String TAG = "RegisterViewModel";
     private MutableLiveData<String> account;
     private MutableLiveData<String> password;
     private MutableLiveData<String> checkPassword;

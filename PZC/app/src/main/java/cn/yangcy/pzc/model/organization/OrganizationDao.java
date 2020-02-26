@@ -9,6 +9,8 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import cn.yangcy.pzc.model.activities.Activities;
+
 @Dao
 public interface OrganizationDao {
 
@@ -23,4 +25,7 @@ public interface OrganizationDao {
 
     @Query("SELECT * FROM tb_organization ORDER BY organization_name ASC")
     LiveData<List<Organization>> queryAllOrganization();
+
+    @Query("SELECT * FROM tb_organization WHERE id = :organizationId")
+    LiveData<Organization> queryOrganizationDetail(int organizationId);
 }

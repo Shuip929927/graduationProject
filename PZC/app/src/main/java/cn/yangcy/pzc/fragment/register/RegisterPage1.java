@@ -19,6 +19,7 @@ import cn.yangcy.pzc.viewmodel.RegisterViewModel;
 
 public class RegisterPage1 extends Fragment {
 
+    private static final String TAG = "RegisterPage1";
     private RegisterViewModel mViewModel;
     private  RegisterPage1FragmentBinding registerPage1FragmentBinding;
 

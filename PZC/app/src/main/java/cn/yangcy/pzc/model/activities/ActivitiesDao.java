@@ -21,6 +21,9 @@ public interface ActivitiesDao {
     @Update
     void updateActivities(Activities activities);
 
-    @Query("SELECT * FROM tb_activities ORDER BY activity_start_time")
+    @Query("SELECT * FROM tb_activities ORDER BY activity_create_time DESC")
     LiveData<List<Activities>> queryAllActivities();
+
+    @Query("SELECT * FROM tb_activities WHERE id = :activitiesId")
+    LiveData<Activities> queryActivitiesDetail(int activitiesId);
 }

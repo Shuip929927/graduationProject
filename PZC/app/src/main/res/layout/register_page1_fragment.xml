@@ -14,134 +14,6 @@
         android:layout_height="match_parent"
         tools:context=".fragment.register.RegisterPage1">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ic_account"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline16"
-            app:layout_constraintEnd_toStartOf="@+id/guideline14"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline13"
-            app:layout_constraintTop_toTopOf="@+id/guideline10" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ic_password"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline17"
-            app:layout_constraintEnd_toStartOf="@+id/guideline14"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline13"
-            app:layout_constraintTop_toTopOf="@+id/guideline16" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tv_phone"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline11"
-            app:layout_constraintEnd_toStartOf="@+id/guideline14"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline13"
-            app:layout_constraintTop_toTopOf="@+id/guideline18" />
-
-        <EditText
-            android:id="@+id/et_register_account"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:background="@android:drawable/editbox_background"
-            android:ems="10"
-            android:hint="@string/et_account_hint"
-            android:inputType="textPersonName"
-            android:text="@={mRegisterViewModel.account}"
-            app:layout_constraintBottom_toTopOf="@+id/guideline16"
-            app:layout_constraintEnd_toStartOf="@+id/guideline15"
-            app:layout_constraintHorizontal_bias="0.3"
-            app:layout_constraintStart_toStartOf="@+id/guideline14"
-            app:layout_constraintTop_toTopOf="@+id/guideline10"
-            tools:targetApi="o" />
-
-        <EditText
-            android:id="@+id/et_register_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:background="@android:drawable/editbox_background"
-            android:ems="10"
-            android:hint="@string/et_password_hint"
-            android:inputType="textPassword"
-            android:text="@={mRegisterViewModel.password}"
-            app:layout_constraintBottom_toTopOf="@+id/guideline17"
-            app:layout_constraintEnd_toStartOf="@+id/guideline15"
-            app:layout_constraintHorizontal_bias="0.3"
-            app:layout_constraintStart_toStartOf="@+id/guideline14"
-            app:layout_constraintTop_toTopOf="@+id/guideline16"
-            tools:targetApi="o" />
-
-        <EditText
-            android:id="@+id/et_register_check_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:background="@android:drawable/editbox_background"
-            android:ems="10"
-            android:hint="@string/register_check_password_hint"
-            android:inputType="textPassword"
-            android:text="@={mRegisterViewModel.checkPassword}"
-            app:layout_constraintBottom_toTopOf="@+id/guideline18"
-            app:layout_constraintEnd_toStartOf="@+id/guideline15"
-            app:layout_constraintHorizontal_bias="0.3"
-            app:layout_constraintStart_toStartOf="@+id/guideline14"
-            app:layout_constraintTop_toTopOf="@+id/guideline17"
-            tools:targetApi="o" />
-
-        <EditText
-            android:id="@+id/et_register_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:background="@android:drawable/editbox_background"
-            android:ems="10"
-            android:hint="@string/register_phone_hint"
-            android:inputType="phone"
-            android:text="@={mRegisterViewModel.phone}"
-            app:layout_constraintBottom_toTopOf="@+id/guideline11"
-            app:layout_constraintEnd_toStartOf="@+id/guideline15"
-            app:layout_constraintHorizontal_bias="0.3"
-            app:layout_constraintStart_toStartOf="@+id/guideline14"
-            app:layout_constraintTop_toTopOf="@+id/guideline18"
-            tools:targetApi="o" />
-
-        <Button
-            android:id="@+id/bt_toRegisterPage2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/holo_blue_light"
-            android:text="@string/bt_to_register_page2"
-            android:textColor="@android:color/background_light"
-            app:layout_constraintBottom_toBottomOf="@+id/bt_backToRegisterActivity"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/bt_backToRegisterActivity"
-            app:layout_constraintTop_toTopOf="@+id/bt_backToRegisterActivity" />
-
-        <Button
-            android:id="@+id/bt_backToRegisterActivity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/bt_back"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/bt_toRegisterPage2"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline19" />
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline10"
             android:layout_width="wrap_content"
@@ -204,6 +76,134 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.75" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ic_account"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline16"
+            app:layout_constraintEnd_toStartOf="@+id/guideline14"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline13"
+            app:layout_constraintTop_toTopOf="@+id/guideline10" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ic_password"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline17"
+            app:layout_constraintEnd_toStartOf="@+id/guideline14"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline13"
+            app:layout_constraintTop_toTopOf="@+id/guideline16" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_phone"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline11"
+            app:layout_constraintEnd_toStartOf="@+id/guideline14"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline13"
+            app:layout_constraintTop_toTopOf="@+id/guideline18" />
+
+        <EditText
+            android:id="@+id/et_register_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:background="@android:drawable/editbox_background"
+            android:ems="10"
+            android:hint="@string/et_account_hint"
+            android:inputType="number"
+            android:text="@={mRegisterViewModel.account}"
+            app:layout_constraintBottom_toTopOf="@+id/guideline16"
+            app:layout_constraintEnd_toStartOf="@+id/guideline15"
+            app:layout_constraintHorizontal_bias="0.3"
+            app:layout_constraintStart_toStartOf="@+id/guideline14"
+            app:layout_constraintTop_toTopOf="@+id/guideline10"
+            tools:targetApi="o" />
+
+        <EditText
+            android:id="@+id/et_register_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:background="@android:drawable/editbox_background"
+            android:ems="10"
+            android:hint="@string/et_password_hint"
+            android:inputType="textPassword"
+            android:text="@={mRegisterViewModel.password}"
+            app:layout_constraintBottom_toTopOf="@+id/guideline17"
+            app:layout_constraintEnd_toStartOf="@+id/guideline15"
+            app:layout_constraintHorizontal_bias="0.3"
+            app:layout_constraintStart_toStartOf="@+id/guideline14"
+            app:layout_constraintTop_toTopOf="@+id/guideline16"
+            tools:targetApi="o" />
+
+        <EditText
+            android:id="@+id/et_register_check_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:background="@android:drawable/editbox_background"
+            android:ems="10"
+            android:hint="@string/register_check_password_hint"
+            android:inputType="textPassword"
+            android:text="@={mRegisterViewModel.checkPassword}"
+            app:layout_constraintBottom_toTopOf="@+id/guideline18"
+            app:layout_constraintEnd_toStartOf="@+id/guideline15"
+            app:layout_constraintHorizontal_bias="0.3"
+            app:layout_constraintStart_toStartOf="@+id/guideline14"
+            app:layout_constraintTop_toTopOf="@+id/guideline17"
+            tools:targetApi="o" />
+
+        <EditText
+            android:id="@+id/et_register_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:background="@android:drawable/editbox_background"
+            android:ems="10"
+            android:hint="@string/register_phone_hint"
+            android:inputType="phone"
+            android:text="@={mRegisterViewModel.phone}"
+            app:layout_constraintBottom_toTopOf="@+id/guideline11"
+            app:layout_constraintEnd_toStartOf="@+id/guideline15"
+            app:layout_constraintHorizontal_bias="0.3"
+            app:layout_constraintStart_toStartOf="@+id/guideline14"
+            app:layout_constraintTop_toTopOf="@+id/guideline18"
+            tools:targetApi="o" />
+
+        <Button
+            android:id="@+id/bt_backToRegisterActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bt_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/bt_toRegisterPage2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline19" />
+
+        <Button
+            android:id="@+id/bt_toRegisterPage2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_blue_light"
+            android:text="@string/bt_to_register_page2"
+            android:textColor="@android:color/background_light"
+            app:layout_constraintBottom_toBottomOf="@+id/bt_backToRegisterActivity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/bt_backToRegisterActivity"
+            app:layout_constraintTop_toTopOf="@+id/bt_backToRegisterActivity" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
