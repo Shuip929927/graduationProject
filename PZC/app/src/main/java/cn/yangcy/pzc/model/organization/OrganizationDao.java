@@ -28,4 +28,7 @@ public interface OrganizationDao {
 
     @Query("SELECT * FROM tb_organization WHERE id = :organizationId")
     LiveData<Organization> queryOrganizationDetail(int organizationId);
+
+    @Query("SELECT * FROM tb_organization WHERE id = :organizationId")
+    Organization queryOrganization(int organizationId);
 }

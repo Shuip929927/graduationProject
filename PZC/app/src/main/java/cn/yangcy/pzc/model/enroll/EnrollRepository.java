@@ -6,6 +6,8 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import java.util.List;
+
 import cn.yangcy.pzc.model.DataBase;
 import cn.yangcy.pzc.model.organization.Organization;
 
@@ -17,6 +19,7 @@ public class EnrollRepository {
     private LiveData<ActivitiesEnroll> activitiesEnrollLiveData;
     private LiveData<OrganizationEnroll> organizationEnrollLiveData;
     private int UserEnrollOrganizationNum;
+    private int organizationMemberNum;
 
     public EnrollRepository(Context context) {
         DataBase dataBase = DataBase.getDataBase(context.getApplicationContext());
@@ -98,5 +101,34 @@ public class EnrollRepository {
     public int getUserEnrollOrganizationNum(int userAccount) {
         UserEnrollOrganizationNum = organizationEnrollDao.queryUserEnrollOrganizationNumber(userAccount);
         return UserEnrollOrganizationNum;
+    }
+
+    public List<Integer> getMemberList(int organizationId) {
+        Log.i(TAG, "getMemberList");
+        return organizationEnrollDao.queryOrganizationMember(organizationId);
+    }
+
+    public List<Integer> getMemberEnrollList(int organizationId) {
+        Log.i(TAG, "getMemberEnrollList");
+        return organizationEnrollDao.queryOrganizationEnrollMember(organizationId);
+    }
+
+    public int getOrganizationMemberNum(int organizationId) {
+        Log.i(TAG, "getOrganizationMemberNum");
+        organizationMemberNum = organizationEnrollDao.queryOrganizationMemberNumber(organizationId);
+        return organizationMemberNum;
+    }
+
+    public void updateOrganizationMemberEnroll(int userAccount, int organizationId, int state){
+        Log.i(TAG, "updateOrganizationMemberEnroll");
+        OrganizationEnroll oe = organizationEnrollDao.queryOrganizationExist(userAccount,organizationId);
+        oe.setState(state);
+        organizationEnrollDao.updateOrganizationEnrollMessage(oe);
+    }
+
+    public void deleteOrganizationMemberEnroll(int userAccount, int organizationId){
+        Log.i(TAG, "deleteOrganizationMemberEnroll");
+        OrganizationEnroll oe = organizationEnrollDao.queryOrganizationExist(userAccount,organizationId);
+        organizationEnrollDao.deleteOrganizationEnrollMessage(oe);
     }
 }

@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+
+import java.util.Arrays;
 import java.util.List;
 
 import cn.yangcy.pzc.Config;
@@ -18,6 +21,7 @@ public class UserRepository {
     private final static String TAG = "UserRepository";
     private SharedPreferences sharedPreferences;
     private UserDao userDao;
+    private LiveData<List<User>> userLiveData;
 
     public UserRepository(Context context) {
         DataBase dataBase = DataBase.getDataBase(context.getApplicationContext());
@@ -32,6 +36,10 @@ public class UserRepository {
 
     public String getOrganizationPersonInChargeName(int account){
        return userDao.queryPersonOfOrganizationCharge(account).toPersonInCharge();
+    }
+
+    public String getOrganizationMemberInfo(int account){
+        return userDao.queryPersonOfOrganizationCharge(account).getUserInfo();
     }
 
     public void saveUserMessage(User user){
@@ -82,8 +90,23 @@ public class UserRepository {
         return userDao.queryUser(account);
     }
 
+    public LiveData<List<User>> getUserLiveData(List<Integer> list) {
+        Log.i(TAG, "getUserLiveData");
+        int[] accounts = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            Log.i(TAG, "getUserLiveData: "+ list.get(i));
+            accounts[i] = list.get(i);
+        }
+        userLiveData = userDao.queryOrganizationMember(accounts);
+        return userLiveData;
+    }
 
-//异步查询类
+    public void updateUserPower(User user){
+        Log.i(TAG, "updateUserPower");
+        userDao.updateUser(user);
+    }
+
+    //异步查询类
     /**
      * 因异步查询doInBackground方法还没执行，
      * 主线程就已经判断user为空，暂无解决方法

@@ -34,7 +34,14 @@ public class User {
 
     @ColumnInfo(name = "power",defaultValue = "1")
     private int power;
-
+    /*
+     *  1 代表没有参加任何学生组织的学生
+     *  2 代表学生组织成员
+     *  3 代表学生组织负责人
+     *  4 代表学生会主席团
+     *  5 代表老师
+     *  6 代表管理员
+     * */
     @Ignore
     public User(int account, String password, String name, String phoneNumber, String department, String major, String classes) {
         this.account = account;
@@ -132,5 +139,10 @@ public class User {
     public String toPersonInCharge(){
         String years = String.valueOf(account).substring(2,4);
         return  department+"\n20"+years+"级"+major+" "+name;
+    }
+
+    public String getUserInfo(){
+        String years = String.valueOf(account).substring(2,4);
+        return  department+"\n20"+years+"级"+major;
     }
 }

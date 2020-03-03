@@ -3,6 +3,7 @@ package cn.yangcy.pzc.viewmodel;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -18,6 +19,7 @@ import cn.yangcy.pzc.model.enroll.EnrollRepository;
 import cn.yangcy.pzc.model.enroll.OrganizationEnroll;
 import cn.yangcy.pzc.model.organization.Organization;
 import cn.yangcy.pzc.model.organization.OrganizationRepository;
+import cn.yangcy.pzc.model.user.User;
 import cn.yangcy.pzc.model.user.UserRepository;
 
 public class StudentUnionViewModel extends AndroidViewModel {
@@ -32,13 +34,18 @@ public class StudentUnionViewModel extends AndroidViewModel {
     private SharedPreferences sharedPreferences;
     private int userAccount;
     private int userPower;
+    private int organizationId;
+    private List<Integer> memberList;
+    private List<Integer> memberEnrollList;
     private int userEnrollOrganizationNum;
+    private int organizationMemberNum;
 
     private LiveData<Activities> activitiesLiveData;
     private LiveData<ActivitiesEnroll> activitiesEnrollLive;
 
     private LiveData<Organization> organizationLiveData;
     private LiveData<OrganizationEnroll> organizationEnrollLive;
+    private LiveData<List<User>> organizationMember;
 
     public StudentUnionViewModel(@NonNull Application application) {
         super(application);
@@ -48,7 +55,6 @@ public class StudentUnionViewModel extends AndroidViewModel {
         activitiesRepository = new ActivitiesRepository(getApplication());
         activitiesLiveList = activitiesRepository.getAllActivities();
         organizationLiveList = organizationRepository.getAllOrganization();
-
         sharedPreferences = application.getSharedPreferences(Config.SP_NAME, Context.MODE_PRIVATE);
 
     }
@@ -65,6 +71,10 @@ public class StudentUnionViewModel extends AndroidViewModel {
 
     public String getOrganizationPersonInChargeName(int personInChargeAccount) {
         return userRepository.getOrganizationPersonInChargeName(personInChargeAccount);
+    }
+
+    public String getOrganizationMemberInfo(int account){
+        return userRepository.getOrganizationMemberInfo(account);
     }
 
     public int getUserAccount() {
@@ -109,4 +119,60 @@ public class StudentUnionViewModel extends AndroidViewModel {
         userEnrollOrganizationNum = enrollRepository.getUserEnrollOrganizationNum(getUserAccount());
         return userEnrollOrganizationNum;
     }
+
+    public int getOrganizationMemberNum(int organizationId) {
+        organizationMemberNum = enrollRepository.getOrganizationMemberNum(organizationId);
+        return organizationMemberNum;
+    }
+
+    public void updateOrganization(Organization organization){
+        organizationRepository.updateOrganization(organization);
+    }
+
+    public int getOrganizationId() {
+        return organizationId;
+    }
+
+    public void setOrganizationId(int organizationId) {
+        this.organizationId = organizationId;
+    }
+
+    public void setMemberList(int organizationId) {
+        setOrganizationId(organizationId);
+       memberList = enrollRepository.getMemberList(organizationId);
+        Log.i(TAG, "setMemberList" + memberList.toString());
+    }
+
+    public List<Integer> getMemberList() {
+        Log.i(TAG, "getMemberList");
+        return memberList;
+    }
+
+    public List<Integer> getMemberEnrollList() {
+        return memberEnrollList;
+    }
+
+    public void setMemberEnrollList(int organizationId) {
+        memberEnrollList = enrollRepository.getMemberEnrollList(organizationId);
+    }
+
+    public LiveData<List<User>> getOrganizationMember(List<Integer> list) {
+        organizationMember = userRepository.getUserLiveData(list);
+        Log.i(TAG, "getOrganizationMember");
+        return organizationMember;
+    }
+
+
+
+    public void updateMemberEnroll(boolean choose,User user,int power,int organizationId){
+        if(choose){
+            user.setPower(power);
+            enrollRepository.updateOrganizationMemberEnroll(user.getAccount(),organizationId,2);
+            userRepository.updateUserPower(user);
+            organizationRepository.updateOrganizationPeopleNumber(organizationId);
+        } else {
+            enrollRepository.deleteOrganizationMemberEnroll(user.getAccount(),organizationId);
+        }
+    }
 }
+

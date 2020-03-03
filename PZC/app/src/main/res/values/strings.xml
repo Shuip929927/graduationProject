@@ -58,6 +58,20 @@
     <string name="info_activities_enroll">报名</string>
     <string name="info_activities_enrolled">待审核</string>
     <string name="info_activities_enrolled_success">报名成功</string>
+    <string name="info_member">部门成员</string>
+    <string name="info_organization_edit">编辑</string>
+    <string name="info_organization_title">部门名称：</string>
+    <string name="info_organization_person_in_charge_title">部门负责人：</string>
+    <string name="info_organization_description_title">部门简介：</string>
+    <string name="info_organization_person_in_charge_position_title">负责人职位：</string>
+    <string name="info_save">保存</string>
+    <string name="info_check_save">确认保存？</string>
+    <string name="info_cancle">取消</string>
+    <string name="tab_enroll_member">申请名单</string>
+    <string name="tab_member">成员名单</string>
+    <string name="info_not_more">没有更多了</string>
+    <string name="bt_enroll_refuse">拒绝</string>
+    <string name="bt_enroll_ok">同意</string>
 
 
 </resources>

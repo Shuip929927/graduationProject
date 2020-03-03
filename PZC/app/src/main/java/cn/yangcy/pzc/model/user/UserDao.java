@@ -31,4 +31,7 @@ public interface UserDao {
     @Query("SELECT * FROM tb_user WHERE account = :userAccount")
     User queryPersonOfOrganizationCharge(int userAccount);
 
+    @Query("SELECT * FROM tb_user WHERE account in(:userAccounts) ORDER BY account DESC")
+    LiveData<List<User>> queryOrganizationMember(int[] userAccounts);
+
 }

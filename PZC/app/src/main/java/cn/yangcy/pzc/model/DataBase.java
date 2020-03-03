@@ -61,7 +61,7 @@ public abstract class DataBase extends RoomDatabase {
                             db.execSQL("insert into tb_user values('1234','1234','test'" +
                                     ",'10000000000','计算机工程系','软件工程','1',6)");
                             db.execSQL("insert into tb_user values('2111','2111','test'" +
-                                    ",'10000000000','计算机工程系','软件工程','1',1)");
+                                    ",'10000000000','计算机工程系','软件工程','1',2)");
                             db.execSQL("insert into tb_user values('2112','2112','test'" +
                                     ",'10000000000','计算机工程系','软件工程','1',2)");
                             db.execSQL("insert into tb_user values('211801001','211801001','邓力文'" +
@@ -156,19 +156,21 @@ public abstract class DataBase extends RoomDatabase {
                                     "同时，院党委办公室刘志勇老师在表彰中被评为2019年度福州大学新闻宣传工作先进个人。')");
 
 //Organization——————————————————————————————————————————————————————————————————————————————————————————————————————
-                            db.execSQL("insert into tb_organization(organization_name,person_id,person_in_charge,description,isEnroll) values" +
+                            db.execSQL("insert into tb_organization(organization_name,person_id,person_in_charge,number_of_people,description,isEnroll) values" +
                                     "('综合办公室'," +
                                     "'211801001'," +
                                     "'综合办公室主任'," +
+                                    "'1'," +
                                     "'综合办公室(两委办)是学生会的中枢部门，维持着学生会的正常运行，" +
                                     "可以说是学生会最重要的部门之一。我们负责主席团和各部门之间的联系，还着手会议记录和对各部门文件汇总建档，" +
                                     "负责信息传递和会议通知。在院活动中我们负责整个学生会大部分物资的管理；负责学院绝大部分晚会，大会的控音。'," +
                                     "'1')");
 
-                            db.execSQL("insert into tb_organization(organization_name,person_id,person_in_charge,description,isEnroll) values" +
+                            db.execSQL("insert into tb_organization(organization_name,person_id,person_in_charge,number_of_people,description,isEnroll) values" +
                                     "('团委组织部'," +
                                     "'211801002'," +
                                     "'组织部部长'," +
+                                    "'1'," +
                                     "'夏天的风和冬天的雪，都是与你有关的浪漫征途，春天的花和秋天的叶，都是与你有关的人间百态。\n" +
                                     "\n" +
                                     "这里是院团委组织部，负责研究和指导学院各团支部建设和推优工作，" +
@@ -562,21 +564,21 @@ public abstract class DataBase extends RoomDatabase {
                             db.execSQL("insert into tb_organization_enroll(user_id,organization_id,organization_enroll_state) values(" +
                                     "'2111'," +
                                     "'1'," +
-                                    "'1')");
+                                    "'2')");
 
                             db.execSQL("insert into tb_organization_enroll(user_id,organization_id,organization_enroll_state) values(" +
                                     "'2111'," +
                                     "'2'," +
-                                    "'1')");
+                                    "'2')");
                             db.execSQL("insert into tb_organization_enroll(user_id,organization_id,organization_enroll_state) values(" +
                                     "'2111'," +
                                     "'3'," +
-                                    "'2')");
+                                    "'1')");
 
                             db.execSQL("insert into tb_organization_enroll(user_id,organization_id,organization_enroll_state) values(" +
                                     "'2111'," +
                                     "'4'," +
-                                    "'2')");
+                                    "'1')");
                         }
 
                         @Override

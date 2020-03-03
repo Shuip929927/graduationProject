@@ -17,7 +17,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import cn.yangcy.pzc.R;
-import cn.yangcy.pzc.adapter.MyFragmentPagerAdapter;
+import cn.yangcy.pzc.adapter.MyStudentUnionFragmentPagerAdapter;
 import cn.yangcy.pzc.viewmodel.StudentUnionViewModel;
 
 public class StudentUnionListPage extends Fragment {
@@ -26,7 +26,7 @@ public class StudentUnionListPage extends Fragment {
     private View view;
     private StudentUnionViewModel mViewModel;
 
-    private MyFragmentPagerAdapter myFragmentPagerAdapter;
+    private MyStudentUnionFragmentPagerAdapter myStudentUnionFragmentPagerAdapter;
     private ViewPager2 mViewPager2;
     private TabLayoutMediator mTabLayoutMediator;
     private TabLayout mTabLayout;
@@ -41,8 +41,8 @@ public class StudentUnionListPage extends Fragment {
         view = inflater.inflate(R.layout.student_union_list_page_fragment, container, false);
         mViewPager2 = view.findViewById(R.id.student_union_viewPager2);
         mTabLayout = view.findViewById(R.id.student_union_tabLayout);
-        myFragmentPagerAdapter = new MyFragmentPagerAdapter(this);
-        mViewPager2.setAdapter(myFragmentPagerAdapter);
+        myStudentUnionFragmentPagerAdapter = new MyStudentUnionFragmentPagerAdapter(this);
+        mViewPager2.setAdapter(myStudentUnionFragmentPagerAdapter);
 
         mTabLayoutMediator = new TabLayoutMediator(mTabLayout, mViewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override

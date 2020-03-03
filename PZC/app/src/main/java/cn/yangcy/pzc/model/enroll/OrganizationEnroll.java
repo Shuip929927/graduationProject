@@ -36,9 +36,9 @@ public class OrganizationEnroll {
      *  1 代表已经报名 但未审核 ，
      *  2 代表通过审核
      * */
-
-    @ColumnInfo(name = "user_power",defaultValue = "2")
-    private int power;
+//
+//    @ColumnInfo(name = "user_power",defaultValue = "2")
+//    private int power;
     /*
      *  2 代表学生组织成员
      *  3 代表学生组织负责人
@@ -59,13 +59,6 @@ public class OrganizationEnroll {
         this.state = state;
     }
 
-    @Ignore
-    public OrganizationEnroll(int userAccount, int organizationId, int state, int power) {
-        this.userAccount = userAccount;
-        this.organizationId = organizationId;
-        this.state = state;
-        this.power = power;
-    }
 
     public int getId() {
         return id;
@@ -98,12 +91,12 @@ public class OrganizationEnroll {
     public void setState(int state) {
         this.state = state;
     }
-
-    public int getPower() {
-        return power;
-    }
-
-    public void setPower(int power) {
-        this.power = power;
-    }
+//
+//    public int getPower() {
+//        return power;
+//    }
+//
+//    public void setPower(int power) {
+//        this.power = power;
+//    }
 }

@@ -2,6 +2,7 @@ package cn.yangcy.pzc.model.organization;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -11,6 +12,7 @@ import cn.yangcy.pzc.model.DataBase;
 
 public class OrganizationRepository {
 
+    private static final String TAG = "OrganizationRepository";
     private OrganizationDao organizationDao;
     private LiveData<List<Organization>> organizationLive;
     private LiveData<Organization> organizationDetailLive;
@@ -48,5 +50,12 @@ public class OrganizationRepository {
             organizationDao.updateOrganization(organizations[0]);
             return null;
         }
+    }
+
+    public void updateOrganizationPeopleNumber(int organizationId){
+        Log.i(TAG, "updateOrganizationPeopleNumber");
+        Organization organization = organizationDao.queryOrganization(organizationId);
+        organization.setNumberOfPeople(organization.getNumberOfPeople()+1);
+        organizationDao.updateOrganization(organization);
     }
 }

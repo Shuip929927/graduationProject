@@ -37,7 +37,7 @@ public class StudentUnionListPageOrganization extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.student_union_list_page_organization_fragment, container, false);
+        view = inflater.inflate(R.layout.student_union_organization_list_page_fragment, container, false);
 //        mViewModel = ViewModelProviders.of(this).get(StudentUnionViewModel.class);
         mViewModel = new ViewModelProvider(getActivity()).get(StudentUnionViewModel.class);
         mRecyclerView = view.findViewById(R.id.student_union_organization_recyclerView);

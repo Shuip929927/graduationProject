@@ -114,6 +114,13 @@ public class HomeListPage extends Fragment {
     public void onPause() {
         super.onPause();
         Log.i(TAG, "onPause: REMOVE");
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i(TAG, "onStop: REMOVE");
         mHandler.removeCallbacks(mLooperTask);
     }
 

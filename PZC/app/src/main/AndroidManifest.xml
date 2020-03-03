@@ -9,6 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".fragment.stundentunoin.AtyStudentUnionOrganizationMemberPage"></activity>
+        <activity android:name=".fragment.stundentunoin.AtyStudentUnionOrganizationControlView" />
+        <activity android:name=".fragment.stundentunoin.AtyStudentUnionOrganizationDetailPage" />
+        <activity android:name=".fragment.stundentunoin.AtyStudentUnionActivitiesDetailPage" />
+        <activity android:name=".fragment.home.AtyHomeListDetailPage" />
+        <activity android:name=".view.HomeActivity" />
+        <activity android:name=".view.LoginActivity" />
+        <activity android:name=".view.RegisterActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,12 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.RegisterActivity" />
-        <activity android:name=".view.LoginActivity" />
-        <activity android:name=".view.HomeActivity" />
-        <activity android:name=".fragment.home.AtyHomeListDetailPage" />
-        <activity android:name=".fragment.stundentunoin.AtyStudentUnionActivitiesDetailPage" />
-        <activity android:name=".fragment.stundentunoin.AtyStudentUnionOrganizationDetailPage" />
     </application>
 
 </manifest>

@@ -7,11 +7,11 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import cn.yangcy.pzc.fragment.stundentunoin.StudentUnionListPageActivities;
 import cn.yangcy.pzc.fragment.stundentunoin.StudentUnionListPageOrganization;
 
-public class MyFragmentPagerAdapter extends FragmentStateAdapter {
+public class MyStudentUnionFragmentPagerAdapter extends FragmentStateAdapter {
 
-    private static final String TAG = "MyFragmentPagerAdapter";
+    private static final String TAG = "MyStudentUnionFragmentPagerAdapter";
     
-    public MyFragmentPagerAdapter(@NonNull Fragment fragment) {
+    public MyStudentUnionFragmentPagerAdapter(@NonNull Fragment fragment) {
         super(fragment);
     }
 

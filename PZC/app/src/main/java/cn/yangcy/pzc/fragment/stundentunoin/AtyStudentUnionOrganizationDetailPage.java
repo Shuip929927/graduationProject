@@ -3,8 +3,11 @@ package cn.yangcy.pzc.fragment.stundentunoin;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -27,20 +30,23 @@ public class AtyStudentUnionOrganizationDetailPage extends AppCompatActivity {
     private StudentUnionOrganizationDetialPageBinding binding;
     private int organizationId;
     private LiveData<Organization> organizationLiveData;
+    private int mMenuVisibleLevel = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         userRepository = new UserRepository(getApplication());
         binding = DataBindingUtil.setContentView(this, R.layout.student_union_organization_detial_page);
         mViewModel = new ViewModelProvider(this).get(StudentUnionViewModel.class);
         binding.setLifecycleOwner(this);
         Intent intent = getIntent();
-        organizationId = intent.getIntExtra("organization_id",-1);
+        organizationId = intent.getIntExtra("organization_id", -1);
         organizationLiveData = mViewModel.getOrganizationLiveData(organizationId);
 
         organizationLiveData.observe(AtyStudentUnionOrganizationDetailPage.this, new Observer<Organization>() {
             LiveData<OrganizationEnroll> organizationEnroll = mViewModel.getOrganizationEnrollLive();
+
             @Override
             public void onChanged(Organization organization) {
                 binding.tvOrganizationName.setText(organization.getOrganization());
@@ -59,13 +65,20 @@ public class AtyStudentUnionOrganizationDetailPage extends AppCompatActivity {
                 }
                 binding.tvOrganizationDetailDescription.setText(organization.getDescription());
 
-                if (organization.getIsEnroll() == 0 && mViewModel.getUserPower()<3 && mViewModel.getUserEnrollOrganizationNum()<3){
+                if (organization.getIsEnroll() == 0 && mViewModel.getUserPower() < 3
+                        && mViewModel.getUserEnrollOrganizationNum() < 3) {
+                    /*
+                    *   getIsEnroll = 0 部门正在纳新
+                    *   getUserPower < 3 该用户不是部门负责人、老师、管理员
+                    *   getUserEnrollOrganizationNum < 3 该用户加入部门数量小于3个
+                    *
+                    *   */
                     organizationEnroll.observe(AtyStudentUnionOrganizationDetailPage.this, new Observer<OrganizationEnroll>() {
                         @Override
                         public void onChanged(OrganizationEnroll organizationEnroll) {
                             final OrganizationEnroll oe = organizationEnroll;
 
-                            switch (oe.getState()){
+                            switch (oe.getState()) {
                                 case 0:
                                     Log.i(TAG, "onChanged: ??????0");
                                     binding.btEnroll.setBackgroundResource(R.drawable.btn_state_ongoing_or_long);
@@ -107,14 +120,64 @@ public class AtyStudentUnionOrganizationDetailPage extends AppCompatActivity {
                             }
                         }
                     });
-                } else if (mViewModel.getUserPower()<3 && mViewModel.getUserEnrollOrganizationNum()>3){
-                    binding.btEnroll.setBackgroundResource(R.drawable.btn_state_end);
-                    binding.btEnroll.setText(R.string.info_organization_enroll_full);
-                    binding.btEnroll.setClickable(false);
+//                } else if (mViewModel.getUserPower() < 3 && mViewModel.getUserEnrollOrganizationNum() > 3) {
+//                    binding.btEnroll.setBackgroundResource(R.drawable.btn_state_end);
+//                    binding.btEnroll.setText(R.string.info_organization_enroll_full);
+//                    binding.btEnroll.setClickable(false);
                 } else {
                     binding.btEnroll.setVisibility(View.GONE);
                 }
             }
         });
+
+
+        if (mViewModel.getUserPower() > 1) {
+            showMenuLevel3(mViewModel.getUserPower());
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_organization, menu);
+        switch (mMenuVisibleLevel) {
+            case 1:
+                menu.findItem(R.id.member).setVisible(false);
+                menu.findItem(R.id.organization_info_edit).setVisible(false);
+                break;
+            case 2:
+                menu.findItem(R.id.member).setVisible(true);
+                menu.findItem(R.id.organization_info_edit).setVisible(false);
+                break;
+            default:
+                menu.findItem(R.id.member).setVisible(true);
+                menu.findItem(R.id.organization_info_edit).setVisible(true);
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()) {
+            case R.id.member:
+                intent = new Intent(this, AtyStudentUnionOrganizationMemberPage.class);
+                intent.putExtra("organization_id", organizationId);
+                startActivity(intent);
+//                finish();
+                break;
+            case R.id.organization_info_edit:
+                intent = new Intent(this, AtyStudentUnionOrganizationControlView.class);
+                intent.putExtra("organization_id", organizationId);
+                startActivity(intent);
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showMenuLevel3(int level) {
+        mMenuVisibleLevel = level;
+        supportInvalidateOptionsMenu();
     }
 }
