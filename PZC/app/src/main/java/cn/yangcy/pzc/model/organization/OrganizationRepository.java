@@ -15,7 +15,6 @@ public class OrganizationRepository {
     private static final String TAG = "OrganizationRepository";
     private OrganizationDao organizationDao;
     private LiveData<List<Organization>> organizationLive;
-    private LiveData<Organization> organizationDetailLive;
 
     public OrganizationRepository(Context context) {
         DataBase dataBase = DataBase.getDataBase(context.getApplicationContext());
@@ -29,8 +28,7 @@ public class OrganizationRepository {
     }
 
     public LiveData<Organization> getOrganizationDetailLive(int organizationId) {
-        organizationDetailLive = organizationDao.queryOrganizationDetail(organizationId);
-        return organizationDetailLive;
+        return organizationDao.queryOrganizationDetail(organizationId);
     }
 
     public void updateOrganization(Organization organization){
@@ -41,7 +39,7 @@ public class OrganizationRepository {
 
         private OrganizationDao organizationDao;
 
-        public UpdateOrganizationAsyncTask(OrganizationDao organizationDao) {
+        UpdateOrganizationAsyncTask(OrganizationDao organizationDao) {
             this.organizationDao = organizationDao;
         }
 
@@ -57,5 +55,9 @@ public class OrganizationRepository {
         Organization organization = organizationDao.queryOrganization(organizationId);
         organization.setNumberOfPeople(organization.getNumberOfPeople()+1);
         organizationDao.updateOrganization(organization);
+    }
+
+    public int queryPersonInChargeOrgid(int userId){
+        return organizationDao.queryPersonInChargeOrgId(userId);
     }
 }

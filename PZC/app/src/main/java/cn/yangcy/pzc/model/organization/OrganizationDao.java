@@ -31,4 +31,7 @@ public interface OrganizationDao {
 
     @Query("SELECT * FROM tb_organization WHERE id = :organizationId")
     Organization queryOrganization(int organizationId);
+
+    @Query("SELECT id FROM tb_organization WHERE person_id = :personInChargeId")
+    int queryPersonInChargeOrgId(int personInChargeId);
 }

@@ -70,7 +70,7 @@ public class AtyStudentUnionOrganizationControlView extends AppCompatActivity {
                         }
                     }
                 });
-                if(mViewModel.getUserPower()<4 && mViewModel.getUserAccount()!= org.getPersonAccount()){
+                if(mViewModel.getUserPower()<3 && mViewModel.getUserAccount()!= org.getPersonAccount()){
                     binding.etControlOrganization.setEnabled(false);
                     binding.etControlChargePosition.setEnabled(false);
                     binding.etControlPersonInCharge.setEnabled(false);
@@ -78,7 +78,7 @@ public class AtyStudentUnionOrganizationControlView extends AppCompatActivity {
                     binding.etControlDescription.setEnabled(false);
                     hideMenu();
 
-                } else if(mViewModel.getUserPower()<4 && mViewModel.getUserAccount() == org.getPersonAccount()){
+                } else if(mViewModel.getUserPower()<3 && mViewModel.getUserAccount() == org.getPersonAccount()){
                     binding.etControlOrganization.setEnabled(false);
                     binding.etControlChargePosition.setEnabled(false);
                     binding.etControlPersonInCharge.setEnabled(false);
@@ -130,7 +130,7 @@ public class AtyStudentUnionOrganizationControlView extends AppCompatActivity {
                                 startActivity(back);
                                 finish();
                             }
-                        }).setNegativeButton(R.string.info_cancle, new DialogInterface.OnClickListener() {
+                        }).setNegativeButton(R.string.info_cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();

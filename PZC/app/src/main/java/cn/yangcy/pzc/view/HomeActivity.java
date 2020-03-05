@@ -7,6 +7,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -18,6 +19,7 @@ import cn.yangcy.pzc.viewmodel.HomeViewModel;
 public class HomeActivity extends AppCompatActivity {
 
     private HomeViewModel mViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,13 +30,12 @@ public class HomeActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this,R.id.nav_host_fragment);
 //        AppBarConfiguration configuration = new AppBarConfiguration.Builder(bottomNavigationView.getMenu()).build();
 //        NavigationUI.setupActionBarWithNavController(this,navController,configuration);
-
         NavigationUI.setupWithNavController(bottomNavigationView,navController);
-
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         return Navigation.findNavController(this,R.id.nav_host_fragment).navigateUp();
     }
+
 }

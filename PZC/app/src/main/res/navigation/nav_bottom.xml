@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_bottom"
-    app:startDestination="@id/homePage">
+    app:startDestination="@id/studentUnionPage">
 
 <!--将每个Fragment对应的ID，修改为menu文件中item对应的ID（最重要的一步）-->
     <fragment

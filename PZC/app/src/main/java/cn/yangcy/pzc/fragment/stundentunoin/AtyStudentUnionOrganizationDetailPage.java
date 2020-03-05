@@ -29,7 +29,6 @@ public class AtyStudentUnionOrganizationDetailPage extends AppCompatActivity {
     private UserRepository userRepository;
     private StudentUnionOrganizationDetialPageBinding binding;
     private int organizationId;
-    private LiveData<Organization> organizationLiveData;
     private int mMenuVisibleLevel = 1;
 
     @Override
@@ -42,7 +41,7 @@ public class AtyStudentUnionOrganizationDetailPage extends AppCompatActivity {
         binding.setLifecycleOwner(this);
         Intent intent = getIntent();
         organizationId = intent.getIntExtra("organization_id", -1);
-        organizationLiveData = mViewModel.getOrganizationLiveData(organizationId);
+        LiveData<Organization> organizationLiveData = mViewModel.getOrganizationLiveData(organizationId);
 
         organizationLiveData.observe(AtyStudentUnionOrganizationDetailPage.this, new Observer<Organization>() {
             LiveData<OrganizationEnroll> organizationEnroll = mViewModel.getOrganizationEnrollLive();
@@ -141,15 +140,15 @@ public class AtyStudentUnionOrganizationDetailPage extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_organization, menu);
         switch (mMenuVisibleLevel) {
             case 1:
-                menu.findItem(R.id.member).setVisible(false);
+                menu.findItem(R.id.organization_member).setVisible(false);
                 menu.findItem(R.id.organization_info_edit).setVisible(false);
                 break;
             case 2:
-                menu.findItem(R.id.member).setVisible(true);
+                menu.findItem(R.id.organization_member).setVisible(true);
                 menu.findItem(R.id.organization_info_edit).setVisible(false);
                 break;
             default:
-                menu.findItem(R.id.member).setVisible(true);
+                menu.findItem(R.id.organization_member).setVisible(true);
                 menu.findItem(R.id.organization_info_edit).setVisible(true);
                 break;
         }
@@ -160,7 +159,7 @@ public class AtyStudentUnionOrganizationDetailPage extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
-            case R.id.member:
+            case R.id.organization_member:
                 intent = new Intent(this, AtyStudentUnionOrganizationMemberPage.class);
                 intent.putExtra("organization_id", organizationId);
                 startActivity(intent);

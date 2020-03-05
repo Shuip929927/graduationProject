@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -17,18 +18,20 @@ import cn.yangcy.pzc.R;
 import cn.yangcy.pzc.model.user.User;
 import cn.yangcy.pzc.viewmodel.StudentUnionViewModel;
 
-public class MyOrganizationMemberEnrollRecyclerViewAdapter
-        extends RecyclerView.Adapter<MyOrganizationMemberEnrollRecyclerViewAdapter.MyViewHolder> {
+public class MyMemberEnrollRecyclerViewAdapter
+        extends RecyclerView.Adapter<MyMemberEnrollRecyclerViewAdapter.MyViewHolder> {
 
     private static final String TAG = "MyOrganizationMemberERA";
     private StudentUnionViewModel mViewModel;
+    private String type;
     private List<User> memberEnrollList = new ArrayList<>();
 
-    public MyOrganizationMemberEnrollRecyclerViewAdapter(StudentUnionViewModel mViewModel) {
+    public MyMemberEnrollRecyclerViewAdapter(StudentUnionViewModel mViewModel) {
         this.mViewModel = mViewModel;
     }
 
-    public void setMemberEnrollList(List<User> memberEnrollList) {
+    public void setMemberEnrollList(String type,List<User> memberEnrollList) {
+        this.type = type;
         this.memberEnrollList = memberEnrollList;
         Log.i(TAG, "setMemberEnrollList ");
     }
@@ -51,16 +54,18 @@ public class MyOrganizationMemberEnrollRecyclerViewAdapter
         holder.bt_enroll_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewModel.updateMemberEnroll(true,user,2,mViewModel.getOrganizationId());
-                memberEnrollList.remove(position);
+                mViewModel.updateMemberEnrollMessage(type,true,user,2);
+//                memberEnrollList.remove(position);
+                holder.cardView.setVisibility(View.GONE);
                 notifyDataSetChanged();
             }
         });
         holder.bt_enroll_refuse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewModel.updateMemberEnroll(false,user,1,mViewModel.getOrganizationId());
-                memberEnrollList.remove(position);
+                mViewModel.updateMemberEnrollMessage(type,false,user,1);
+//                memberEnrollList.remove(position);
+                holder.cardView.setVisibility(View.GONE);
                 notifyDataSetChanged();
             }
         });
@@ -73,13 +78,15 @@ public class MyOrganizationMemberEnrollRecyclerViewAdapter
 
     static class MyViewHolder extends RecyclerView.ViewHolder{
 
+        private CardView cardView;
         private TextView tv_enroll_member_name,tv_enroll_member_icon,tv_enroll_member_info;
         private Button bt_enroll_refuse,bt_enroll_ok;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_enroll_member_name = itemView.findViewById(R.id.tv_organization_member_enroll_name);
-            tv_enroll_member_icon = itemView.findViewById(R.id.tv_organization_member_enroll_name_icon);
-            tv_enroll_member_info = itemView.findViewById(R.id.tv_organization_member_enroll_info);
+            cardView = itemView.findViewById(R.id.member_enroll_cell_cardView);
+            tv_enroll_member_name = itemView.findViewById(R.id.tv_member_enroll_name);
+            tv_enroll_member_icon = itemView.findViewById(R.id.tv_member_enroll_name_icon);
+            tv_enroll_member_info = itemView.findViewById(R.id.tv_member_enroll_info);
             bt_enroll_refuse = itemView.findViewById(R.id.bt_enroll_refuse);
             bt_enroll_ok = itemView.findViewById(R.id.bt_enroll_ok);
         }

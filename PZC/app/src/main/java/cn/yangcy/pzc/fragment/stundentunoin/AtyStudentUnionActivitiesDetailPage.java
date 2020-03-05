@@ -3,8 +3,11 @@ package cn.yangcy.pzc.fragment.stundentunoin;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -24,7 +27,7 @@ public class AtyStudentUnionActivitiesDetailPage extends AppCompatActivity {
     private StudentUnionViewModel mViewModel;
     private StudentUnionActivitiesDetialPageBinding binding;
     private int activitiesId;
-    private LiveData<Activities> activitiesLiveData;
+    private int mMenuVisibleLevel = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,7 +37,7 @@ public class AtyStudentUnionActivitiesDetailPage extends AppCompatActivity {
         binding.setLifecycleOwner(this);
         Intent intent = getIntent();
         activitiesId = intent.getIntExtra("activities_id", -1);
-        activitiesLiveData = mViewModel.getActivitiesLiveData(activitiesId);
+        LiveData<Activities> activitiesLiveData = mViewModel.getActivitiesLiveData(activitiesId);
 
 
         activitiesLiveData.observe(AtyStudentUnionActivitiesDetailPage.this, new Observer<Activities>() {
@@ -232,5 +235,55 @@ public class AtyStudentUnionActivitiesDetailPage extends AppCompatActivity {
                 }
             }
         });
+
+        if (mViewModel.getUserPower() > 1) {
+            showMenuLevel3(mViewModel.getUserPower());
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.memu_activities, menu);
+        switch (mMenuVisibleLevel) {
+            case 1:
+                menu.findItem(R.id.activities_member).setVisible(false);
+                menu.findItem(R.id.activities_info_edit).setVisible(false);
+                break;
+            case 2:
+                menu.findItem(R.id.activities_member).setVisible(true);
+                menu.findItem(R.id.activities_info_edit).setVisible(false);
+                break;
+            default:
+                menu.findItem(R.id.activities_member).setVisible(true);
+                menu.findItem(R.id.activities_info_edit).setVisible(true);
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()) {
+            case R.id.activities_member:
+                intent = new Intent(this, AtyStudentUnionActivitiesMemberPage.class);
+                intent.putExtra("activities_id", activitiesId);
+                startActivity(intent);
+//                finish();
+                break;
+            case R.id.activities_info_edit:
+                intent = new Intent(this, AtyStudentUnionActivitiesControlView.class);
+                intent.putExtra("activities_id", activitiesId);
+                startActivity(intent);
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showMenuLevel3(int level) {
+        mMenuVisibleLevel = level;
+        supportInvalidateOptionsMenu();
     }
 }
+

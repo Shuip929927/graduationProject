@@ -12,27 +12,27 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import cn.yangcy.pzc.R;
-import cn.yangcy.pzc.adapter.MyOrganizationMemberFragmentPagerAdapter;
+import cn.yangcy.pzc.adapter.MyActivitiesMemberFragmentPagerAdapter;
 import cn.yangcy.pzc.viewmodel.StudentUnionViewModel;
 
-public class AtyStudentUnionOrganizationMemberPage extends AppCompatActivity {
+public class AtyStudentUnionActivitiesMemberPage extends AppCompatActivity {
+
+    private StudentUnionViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.student_union_organization_member_page);
+        setContentView(R.layout.student_union_activities_member_page);
         Intent intent = getIntent();
-        int organizationId = intent.getIntExtra("organization_id",-1);
+        int activitiesId = intent.getIntExtra("activities_id",-1);
+        mViewModel = new ViewModelProvider(this).get(StudentUnionViewModel.class);
+        mViewModel.setActivitiesId(activitiesId);
 
-        StudentUnionViewModel mViewModel = new ViewModelProvider(this).get(StudentUnionViewModel.class);
-        mViewModel.setOrganizationId(organizationId);
-//        mViewModel.setMemberList(organizationId);
-//        mViewModel.setMemberEnrollList(organizationId);
+        ViewPager2 mViewPager2 = findViewById(R.id.student_union_activities_member_viewPager2);
+        TabLayout mTabLayout = findViewById(R.id.student_union_activities_member_tabLayout);
+        MyActivitiesMemberFragmentPagerAdapter myActivitiesMemberFragmentPagerAdapter = new MyActivitiesMemberFragmentPagerAdapter(this);
+        mViewPager2.setAdapter(myActivitiesMemberFragmentPagerAdapter);
 
-        ViewPager2 mViewPager2 = findViewById(R.id.student_union_organization_member_viewPager2);
-        TabLayout mTabLayout = findViewById(R.id.student_union_organization_member_tabLayout);
-        MyOrganizationMemberFragmentPagerAdapter myOrganizationMemberFragmentPagerAdapter = new MyOrganizationMemberFragmentPagerAdapter(this);
-        mViewPager2.setAdapter(myOrganizationMemberFragmentPagerAdapter);
         TabLayoutMediator mTabLayoutMediator = new TabLayoutMediator(mTabLayout, mViewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {

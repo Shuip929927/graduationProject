@@ -18,20 +18,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
+import java.util.Objects;
 
 import cn.yangcy.pzc.R;
 import cn.yangcy.pzc.adapter.MyMemberEnrollRecyclerViewAdapter;
 import cn.yangcy.pzc.model.user.User;
 import cn.yangcy.pzc.viewmodel.StudentUnionViewModel;
 
-public class OrganizationEnrollPage extends Fragment {
+public class ActivitiesEnrollPage extends Fragment {
 
-    private static final String TAG = "OrganizationEnrollPage";
+    private static final String TAG = "ActivitiesEnrollPage";
     private StudentUnionViewModel mViewModel;
     private MyMemberEnrollRecyclerViewAdapter myMemberEnrollRecyclerViewAdapter;
 
-    public static OrganizationEnrollPage newInstance() {
-        return new OrganizationEnrollPage();
+    public static ActivitiesEnrollPage newInstance() {
+        return new ActivitiesEnrollPage();
     }
 
     @Override
@@ -39,7 +40,7 @@ public class OrganizationEnrollPage extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.member_enroll_page_fragment, container, false);
         RecyclerView mRecyclerView = view.findViewById(R.id.member_enroll_recyclerView);
-        mViewModel = new ViewModelProvider(getActivity()).get(StudentUnionViewModel.class);
+        mViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(StudentUnionViewModel.class);
         myMemberEnrollRecyclerViewAdapter = new MyMemberEnrollRecyclerViewAdapter(mViewModel);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(myMemberEnrollRecyclerViewAdapter);
@@ -49,33 +50,22 @@ public class OrganizationEnrollPage extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        mViewModel = ViewModelProviders.of(this).get(StudentUnionViewModel.class);
-        // TODO: Use the ViewModel
-//        mViewModel.setMemberEnrollList(mViewModel.getOrganizationId());
-//        memberEnrollList = mViewModel.getMemberEnrollList();
-//        memberEnrollLiveData = mViewModel.getMemberList(memberEnrollList);
-//        memberEnrollLiveData.observe(this, new Observer<List<User>>() {
-//            @Override
-//            public void onChanged(List<User> users) {
-//                myMemberEnrollRecyclerViewAdapter.setMemberEnrollList(users);
-//                myMemberEnrollRecyclerViewAdapter.notifyDataSetChanged();
-//            }
-//        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
         Log.i(TAG, "onResume: ");
-        mViewModel.setMemberEnrollList("organization_id",mViewModel.getOrganizationId());
+        mViewModel.setMemberEnrollList("activities_id",mViewModel.getActivitiesId());
         List<Integer> memberEnrollList = mViewModel.getMemberEnrollList();
         LiveData<List<User>> memberEnrollLiveData = mViewModel.getMemberList(memberEnrollList);
         memberEnrollLiveData.observe(this, new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> users) {
-                myMemberEnrollRecyclerViewAdapter.setMemberEnrollList("organization_id",users);
+                myMemberEnrollRecyclerViewAdapter.setMemberEnrollList("activities_id",users);
                 myMemberEnrollRecyclerViewAdapter.notifyDataSetChanged();
             }
         });
     }
+
 }

@@ -7,7 +7,7 @@
     tools:context=".fragment.stundentunoin.OrganizationMemberListPage">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/organization_member_list_recyclerView"
+        android:id="@+id/show_member_list_recyclerView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_organization_not_more"
+        android:id="@+id/tv_not_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -25,5 +25,5 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/organization_member_list_recyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/show_member_list_recyclerView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

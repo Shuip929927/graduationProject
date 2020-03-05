@@ -54,6 +54,11 @@ public class StudentUnionListPageActivities extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         // TODO: Use the ViewModel
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         mViewModel.getAllActivitiesLiveList().observe(getViewLifecycleOwner(), new Observer<List<Activities>>() {
             @Override
             public void onChanged(List<Activities> activities) {
@@ -63,5 +68,4 @@ public class StudentUnionListPageActivities extends Fragment {
             }
         });
     }
-
 }

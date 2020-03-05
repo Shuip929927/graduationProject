@@ -36,7 +36,7 @@
                 app:layout_constraintGuide_percent="0.2" />
 
             <TextView
-                android:id="@+id/tv_organization_member_enroll_name"
+                android:id="@+id/tv_member_enroll_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -47,7 +47,7 @@
                 tools:text="姓名" />
 
             <TextView
-                android:id="@+id/tv_organization_member_enroll_name_icon"
+                android:id="@+id/tv_member_enroll_name_icon"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:background="@drawable/shape_organization_member"
@@ -60,7 +60,7 @@
                 tools:text="姓" />
 
             <TextView
-                android:id="@+id/tv_organization_member_enroll_info"
+                android:id="@+id/tv_member_enroll_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"

@@ -16,13 +16,13 @@ import cn.yangcy.pzc.R;
 import cn.yangcy.pzc.model.user.User;
 import cn.yangcy.pzc.viewmodel.StudentUnionViewModel;
 
-public class MyOrganizationMemberListRecyclerViewAdapter extends RecyclerView.Adapter<MyOrganizationMemberListRecyclerViewAdapter.MyViewHolder> {
+public class MyShowMemberListRecyclerViewAdapter extends RecyclerView.Adapter<MyShowMemberListRecyclerViewAdapter.MyViewHolder> {
 
     private static final String TAG = "MyOrganizationMemberRVA";
     private StudentUnionViewModel mViewModel;
     private List<User> memberList = new ArrayList<>();
 
-    public MyOrganizationMemberListRecyclerViewAdapter(StudentUnionViewModel mViewModel) {
+    public MyShowMemberListRecyclerViewAdapter(StudentUnionViewModel mViewModel) {
         this.mViewModel = mViewModel;
     }
 
@@ -57,13 +57,13 @@ public class MyOrganizationMemberListRecyclerViewAdapter extends RecyclerView.Ad
 
     static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView tv_icon,tv_name,tv_info,tv_not_more;
+        private TextView tv_icon,tv_name,tv_info;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_icon = itemView.findViewById(R.id.tv_organization_member_enroll_name_icon);
-            tv_name = itemView.findViewById(R.id.tv_organization_member_enroll_name);
-            tv_info = itemView.findViewById(R.id.tv_organization_member_enroll_info);
+            tv_icon = itemView.findViewById(R.id.tv_member_enroll_name_icon);
+            tv_name = itemView.findViewById(R.id.tv_member_enroll_name);
+            tv_info = itemView.findViewById(R.id.tv_member_enroll_info);
         }
     }
 }

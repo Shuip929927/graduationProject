@@ -7,7 +7,7 @@
     tools:context=".fragment.stundentunoin.OrganizationEnrollPage">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/organization_member_enroll_recyclerView"
+        android:id="@+id/member_enroll_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_organization_not_more"
+        android:id="@+id/tv_not_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/info_not_more"
@@ -23,5 +23,5 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/organization_member_enroll_recyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/member_enroll_recyclerView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

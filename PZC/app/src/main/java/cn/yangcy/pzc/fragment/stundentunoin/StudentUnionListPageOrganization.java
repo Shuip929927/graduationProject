@@ -50,6 +50,11 @@ public class StudentUnionListPageOrganization extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        // TODO: Use the ViewModel
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
         mViewModel.getAllOrganizationLiveList().observe(getViewLifecycleOwner(), new Observer<List<Organization>>() {
             @Override
             public void onChanged(List<Organization> organizations) {
@@ -57,7 +62,5 @@ public class StudentUnionListPageOrganization extends Fragment {
                 myOrganizationRecyclerViewAdapter.notifyDataSetChanged();
             }
         });
-        // TODO: Use the ViewModel
     }
-
 }

@@ -9,17 +9,12 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import cn.yangcy.pzc.model.DataBase;
-import cn.yangcy.pzc.model.organization.Organization;
 
 public class EnrollRepository {
 
     private static final String TAG = "EnrollRepository";
     private OrganizationEnrollDao organizationEnrollDao;
     private ActivitiesEnrollDao activitiesEnrollDao;
-    private LiveData<ActivitiesEnroll> activitiesEnrollLiveData;
-    private LiveData<OrganizationEnroll> organizationEnrollLiveData;
-    private int UserEnrollOrganizationNum;
-    private int organizationMemberNum;
 
     public EnrollRepository(Context context) {
         DataBase dataBase = DataBase.getDataBase(context.getApplicationContext());
@@ -29,9 +24,10 @@ public class EnrollRepository {
 
     public LiveData<ActivitiesEnroll> queryActivitiesEnrollState(int userAccount, int activitiesId){
         ActivitiesEnroll activitiesEnroll = activitiesEnrollDao.queryActivitiesExist(userAccount,activitiesId);
+        LiveData<ActivitiesEnroll> activitiesEnrollLiveData;
         if(activitiesEnroll == null){
-            activitiesEnroll = new ActivitiesEnroll(userAccount,activitiesId);
-                activitiesEnrollDao.insertEnrollMessage(activitiesEnroll);
+            ActivitiesEnroll ae = new ActivitiesEnroll(userAccount,activitiesId);
+                activitiesEnrollDao.insertEnrollMessage(ae);
                 activitiesEnrollLiveData = activitiesEnrollDao.queryActivitiesEnrollLive(userAccount,activitiesId);
             Log.i(TAG, "doInBackground: AE insert"+userAccount + activitiesId);
         } else{
@@ -43,11 +39,12 @@ public class EnrollRepository {
 
     public LiveData<OrganizationEnroll> queryOrganizationEnrollState(int userAccount, int organizationId){
         OrganizationEnroll organizationEnroll = organizationEnrollDao.queryOrganizationExist(userAccount,organizationId);
+        LiveData<OrganizationEnroll> organizationEnrollLiveData;
         if(organizationEnroll == null){
-            organizationEnroll = new OrganizationEnroll(userAccount,organizationId);
-            organizationEnrollDao.insertOrganizationEnrollMessage(organizationEnroll);
+            OrganizationEnroll oe = new OrganizationEnroll(userAccount,organizationId);
+            organizationEnrollDao.insertOrganizationEnrollMessage(oe);
             organizationEnrollLiveData = organizationEnrollDao.queryOrganizationEnrollLive(userAccount,organizationId);
-            Log.i(TAG, "doInBackground: OE insert"+userAccount + organizationEnroll);
+            Log.i(TAG, "doInBackground: OE insert"+userAccount + oe);
         } else{
             Log.i(TAG, "queryOrganizationEnrollState: OE NOT NULL");
             organizationEnrollLiveData = organizationEnrollDao.queryOrganizationEnrollLive(userAccount,organizationId);
@@ -65,7 +62,7 @@ public class EnrollRepository {
 
         private ActivitiesEnrollDao activitiesEnrollDao;
 
-        public DoActivitiesEnrollAsyncTask(ActivitiesEnrollDao activitiesEnrollDao) {
+        DoActivitiesEnrollAsyncTask(ActivitiesEnrollDao activitiesEnrollDao) {
             this.activitiesEnrollDao = activitiesEnrollDao;
         }
 
@@ -86,7 +83,7 @@ public class EnrollRepository {
 
         private OrganizationEnrollDao organizationEnrollDao;
 
-        public DoOrganizationEnrollAsyncTask(OrganizationEnrollDao organizationEnrollDao) {
+        DoOrganizationEnrollAsyncTask(OrganizationEnrollDao organizationEnrollDao) {
             this.organizationEnrollDao = organizationEnrollDao;
         }
 
@@ -99,24 +96,32 @@ public class EnrollRepository {
     }
 
     public int getUserEnrollOrganizationNum(int userAccount) {
-        UserEnrollOrganizationNum = organizationEnrollDao.queryUserEnrollOrganizationNumber(userAccount);
-        return UserEnrollOrganizationNum;
+        return organizationEnrollDao.queryUserEnrollOrganizationNumber(userAccount);
     }
 
-    public List<Integer> getMemberList(int organizationId) {
-        Log.i(TAG, "getMemberList");
+    public List<Integer> getOrganizationMemberList(int organizationId) {
+        Log.i(TAG, "getOrganizationMemberList");
         return organizationEnrollDao.queryOrganizationMember(organizationId);
     }
 
-    public List<Integer> getMemberEnrollList(int organizationId) {
+    public List<Integer> getActivitiesMemberList(int activitiesId) {
+        Log.i(TAG, "getActivitiesMemberList");
+        return activitiesEnrollDao.queryActivitiesMember(activitiesId);
+    }
+
+    public List<Integer> getOrganizationMemberEnrollList(int organizationId) {
         Log.i(TAG, "getMemberEnrollList");
         return organizationEnrollDao.queryOrganizationEnrollMember(organizationId);
     }
 
+    public List<Integer> getActivitiesMemberEnrollList(int activitiesId) {
+        Log.i(TAG, "getActivitiesMemberEnrollList");
+        return activitiesEnrollDao.queryActivitiesEnrollMember(activitiesId);
+    }
+
     public int getOrganizationMemberNum(int organizationId) {
         Log.i(TAG, "getOrganizationMemberNum");
-        organizationMemberNum = organizationEnrollDao.queryOrganizationMemberNumber(organizationId);
-        return organizationMemberNum;
+        return organizationEnrollDao.queryOrganizationMemberNumber(organizationId);
     }
 
     public void updateOrganizationMemberEnroll(int userAccount, int organizationId, int state){
@@ -130,5 +135,18 @@ public class EnrollRepository {
         Log.i(TAG, "deleteOrganizationMemberEnroll");
         OrganizationEnroll oe = organizationEnrollDao.queryOrganizationExist(userAccount,organizationId);
         organizationEnrollDao.deleteOrganizationEnrollMessage(oe);
+    }
+
+    public void updateActivitiesMemberEnroll(int userAccount, int activitiesId, int state){
+        Log.i(TAG, "updateOrganizationMemberEnroll");
+        ActivitiesEnroll ae = activitiesEnrollDao.queryActivitiesExist(userAccount,activitiesId);
+        ae.setState(state);
+        activitiesEnrollDao.updateEnrollMessage(ae);
+    }
+
+    public void deleteActivitiesMemberEnroll(int userAccount, int activitiesId){
+        Log.i(TAG, "deleteOrganizationMemberEnroll");
+        ActivitiesEnroll ae = activitiesEnrollDao.queryActivitiesExist(userAccount,activitiesId);
+        activitiesEnrollDao.deleteEnrollMessage(ae);
     }
 }

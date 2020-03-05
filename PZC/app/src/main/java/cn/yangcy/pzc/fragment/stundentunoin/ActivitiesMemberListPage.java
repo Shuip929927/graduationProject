@@ -25,21 +25,22 @@ import cn.yangcy.pzc.adapter.MyShowMemberListRecyclerViewAdapter;
 import cn.yangcy.pzc.model.user.User;
 import cn.yangcy.pzc.viewmodel.StudentUnionViewModel;
 
-public class OrganizationMemberListPage extends Fragment {
+public class ActivitiesMemberListPage extends Fragment {
 
-    private static final String TAG = "OrganizationMemberListP";
+    private static final String TAG = "ActivitiesMemberListPag";
     private StudentUnionViewModel mViewModel;
     private MyShowMemberListRecyclerViewAdapter myShowMemberListRecyclerViewAdapter;
     private List<Integer> memberAccountList;
     private LiveData<List<User>> memberLiveData;
 
-    public static OrganizationMemberListPage newInstance() {
-        return new OrganizationMemberListPage();
+    public static ActivitiesMemberListPage newInstance() {
+        return new ActivitiesMemberListPage();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.show_member_list_page_fragment, container, false);
         mViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(StudentUnionViewModel.class);
         RecyclerView mRecyclerView = view.findViewById(R.id.show_member_list_recyclerView);
@@ -53,29 +54,16 @@ public class OrganizationMemberListPage extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 //        mViewModel = ViewModelProviders.of(this).get(StudentUnionViewModel.class);
-        mViewModel.setMemberList("organization_id",mViewModel.getOrganizationId());
-        memberAccountList = mViewModel.getMemberList();
-        memberLiveData = mViewModel.getMemberList(memberAccountList);
-        memberLiveData.observe(this, new Observer<List<User>>() {
-            @Override
-            public void onChanged(List<User> users) {
-                Log.i(TAG, "onChanged: List<User> users  " + users.size());
-                myShowMemberListRecyclerViewAdapter.setMemberList(users);
-                myShowMemberListRecyclerViewAdapter.notifyDataSetChanged();
-            }
-        });
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.i(TAG, "onResume");
-        mViewModel.setMemberList("organization_id",mViewModel.getOrganizationId());
+        mViewModel.setMemberList("activities_id",mViewModel.getActivitiesId());
 
         memberAccountList = mViewModel.getMemberList();
         memberLiveData = mViewModel.getMemberList(memberAccountList);
-
         memberLiveData.observe(this, new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> users) {
@@ -83,7 +71,6 @@ public class OrganizationMemberListPage extends Fragment {
                 myShowMemberListRecyclerViewAdapter.setMemberList(users);
                 myShowMemberListRecyclerViewAdapter.notifyDataSetChanged();
             }
-
         });
     }
 }

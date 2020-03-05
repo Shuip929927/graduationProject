@@ -7,6 +7,8 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import java.util.List;
+
 import cn.yangcy.pzc.model.activities.Activities;
 
 @Dao
@@ -28,4 +30,12 @@ public interface ActivitiesEnrollDao {
     @Query("SELECT * FROM tb_activities_enroll " +
             "WHERE user_id = :userAccount AND activity_id = :activitiesId")
     ActivitiesEnroll queryActivitiesExist(int userAccount, int activitiesId);
+
+    @Query("SELECT user_id FROM tb_activities_enroll " +
+            "WHERE activity_id = :activitiesId AND activity_enroll_state = 2")
+    List<Integer> queryActivitiesMember(int activitiesId);
+
+    @Query("SELECT user_id FROM tb_activities_enroll " +
+            "WHERE activity_id = :activitiesId AND activity_enroll_state = 1")
+    List<Integer> queryActivitiesEnrollMember(int activitiesId);
 }

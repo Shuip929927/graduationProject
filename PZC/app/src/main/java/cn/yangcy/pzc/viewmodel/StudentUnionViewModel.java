@@ -25,44 +25,95 @@ import cn.yangcy.pzc.model.user.UserRepository;
 public class StudentUnionViewModel extends AndroidViewModel {
 
     private static final String TAG = "StudentUnionViewModel";
-    private OrganizationRepository organizationRepository;
+    private SharedPreferences sharedPreferences;
     private UserRepository userRepository;
+    private OrganizationRepository organizationRepository;
     private ActivitiesRepository activitiesRepository;
     private EnrollRepository enrollRepository;
-    private LiveData<List<Activities>> activitiesLiveList;
-    private LiveData<List<Organization>> organizationLiveList;
-    private SharedPreferences sharedPreferences;
-    private int userAccount;
-    private int userPower;
-    private int organizationId;
-    private List<Integer> memberList;
-    private List<Integer> memberEnrollList;
-    private int userEnrollOrganizationNum;
-    private int organizationMemberNum;
 
-    private LiveData<Activities> activitiesLiveData;
+    private int activitiesId;
+    private LiveData<List<Activities>> activitiesLiveList;
     private LiveData<ActivitiesEnroll> activitiesEnrollLive;
 
-    private LiveData<Organization> organizationLiveData;
+    private int organizationId;
+    private LiveData<List<Organization>> organizationLiveList;
     private LiveData<OrganizationEnroll> organizationEnrollLive;
-    private LiveData<List<User>> organizationMember;
+
+    private List<Integer> memberList;
+    private List<Integer> memberEnrollList;
 
     public StudentUnionViewModel(@NonNull Application application) {
         super(application);
-        organizationRepository = new OrganizationRepository(getApplication());
-        userRepository = new UserRepository(getApplication());
-        enrollRepository = new EnrollRepository(getApplication());
-        activitiesRepository = new ActivitiesRepository(getApplication());
-        activitiesLiveList = activitiesRepository.getAllActivities();
-        organizationLiveList = organizationRepository.getAllOrganization();
         sharedPreferences = application.getSharedPreferences(Config.SP_NAME, Context.MODE_PRIVATE);
 
-    }
-    // TODO: Implement the ViewModel
+        userRepository = new UserRepository(getApplication());
+        activitiesRepository = new ActivitiesRepository(getApplication());
+        organizationRepository = new OrganizationRepository(getApplication());
+        enrollRepository = new EnrollRepository(getApplication());
 
+        activitiesLiveList = activitiesRepository.getAllActivities();
+        organizationLiveList = organizationRepository.getAllOrganization();
+
+
+    }
+
+    public int getUserAccount() {
+        return sharedPreferences.getInt("user_account", -1);
+    }
+
+    public int getUserPower() {
+        return sharedPreferences.getInt("user_power", -1);
+    }
+
+//Activities
+
+    public int getActivitiesId() {
+        return activitiesId;
+    }
+
+    public void setActivitiesId(int activitiesId) {
+        this.activitiesId = activitiesId;
+    }
 
     public LiveData<List<Activities>> getAllActivitiesLiveList() {
         return activitiesLiveList;
+    }
+
+    public LiveData<Activities> getActivitiesLiveData(int activitiesId) {
+        LiveData<Activities> activitiesLiveData = activitiesRepository.getActivitiesDetailLive(activitiesId);
+        activitiesEnrollLive = enrollRepository.queryActivitiesEnrollState(getUserAccount(), activitiesId);
+        return activitiesLiveData;
+    }
+
+    public LiveData<ActivitiesEnroll> getActivitiesEnroll() {
+        return activitiesEnrollLive;
+    }
+
+    public void updateActivitiesEnroll(ActivitiesEnroll activitiesEnroll) {
+        enrollRepository.activitiesDoEnroll(activitiesEnroll);
+    }
+
+    public void updateActivities(Activities activities) {
+        activitiesRepository.updateActivities(activities);
+    }
+
+    private void updateActivitiesMemberEnroll(boolean choose, User user, int power, int activitiesId) {
+        if (choose) {
+            enrollRepository.updateActivitiesMemberEnroll(user.getAccount(), activitiesId, 2);
+        } else {
+            enrollRepository.deleteActivitiesMemberEnroll(user.getAccount(), activitiesId);
+        }
+    }
+
+
+//Organization
+
+    public int getOrganizationId() {
+        return organizationId;
+    }
+
+    public void setOrganizationId(int organizationId) {
+        this.organizationId = organizationId;
     }
 
     public LiveData<List<Organization>> getAllOrganizationLiveList() {
@@ -73,37 +124,9 @@ public class StudentUnionViewModel extends AndroidViewModel {
         return userRepository.getOrganizationPersonInChargeName(personInChargeAccount);
     }
 
-    public String getOrganizationMemberInfo(int account){
-        return userRepository.getOrganizationMemberInfo(account);
-    }
-
-    public int getUserAccount() {
-        userAccount = sharedPreferences.getInt("user_account", -1);
-        return userAccount;
-    }
-
-    public int getUserPower() {
-        userPower = sharedPreferences.getInt("user_power", -1);
-        return userPower;
-    }
-
-    public LiveData<Activities> getActivitiesLiveData(int activitiesId) {
-        activitiesLiveData = activitiesRepository.getActivitiesDetailLive(activitiesId);
-        activitiesEnrollLive = enrollRepository.queryActivitiesEnrollState(getUserAccount(),activitiesId);
-        return activitiesLiveData;
-    }
-
-    public LiveData<ActivitiesEnroll> getActivitiesEnroll(){
-        return activitiesEnrollLive;
-    }
-
-    public void updateActivitiesEnroll(ActivitiesEnroll activitiesEnroll){
-        enrollRepository.activitiesDoEnroll(activitiesEnroll);
-    }
-
     public LiveData<Organization> getOrganizationLiveData(int organizationId) {
-        organizationLiveData = organizationRepository.getOrganizationDetailLive(organizationId);
-        organizationEnrollLive = enrollRepository.queryOrganizationEnrollState(getUserAccount(),organizationId);
+        LiveData<Organization> organizationLiveData = organizationRepository.getOrganizationDetailLive(organizationId);
+        organizationEnrollLive = enrollRepository.queryOrganizationEnrollState(getUserAccount(), organizationId);
         return organizationLiveData;
     }
 
@@ -111,39 +134,53 @@ public class StudentUnionViewModel extends AndroidViewModel {
         return organizationEnrollLive;
     }
 
-    public void updateOrganizationEnroll(OrganizationEnroll organizationEnroll){
+    public void updateOrganizationEnroll(OrganizationEnroll organizationEnroll) {
         enrollRepository.organizationDoEnroll(organizationEnroll);
     }
 
     public int getUserEnrollOrganizationNum() {
-        userEnrollOrganizationNum = enrollRepository.getUserEnrollOrganizationNum(getUserAccount());
-        return userEnrollOrganizationNum;
+        return enrollRepository.getUserEnrollOrganizationNum(getUserAccount());
     }
 
-    public int getOrganizationMemberNum(int organizationId) {
-        organizationMemberNum = enrollRepository.getOrganizationMemberNum(organizationId);
-        return organizationMemberNum;
-    }
-
-    public void updateOrganization(Organization organization){
+    public void updateOrganization(Organization organization) {
         organizationRepository.updateOrganization(organization);
     }
 
-    public int getOrganizationId() {
-        return organizationId;
+    private void updateOrganizationMemberEnroll(boolean choose, User user, int power, int organizationId) {
+        if (choose) {
+            user.setPower(power);
+            enrollRepository.updateOrganizationMemberEnroll(user.getAccount(), organizationId, 2);
+            userRepository.updateUserPower(user);
+            organizationRepository.updateOrganizationPeopleNumber(organizationId);
+        } else {
+            enrollRepository.deleteOrganizationMemberEnroll(user.getAccount(), organizationId);
+        }
     }
 
-    public void setOrganizationId(int organizationId) {
-        this.organizationId = organizationId;
+    public int searchPersonInChargeOrgId(int userAccount) {
+        return organizationRepository.queryPersonInChargeOrgid(userAccount);
     }
 
-    public void setMemberList(int organizationId) {
-        setOrganizationId(organizationId);
-       memberList = enrollRepository.getMemberList(organizationId);
-        Log.i(TAG, "setMemberList" + memberList.toString());
+//Common
+
+    public void setMemberList(String type, int id) {
+        if("organization_id".equals(type)){
+            memberList = enrollRepository.getOrganizationMemberList(id);
+            Log.i(TAG, "getOrganizationMemberList" + memberList.toString());
+        } else if("activities_id".equals(type)){
+            memberList = enrollRepository.getActivitiesMemberList(id);
+            Log.i(TAG, "getActivitiesMemberList" + memberList.toString());
+        }
+
     }
 
     public List<Integer> getMemberList() {
+        Log.i(TAG, "getOrganizationMemberList");
+        return memberList;
+    }
+
+    public LiveData<List<User>> getMemberList(List<Integer> list) {
+        LiveData<List<User>> memberList = userRepository.getUserLiveData(list);
         Log.i(TAG, "getMemberList");
         return memberList;
     }
@@ -152,27 +189,23 @@ public class StudentUnionViewModel extends AndroidViewModel {
         return memberEnrollList;
     }
 
-    public void setMemberEnrollList(int organizationId) {
-        memberEnrollList = enrollRepository.getMemberEnrollList(organizationId);
-    }
-
-    public LiveData<List<User>> getOrganizationMember(List<Integer> list) {
-        organizationMember = userRepository.getUserLiveData(list);
-        Log.i(TAG, "getOrganizationMember");
-        return organizationMember;
-    }
-
-
-
-    public void updateMemberEnroll(boolean choose,User user,int power,int organizationId){
-        if(choose){
-            user.setPower(power);
-            enrollRepository.updateOrganizationMemberEnroll(user.getAccount(),organizationId,2);
-            userRepository.updateUserPower(user);
-            organizationRepository.updateOrganizationPeopleNumber(organizationId);
-        } else {
-            enrollRepository.deleteOrganizationMemberEnroll(user.getAccount(),organizationId);
+    public void setMemberEnrollList(String type, int id) {
+        if("organization_id".equals(type)){
+            memberEnrollList = enrollRepository.getOrganizationMemberEnrollList(id);
+        } else if("activities_id".equals(type)){
+            memberEnrollList = enrollRepository.getActivitiesMemberEnrollList(id);
         }
+
     }
+
+    public void updateMemberEnrollMessage(String type, boolean choose, User user, int power){
+        if("organization_id".equals(type)){
+            updateOrganizationMemberEnroll(choose,user,power,getOrganizationId());
+        } else if("activities_id".equals(type)){
+            updateActivitiesMemberEnroll(choose,user,power,getActivitiesId());
+        }
+
+    }
+
 }
 
