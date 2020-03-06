@@ -43,7 +43,7 @@ public class StudentUnionListPageActivities extends Fragment {
         //        mViewModel = ViewModelProviders.of(this).get(StudentUnionViewModel.class);
         mViewModel = new ViewModelProvider(getActivity()).get(StudentUnionViewModel.class);
         mRecyclerView = view.findViewById(R.id.student_union_activities_recyclerView);
-        myActivitiesRecyclerViewAdapter = new MyActivitiesRecyclerViewAdapter(mViewModel);
+        myActivitiesRecyclerViewAdapter = new MyActivitiesRecyclerViewAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
         mRecyclerView.setAdapter(myActivitiesRecyclerViewAdapter);
 

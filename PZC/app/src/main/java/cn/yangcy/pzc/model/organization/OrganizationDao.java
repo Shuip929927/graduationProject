@@ -27,11 +27,16 @@ public interface OrganizationDao {
     LiveData<List<Organization>> queryAllOrganization();
 
     @Query("SELECT * FROM tb_organization WHERE id = :organizationId")
-    LiveData<Organization> queryOrganizationDetail(int organizationId);
+    LiveData<Organization> queryOrganizationDetailById(int organizationId);
 
     @Query("SELECT * FROM tb_organization WHERE id = :organizationId")
-    Organization queryOrganization(int organizationId);
+    Organization queryOrganizationById(int organizationId);
 
     @Query("SELECT id FROM tb_organization WHERE person_id = :personInChargeId")
     int queryPersonInChargeOrgId(int personInChargeId);
+
+
+    @Query("SELECT * FROM tb_organization WHERE id in(:organizations) ORDER BY id DESC")
+    LiveData<List<Organization>> queryUserEnrollOrganization(int[] organizations);
+
 }

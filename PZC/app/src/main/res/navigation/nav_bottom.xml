@@ -18,7 +18,7 @@
         tools:layout="@layout/student_union_page_fragment" />
     <fragment
         android:id="@+id/myPage"
-        android:name="cn.yangcy.pzc.fragment.home.MyPage"
+        android:name="cn.yangcy.pzc.fragment.my.MyPage"
         android:label="my_page_fragment"
         tools:layout="@layout/my_page_fragment" />
 </navigation>

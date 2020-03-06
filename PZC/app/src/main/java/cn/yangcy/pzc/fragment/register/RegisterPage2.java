@@ -1,5 +1,6 @@
 package cn.yangcy.pzc.fragment.register;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,9 +21,13 @@ import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import cn.yangcy.pzc.R;
 import cn.yangcy.pzc.databinding.RegisterPage2FragmentBinding;
+import cn.yangcy.pzc.view.HomeActivity;
+import cn.yangcy.pzc.view.LoginActivity;
+import cn.yangcy.pzc.view.RegisterActivity;
 import cn.yangcy.pzc.viewmodel.RegisterViewModel;
 
 public class RegisterPage2 extends Fragment {
@@ -100,7 +106,13 @@ public class RegisterPage2 extends Fragment {
         registerPage2FragmentBinding.btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewModel.doRegister();
+                if(mViewModel.doRegister()){
+                    Intent login = new Intent(getContext(), HomeActivity.class);
+                    startActivity(login);
+                    Objects.requireNonNull(getActivity()).finish();
+                } else {
+                    Toast.makeText(getContext(), R.string.fail_register,Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

@@ -28,7 +28,7 @@ public class OrganizationRepository {
     }
 
     public LiveData<Organization> getOrganizationDetailLive(int organizationId) {
-        return organizationDao.queryOrganizationDetail(organizationId);
+        return organizationDao.queryOrganizationDetailById(organizationId);
     }
 
     public void updateOrganization(Organization organization){
@@ -52,12 +52,22 @@ public class OrganizationRepository {
 
     public void updateOrganizationPeopleNumber(int organizationId){
         Log.i(TAG, "updateOrganizationPeopleNumber");
-        Organization organization = organizationDao.queryOrganization(organizationId);
+        Organization organization = organizationDao.queryOrganizationById(organizationId);
         organization.setNumberOfPeople(organization.getNumberOfPeople()+1);
         organizationDao.updateOrganization(organization);
     }
 
     public int queryPersonInChargeOrgid(int userId){
         return organizationDao.queryPersonInChargeOrgId(userId);
+    }
+
+    public LiveData<List<Organization>> getUserEnrollOrganizationLiveData(List<Integer> list) {
+        Log.i(TAG, "getUserEnrollOrganizationLiveData");
+        int[] organizations = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            Log.i(TAG, "getUserLiveData: "+ list.get(i));
+            organizations[i] = list.get(i);
+        }
+        return organizationDao.queryUserEnrollOrganization(organizations);
     }
 }

@@ -19,10 +19,12 @@ import cn.yangcy.pzc.viewmodel.HomeViewModel;
 public class HomeActivity extends AppCompatActivity {
 
     private HomeViewModel mViewModel;
+    public static HomeActivity INSTANCE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        INSTANCE = this;
         setContentView(R.layout.activity_home);
         mViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 //        getSupportActionBar().hide();

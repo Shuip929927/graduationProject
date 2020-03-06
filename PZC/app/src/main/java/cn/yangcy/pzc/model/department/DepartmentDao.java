@@ -31,4 +31,6 @@ public interface DepartmentDao {
 //    LiveData<List<String>> queryAllDepartment();
     List<String> queryAllDepartment();
 
+    @Query("SELECT * FROM tb_department WHERE department_name = :departmentName")
+    Department queryDepartmentByName(String departmentName);
 }

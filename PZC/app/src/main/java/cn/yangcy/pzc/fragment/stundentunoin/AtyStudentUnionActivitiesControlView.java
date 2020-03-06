@@ -31,7 +31,7 @@ public class AtyStudentUnionActivitiesControlView extends AppCompatActivity {
     private Activities act;
     private boolean isShowMenu = true;
 
-    private AlertDialog.Builder build;
+    private AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +116,7 @@ public class AtyStudentUnionActivitiesControlView extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.organization_save:
                 Log.i(TAG, "onOptionsItemSelected: ");
-                build = new AlertDialog.Builder(this).setTitle(R.string.info_save).setMessage(R.string.info_check_save)
+                builder = new AlertDialog.Builder(this).setTitle(R.string.info_save).setMessage(R.string.info_check_save)
                         .setPositiveButton(R.string.info_save, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -142,7 +142,7 @@ public class AtyStudentUnionActivitiesControlView extends AppCompatActivity {
                                 dialog.dismiss();
                             }
                         });
-                build.create().show();
+                builder.create().show();
                 break;
         }
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/my_person_info_edit"
+        android:title="@string/info_edit"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/my_person_info_save"
+        android:title="@string/info_save"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/my_person_info_cancel"
+        android:title="@string/info_cancel"
+        app:showAsAction="ifRoom"/>
+</menu>

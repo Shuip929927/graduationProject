@@ -22,15 +22,14 @@ import cn.yangcy.pzc.viewmodel.StudentUnionViewModel;
 public class MyActivitiesRecyclerViewAdapter extends RecyclerView.Adapter<MyActivitiesRecyclerViewAdapter.MyViewHolder> {
 
     private static final String TAG = "MyActivitiesAdapter";
-    private StudentUnionViewModel mViewModel;
     private List<Activities> activitiesList = new ArrayList<>();
     private static String infoCreateTime;
     private static String infoStartTime;
     private static String infoHoldOrganization;
 
 
-    public MyActivitiesRecyclerViewAdapter(StudentUnionViewModel studentUnionViewModel) {
-        this.mViewModel = studentUnionViewModel;
+    public MyActivitiesRecyclerViewAdapter() {
+
     }
 
     public void setActivitiesList(List<Activities> activitiesList) {

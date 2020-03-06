@@ -28,4 +28,8 @@ public class DepartmentRepository {
         return departmentList;
     }
 
+    public Department queryDepartmentByName(String departmentName){
+        return departmentDao.queryDepartmentByName(departmentName);
+    }
+
 }

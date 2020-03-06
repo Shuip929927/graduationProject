@@ -150,7 +150,7 @@ public class StudentUnionViewModel extends AndroidViewModel {
         if (choose) {
             user.setPower(power);
             enrollRepository.updateOrganizationMemberEnroll(user.getAccount(), organizationId, 2);
-            userRepository.updateUserPower(user);
+            userRepository.updateUser(user);
             organizationRepository.updateOrganizationPeopleNumber(organizationId);
         } else {
             enrollRepository.deleteOrganizationMemberEnroll(user.getAccount(), organizationId);

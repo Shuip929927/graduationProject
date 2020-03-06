@@ -119,6 +119,16 @@ public class EnrollRepository {
         return activitiesEnrollDao.queryActivitiesEnrollMember(activitiesId);
     }
 
+    public List<Integer> getUserEnrollOrganizationList(int userId) {
+        Log.i(TAG, "getUserEnrollOrganizationList");
+        return organizationEnrollDao.queryUserEnrollOrganizationList(userId);
+    }
+
+    public List<Integer> getUserEnrollActivitiesList(int userId) {
+        Log.i(TAG, "getUserEnrollActivitiesList");
+        return activitiesEnrollDao.queryUserEnrollActivities(userId);
+    }
+
     public int getOrganizationMemberNum(int organizationId) {
         Log.i(TAG, "getOrganizationMemberNum");
         return organizationEnrollDao.queryOrganizationMemberNumber(organizationId);

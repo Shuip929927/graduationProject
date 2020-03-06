@@ -10,6 +10,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import java.io.Serializable;
+
 import cn.yangcy.pzc.model.activities.Activities;
 import cn.yangcy.pzc.model.activities.ActivitiesDao;
 import cn.yangcy.pzc.model.department.Department;
@@ -24,6 +26,7 @@ import cn.yangcy.pzc.model.organization.Organization;
 import cn.yangcy.pzc.model.organization.OrganizationDao;
 import cn.yangcy.pzc.model.user.User;
 import cn.yangcy.pzc.model.user.UserDao;
+import cn.yangcy.pzc.util.MD5Util;
 
 //singleton 单例
 @Database(entities = {User.class, Department.class, Information.class, Organization.class,
@@ -57,40 +60,50 @@ public abstract class DataBase extends RoomDatabase {
                             db.execSQL("insert into tb_department(department_name) values('人文艺术系')");
                             db.execSQL("insert into tb_department(department_name) values('外国语系')");
 
+
+                            String pwd1234 = MD5Util.digest("1234");
+                            String pwd2111 = MD5Util.digest("1234");
+                            String pwd2112 = MD5Util.digest("2112");
+                            String pwd211801001 = MD5Util.digest("211801001");
+                            String pwd211801002 = MD5Util.digest("211801002");
+                            String pwd211706001 = MD5Util.digest("211706001");
+                            String pwd211703001 = MD5Util.digest("211703001");
+                            String pwd211704001 = MD5Util.digest("211704001");
+                            String pwd211803001 = MD5Util.digest("211803001");
 //User——————————————————————————————————————————————————————————————————————————————————————————————————————
-                            db.execSQL("insert into tb_user values('1234','1234','test'" +
+                            db.execSQL("insert into tb_user values('1234','"+pwd1234+"','test'" +
                                     ",'10000000000','计算机工程系','软件工程','1',6)");
-                            db.execSQL("insert into tb_user values('2111','2111','test'" +
+                            db.execSQL("insert into tb_user values('2111','"+pwd2111+"','test'" +
                                     ",'10000000000','计算机工程系','软件工程','1',2)");
-                            db.execSQL("insert into tb_user values('2112','2112','test'" +
+                            db.execSQL("insert into tb_user values('2112','"+pwd2112+"','test'" +
                                     ",'10000000000','计算机工程系','软件工程','1',2)");
-                            db.execSQL("insert into tb_user values('211801001','211801001','邓力文'" +
+                            db.execSQL("insert into tb_user values('211801001','"+pwd211801001+"','邓力文'" +
                                     ",'18950000001','机械工程系','车辆工程','1',3)");
-                            db.execSQL("insert into tb_user values('211801002','211801002','朱明波'" +
+                            db.execSQL("insert into tb_user values('211801002','"+pwd211801002+"','朱明波'" +
                                     ",'18950000002','机械工程系','机械设计制造及自动化','2',3)");
-                            db.execSQL("insert into tb_user values('211706001','211706001','石利民'" +
+                            db.execSQL("insert into tb_user values('211706001','"+pwd211706001+"','石利民'" +
                                     ",'18950000003','计算机工程系','软件工程','2',3)");
-                            db.execSQL("insert into tb_user values('211703001','211703001','方海婷'" +
+                            db.execSQL("insert into tb_user values('211703001','"+pwd211703001+"','方海婷'" +
                                     ",'18950000004','经济管理系','国际经济与贸易','1',3)");
-                            db.execSQL("insert into tb_user values('211704001','211704001','王丽芬'" +
+                            db.execSQL("insert into tb_user values('211704001','"+pwd211704001+"','王丽芬'" +
                                     ",'18950000005','环境资源工程系','环境工程','1',3)");
-                            db.execSQL("insert into tb_user values('211803001','211803001','欧宇锶'" +
+                            db.execSQL("insert into tb_user values('211803001','"+pwd211803001+"','欧宇锶'" +
                                     ",'18950000006','经济管理系','互联网金融与大数据技术综合实验班','1',3)");
-                            db.execSQL("insert into tb_user values('211705001','211705001','葛佳凝'" +
+                            db.execSQL("insert into tb_user values('211705001','"+pwd1234+"','葛佳凝'" +
                                     ",'18950000007','传播与艺术系','网络与新媒体','1',3)");
-                            db.execSQL("insert into tb_user values('211703002','211703002','陈香香'" +
+                            db.execSQL("insert into tb_user values('211703002','"+pwd1234+"','陈香香'" +
                                     ",'18950000008','经济管理系','国际经济与贸易','1',3)");
-                            db.execSQL("insert into tb_user values('211704002','211704002','李君芮'" +
+                            db.execSQL("insert into tb_user values('211704002','"+pwd1234+"','李君芮'" +
                                     ",'18950000009','环境资源工程系','环境工程','1',3)");
-                            db.execSQL("insert into tb_user values('211807001','211807001','李泓'" +
+                            db.execSQL("insert into tb_user values('211807001','"+pwd1234+"','李泓'" +
                                     ",'18950000010','化学工程系','应用化学','1',3)");
-                            db.execSQL("insert into tb_user values('211808001','211808001','黄寒琪'" +
+                            db.execSQL("insert into tb_user values('211808001','"+pwd1234+"','黄寒琪'" +
                                     ",'18950000011','电气工程系','电气工程及其自动化','1',3)");
-                            db.execSQL("insert into tb_user values('211705002','211705002','杜超市'" +
+                            db.execSQL("insert into tb_user values('211705002','"+pwd1234+"','杜超市'" +
                                     ",'18950000012','传播与艺术系','网络与新媒体','1',3)");
-                            db.execSQL("insert into tb_user values('211803002','211803002','黄凡'" +
+                            db.execSQL("insert into tb_user values('211803002','"+pwd1234+"','黄凡'" +
                                     ",'18950000013','经济管理系','财务管理','1',3)");
-                            db.execSQL("insert into tb_user values('211705003','211705003','徐淑萍'" +
+                            db.execSQL("insert into tb_user values('211705003','"+pwd1234+"','徐淑萍'" +
                                     ",'18950000014','传播与艺术系','工业设计','1',3)");
 
 //Information——————————————————————————————————————————————————————————————————————————————————————————————————————

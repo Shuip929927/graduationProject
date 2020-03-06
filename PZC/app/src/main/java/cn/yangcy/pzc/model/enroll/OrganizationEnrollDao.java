@@ -50,4 +50,8 @@ public interface OrganizationEnrollDao {
     @Query("SELECT COUNT(*) FROM tb_organization_enroll " +
             "WHERE organization_id = :organizationId AND organization_enroll_state = 2")
     int queryOrganizationMemberNumber(int organizationId);
+
+    @Query("SELECT organization_id FROM tb_organization_enroll " +
+            "WHERE user_id = :userId AND organization_enroll_state = 2")
+    List<Integer> queryUserEnrollOrganizationList(int userId);
 }

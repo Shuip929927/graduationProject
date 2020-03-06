@@ -101,8 +101,8 @@ public class UserRepository {
         return userLiveData;
     }
 
-    public void updateUserPower(User user){
-        Log.i(TAG, "updateUserPower");
+    public void updateUser(User user){
+        Log.i(TAG, "updateUser");
         userDao.updateUser(user);
     }
 

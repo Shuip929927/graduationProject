@@ -38,4 +38,10 @@ public interface ActivitiesEnrollDao {
     @Query("SELECT user_id FROM tb_activities_enroll " +
             "WHERE activity_id = :activitiesId AND activity_enroll_state = 1")
     List<Integer> queryActivitiesEnrollMember(int activitiesId);
+
+    @Query("SELECT activity_id FROM tb_activities_enroll " +
+            "WHERE user_id = :userId AND activity_enroll_state = 2")
+    List<Integer> queryUserEnrollActivities(int userId);
+
+
 }

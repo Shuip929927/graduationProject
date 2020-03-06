@@ -5,25 +5,27 @@
     <string name="ic_account">用户名</string>
     <string name="ic_password">密码</string>
     <string name="bt_login">登录</string>
-    <string name="et_account_hint">请输入用户名</string>
+    <string name="et_account_hint">请输入9位用户名</string>
     <string name="et_password_hint">请输入密码</string>
     <string name="tv_register">注册账号</string>
     <string name="tv_spare">｜</string>
     <string name="tv_forgetPassword">忘记密码？</string>
 
-    <string name="content_user_no_exist">该用户不存在</string>
+    <string name="err_user_no_exist">用户不存在</string>
+    <string name="err_user_exist">用户已存在</string>
 
     <string name="bt_to_register_page2">下一步</string>
     <string name="bt_back">返回</string>
-    <string name="tv_phone">手机号码</string>
+
+    <string name="tv_phone">手机号码：</string>
 
     <string name="register_check_password_hint">请再输入一次密码</string>
     <string name="register_phone_hint">请输入手机号</string>
     <string name="tv_register_page2_title">完善信息</string>
-    <string name="tv_register_page2_name"> 姓名</string>
-    <string name="tv_register_page2_department">系别</string>
-    <string name="tv_register_page2_major">专业</string>
-    <string name="tv_register_page2_classes">班级</string>
+    <string name="tv_register_page2_name"> 姓名：</string>
+    <string name="tv_register_page2_department">系别：</string>
+    <string name="tv_register_page2_major">专业：</string>
+    <string name="tv_register_page2_classes">班级：</string>
     <string name="register_name_hint">请输入真实姓名</string>
     <string name="register_major_hint">请输入所在专业</string>
     <string name="register_classes_hint">请输入所在班级</string>
@@ -71,6 +73,7 @@
 
     <string name="info_edit">编辑</string>
     <string name="info_save">保存</string>
+    <string name="info_sure">确定</string>
     <string name="info_check_save">确认保存？</string>
     <string name="info_cancel">取消</string>
 
@@ -82,26 +85,25 @@
     <string name="info_activities_description">活动简介：</string>
     <string name="title_activity_settings">Settings</string>
 
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="todo">TODO</string>
     <string name="info_my_enroll_organization">我加入的学生组织</string>
     <string name="info_my_hold_activities">我发起的活动</string>
     <string name="info_exit">退出登录</string>
     <string name="info_settings">设置</string>
     <string name="info_my_enroll_activities">我参加的活动</string>
+    <string name="tv_settings_update_password">修改密码</string>
+    <string name="err_password">密码错误，请重新输入</string>
+    <string name="err_empty">账号、密码不能为空！</string>
+    <string name="err_input_cannot_empty">输入不能为空</string>
+    <string name="fail_register">注册失败，请尝试修改信息或稍后再试</string>
+    <string name="err_password_not_equals_check">两次密码输入不一致！</string>
+    <string name="err_phone_lenth">请输入正确的手机号码</string>
+    <string name="bt_update_phone_num">修改手机号码</string>
+    <string name="err_department">输入的系别不存在，请重新输入！</string>
+    <string name="et_old_password_hint">请输入旧密码</string>
+    <string name="et_new_password_hint">请输入新密码</string>
+    <string name="et_check_new_password_hint">请再输入一次新密码</string>
+    <string name="info_update_success">修改成功</string>
 
 
 </resources>

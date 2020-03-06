@@ -1,7 +1,6 @@
 package cn.yangcy.pzc.viewmodel;
 
 import android.app.Application;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -13,10 +12,9 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 
 import cn.yangcy.pzc.R;
-import cn.yangcy.pzc.model.DataBase;
 import cn.yangcy.pzc.model.user.User;
-import cn.yangcy.pzc.model.user.UserDao;
 import cn.yangcy.pzc.model.user.UserRepository;
+import cn.yangcy.pzc.util.MD5Util;
 
 public class LoginViewModel extends AndroidViewModel {
 
@@ -89,17 +87,27 @@ public class LoginViewModel extends AndroidViewModel {
     public boolean doLogin() {
         //测试数据绑定是否成功
         Log.d(TAG, "doLogin:  doLogin");
+
+        if(account.getValue().isEmpty()||password.getValue().isEmpty()){
+            Toast.makeText(getApplication(), R.string.err_empty, Toast.LENGTH_SHORT).show();
+            return false;
+        }
         User u = userRepository.queryUser(account.getValue());
 
         if (u == null) {
             Log.d(TAG, "doLogin: queryUser Null");
-            Toast.makeText(getApplication(), R.string.content_user_no_exist, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(), R.string.err_user_no_exist, Toast.LENGTH_SHORT).show();
             return false;
         } else {
-            Log.d(TAG, "doLogin: queryUser Exist");
-            Log.d(TAG, "doLogin: "+ u.toPersonInCharge());
-            userRepository.saveUserMessage(u);
-            return true;
+            if(MD5Util.digest(password.getValue()).equals(u.getPassword())){
+                Log.d(TAG, "doLogin: queryUser Exist");
+                Log.d(TAG, "doLogin: "+ u.toPersonInCharge());
+                userRepository.saveUserMessage(u);
+                return true;
+            } else{
+                Toast.makeText(getApplication(), R.string.err_password, Toast.LENGTH_SHORT).show();
+                return false;
+            }
         }
 
     }

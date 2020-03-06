@@ -1,24 +1,20 @@
 package cn.yangcy.pzc.viewmodel;
 
 import android.app.Application;
-import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import cn.yangcy.pzc.model.DataBase;
-import cn.yangcy.pzc.model.department.Department;
-import cn.yangcy.pzc.model.department.DepartmentDao;
+import cn.yangcy.pzc.R;
 import cn.yangcy.pzc.model.department.DepartmentRepository;
 import cn.yangcy.pzc.model.user.User;
-import cn.yangcy.pzc.model.user.UserDao;
 import cn.yangcy.pzc.model.user.UserRepository;
+import cn.yangcy.pzc.util.MD5Util;
 
 public class RegisterViewModel extends AndroidViewModel {
     // TODO: Implement the ViewModel
@@ -42,14 +38,14 @@ public class RegisterViewModel extends AndroidViewModel {
         departmentRepository = new DepartmentRepository(application);
     }
 
-    public List<String> getDepartmentList(){
+    public List<String> getDepartmentList() {
         return departmentRepository.getDepartmentList();
     }
 
     public MutableLiveData<String> getAccount() {
-        if(account == null){
+        if (account == null) {
             account = new MutableLiveData<String>();
-            account.setValue("1");
+            account.setValue("");
         }
         return account;
     }
@@ -59,9 +55,9 @@ public class RegisterViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<String> getPassword() {
-        if(password == null){
+        if (password == null) {
             password = new MutableLiveData<String>();
-            password.setValue("2");
+            password.setValue("");
         }
         return password;
     }
@@ -71,9 +67,9 @@ public class RegisterViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<String> getCheckPassword() {
-        if(checkPassword == null){
+        if (checkPassword == null) {
             checkPassword = new MutableLiveData<String>();
-            checkPassword.setValue("3");
+            checkPassword.setValue("");
         }
         return checkPassword;
     }
@@ -83,9 +79,9 @@ public class RegisterViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<String> getPhone() {
-        if(phone == null){
+        if (phone == null) {
             phone = new MutableLiveData<String>();
-            phone.setValue("4");
+            phone.setValue("");
         }
         return phone;
     }
@@ -95,9 +91,9 @@ public class RegisterViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<String> getName() {
-        if(name == null){
+        if (name == null) {
             name = new MutableLiveData<String>();
-            name.setValue("5");
+            name.setValue("");
         }
         return name;
     }
@@ -107,9 +103,9 @@ public class RegisterViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<String> getDepartment() {
-        if(department == null){
+        if (department == null) {
             department = new MutableLiveData<String>();
-            department.setValue("6");
+            department.setValue("");
         }
         return department;
     }
@@ -119,9 +115,9 @@ public class RegisterViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<String> getMajor() {
-        if(major == null){
+        if (major == null) {
             major = new MutableLiveData<String>();
-            major.setValue("7");
+            major.setValue("");
         }
         return major;
     }
@@ -131,9 +127,9 @@ public class RegisterViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<String> getClasses() {
-        if(classes == null){
+        if (classes == null) {
             classes = new MutableLiveData<String>();
-            classes.setValue("8");
+            classes.setValue("");
         }
         return classes;
     }
@@ -142,12 +138,11 @@ public class RegisterViewModel extends AndroidViewModel {
         this.classes = classes;
     }
 
-    public void doRegister(){
-        doNext();
-        Log.i(TAG, "doRegister: name"+ name.getValue());
-        Log.i(TAG, "doRegister: department"+ department.getValue());
-        Log.i(TAG, "doRegister: major"+ major.getValue());
-        Log.i(TAG, "doRegister: classes"+ classes.getValue());
+    public boolean doRegister() {
+        Log.i(TAG, "doRegister: name" + name.getValue());
+        Log.i(TAG, "doRegister: department" + department.getValue());
+        Log.i(TAG, "doRegister: major" + major.getValue());
+        Log.i(TAG, "doRegister: classes" + classes.getValue());
 //        if(departmentList == null){
 //            Log.i(TAG, "departmentList: isEmpty");
 //        } else {
@@ -156,18 +151,54 @@ public class RegisterViewModel extends AndroidViewModel {
 //                Log.i(TAG, "departmentList: " + departmentList.get(i));
 //            }
 //        }
-//        User user = new User(account.getValue(), MD5Util.digest(password.getValue()),name.getValue(),
-//                MD5Util.digest(phone.getValue()),department.getValue(),major.getValue(),classes.getValue(),1);
-//        Log.i(TAG, "doRegister: "+user.toString());
-//        new RegisterAsync(userDao).execute(user);
+
+        if (name.getValue().isEmpty() || department.getValue().isEmpty() ||
+                major.getValue().isEmpty() || classes.getValue().isEmpty()) {
+            return false;
+        } else {
+            User user = new User(Integer.valueOf(account.getValue()), MD5Util.digest(password.getValue()), name.getValue(),
+                    MD5Util.digest(phone.getValue()), department.getValue(), major.getValue(), classes.getValue(), 1);
+            Log.i(TAG, "doRegister: " + user.toString());
+            userRepository.register(user);
+            userRepository.saveUserMessage(user);
+            return true;
+        }
+
 
     }
 
-    public void doNext(){
-        Log.i(TAG, "doNext: account"+ account.getValue());
-        Log.i(TAG, "idoNext: password"+ password.getValue());
-        Log.i(TAG, "doNext: checkPassword"+ checkPassword.getValue());
-        Log.i(TAG, "doNext: phone"+ phone.getValue());
+    public boolean doNext() {
+        Log.i(TAG, "doNext: account" + account.getValue());
+        Log.i(TAG, "idoNext: password" + password.getValue());
+        Log.i(TAG, "doNext: checkPassword" + checkPassword.getValue());
+        Log.i(TAG, "doNext: phone" + phone.getValue());
+        if (account.getValue().isEmpty() || password.getValue().isEmpty() ||
+                checkPassword.getValue().isEmpty() || phone.getValue().isEmpty()) {
+            Toast.makeText(getApplication(), R.string.err_input_cannot_empty, Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+//            if(account.getValue().length()!=9){
+//                Toast.makeText(getApplication(), R.string.et_account_hint,Toast.LENGTH_SHORT).show();
+//                return false;
+//            }
+
+            User u = userRepository.queryUser(account.getValue());
+
+            if (u != null) {
+                Toast.makeText(getApplication(), R.string.err_user_exist, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            if (!password.getValue().equals(checkPassword.getValue())) {
+                Toast.makeText(getApplication(), R.string.err_password_not_equals_check, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            if (phone.getValue().length() != 11) {
+                Toast.makeText(getApplication(), R.string.err_phone_lenth, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            return true;
+        }
     }
 
 }

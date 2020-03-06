@@ -9,6 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".fragment.my.MyHoldActivitiesPage" />
+        <activity android:name=".fragment.my.MyEnrollActivitiesPage" />
+        <activity android:name=".fragment.my.MyPersonInfoPage" />
+        <activity android:name=".fragment.my.MyEnrollOrganizationPage" />
+        <activity android:name=".fragment.my.MySettingsPage" />
         <activity android:name=".fragment.stundentunoin.AtyStudentUnionActivitiesMemberPage" />
         <activity android:name=".fragment.stundentunoin.AtyStudentUnionActivitiesControlView" />
         <activity android:name=".fragment.stundentunoin.AtyStudentUnionOrganizationMemberPage" />
@@ -26,6 +31,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".fragment.my.MyEnrollOrganizationPage" />
+        <activity android:name=".fragment.my.MySettingsPage" />
     </application>
 
 </manifest>
