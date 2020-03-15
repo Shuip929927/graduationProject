@@ -57,6 +57,14 @@ public class OrganizationRepository {
         organizationDao.updateOrganization(organization);
     }
 
+    public Organization getOrganizationById(int organizationId){
+        return organizationDao.queryOrganizationById(organizationId);
+    }
+
+    public int getOrganizationIdByName(String organizationName){
+        return organizationDao.queryOrganizationIdByName(organizationName);
+    }
+
     public int queryPersonInChargeOrgid(int userId){
         return organizationDao.queryPersonInChargeOrgId(userId);
     }

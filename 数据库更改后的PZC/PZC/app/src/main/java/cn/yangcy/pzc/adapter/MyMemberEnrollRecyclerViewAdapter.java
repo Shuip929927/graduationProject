@@ -50,7 +50,7 @@ public class MyMemberEnrollRecyclerViewAdapter
         final User user = memberEnrollList.get(position);
         holder.tv_enroll_member_icon.setText(user.getName().substring(0,1));
         holder.tv_enroll_member_name.setText(user.getName());
-        holder.tv_enroll_member_info.setText(mViewModel.getPersonInfo(user.getAccount()));
+        holder.tv_enroll_member_info.setText(mViewModel.getMemberInfo(user.getAccount()));
         holder.bt_enroll_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

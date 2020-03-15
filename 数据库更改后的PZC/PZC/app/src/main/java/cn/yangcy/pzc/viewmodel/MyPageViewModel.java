@@ -107,7 +107,14 @@ public class MyPageViewModel extends AndroidViewModel {
     }
 
     //MyEnrollActivitiesPage
+    public String getActivitiesHoldOrgNameById(int organizationId){
+        Organization organization = organizationRepository.getOrganizationById(organizationId);
+        return organization.getOrganization();
+    }
 
+    public int getOrganizationIdByName(String organizationName){
+        return organizationRepository.getOrganizationIdByName(organizationName);
+    }
 
     public List<Integer> getMyEnrollActivitiesIdList() {
         return myEnrollActivitiesIdList;
@@ -162,4 +169,6 @@ public class MyPageViewModel extends AndroidViewModel {
     public void updateUserPassword(User user){
         userRepository.updateUser(user);
     }
+
+
 }

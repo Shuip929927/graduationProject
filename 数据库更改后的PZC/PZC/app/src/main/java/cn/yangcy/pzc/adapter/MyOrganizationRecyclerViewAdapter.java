@@ -50,7 +50,7 @@ public class MyOrganizationRecyclerViewAdapter extends RecyclerView.Adapter<MyOr
         final Organization organization = organizationList.get(position);
         holder.tv_organization_name.setText(organization.getOrganization());
         holder.tv_organization_personInCharge.setText(organization.getPersonInCharge());
-        String personInChargeName = mViewModel.getOrganizationPersonInChargeName(organization.getPersonAccount());
+        String personInChargeName = mViewModel.getPersonInfo(organization.getPersonAccount());
         holder.tv_organization_personInChargeName.setText(personInChargeName);
         int state = organization.getIsEnroll();
         if (state == 0) {

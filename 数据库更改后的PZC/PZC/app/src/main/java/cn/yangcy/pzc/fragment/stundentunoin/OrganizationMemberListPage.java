@@ -56,7 +56,7 @@ public class OrganizationMemberListPage extends Fragment {
         mViewModel.setMemberList("organization_id",mViewModel.getOrganizationId());
         memberAccountList = mViewModel.getMemberList();
         memberLiveData = mViewModel.getMemberList(memberAccountList);
-        memberLiveData.observe(this, new Observer<List<User>>() {
+        memberLiveData.observe(getViewLifecycleOwner(), new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> users) {
                 Log.i(TAG, "onChanged: List<User> users  " + users.size());

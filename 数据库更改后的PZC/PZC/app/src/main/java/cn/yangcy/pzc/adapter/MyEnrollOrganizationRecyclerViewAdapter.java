@@ -52,13 +52,13 @@ public class MyEnrollOrganizationRecyclerViewAdapter extends RecyclerView.Adapte
         holder.tv_organization_personInChargeName.setText(String.valueOf(organization.getNumberOfPeople()));
         int state = organization.getIsEnroll();
         if (state == 0) {
-            holder.bt_organizationisEnroll.setBackgroundResource(R.drawable.btn_state_ongoing_or_long);
-            holder.bt_organizationisEnroll.setText(R.string.info_activities_state_ongoing);
+            holder.bt_organizationIsEnroll.setBackgroundResource(R.drawable.btn_state_ongoing_or_long);
+            holder.bt_organizationIsEnroll.setText(R.string.info_activities_state_ongoing);
         } else if (state == 1) {
-            holder.bt_organizationisEnroll.setBackgroundResource(R.drawable.btn_state_end);
-            holder.bt_organizationisEnroll.setText(R.string.info_organization_state_end);
+            holder.bt_organizationIsEnroll.setBackgroundResource(R.drawable.btn_state_end);
+            holder.bt_organizationIsEnroll.setText(R.string.info_organization_state_end);
         } else {
-            holder.bt_organizationisEnroll.setVisibility(View.GONE);
+            holder.bt_organizationIsEnroll.setVisibility(View.GONE);
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,14 +81,14 @@ public class MyEnrollOrganizationRecyclerViewAdapter extends RecyclerView.Adapte
         private TextView tv_organization_name, tv_organization_personInCharge,
                 tv_organization_personInChargeName;
 
-        private Button bt_organizationisEnroll;
+        private Button bt_organizationIsEnroll;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_organization_name = itemView.findViewById(R.id.tv_student_union_organization_name);
             tv_organization_personInCharge = itemView.findViewById(R.id.tv_student_union_organization_person_in_charge);
             tv_organization_personInChargeName = itemView.findViewById(R.id.tv_student_union_organization_personInCharge_name);
-            bt_organizationisEnroll = itemView.findViewById(R.id.bt_student_union_organization_isEnroll);
+            bt_organizationIsEnroll = itemView.findViewById(R.id.bt_student_union_organization_isEnroll);
         }
     }
 }

@@ -49,7 +49,7 @@ public class AtyStudentUnionOrganizationDetailPage extends AppCompatActivity {
                 binding.tvOrganizationName.setText(organization.getOrganization());
                 binding.tvOrganizationPersonInCharge.setText(organization.getPersonInCharge());
 //                String name = userRepository.queryUser(String.valueOf(organization.getPersonAccount())).toPersonInCharge();
-                String name = mViewModel.getPersonInfo(organization.getPersonAccount());
+                String name = mViewModel.getOrganizationPersonInChargeName(organization.getPersonAccount());
                 binding.tvOrganizationPersonInChargeName.setText(name);
                 binding.tvOrganizationNumberOfPeople.setText(String.valueOf(organization.getNumberOfPeople()));
                 if (organization.getIsEnroll() == 0) {

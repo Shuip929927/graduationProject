@@ -29,7 +29,7 @@ public class MyEnrollActivitiesPage extends AppCompatActivity {
         User user = (User) intent.getSerializableExtra("user");
         MyPageViewModel mViewModel = new ViewModelProvider(this).get(MyPageViewModel.class);
         RecyclerView mRecyclerView = findViewById(R.id.my_recyclerView);
-        myActivitiesRecyclerViewAdapter = new MyActivitiesRecyclerViewAdapter();
+        myActivitiesRecyclerViewAdapter = new MyActivitiesRecyclerViewAdapter(mViewModel);
         mRecyclerView.setAdapter(myActivitiesRecyclerViewAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 

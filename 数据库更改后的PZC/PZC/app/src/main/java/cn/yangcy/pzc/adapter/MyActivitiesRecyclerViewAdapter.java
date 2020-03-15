@@ -17,19 +17,28 @@ import java.util.List;
 import cn.yangcy.pzc.R;
 import cn.yangcy.pzc.fragment.stundentunoin.AtyStudentUnionActivitiesDetailPage;
 import cn.yangcy.pzc.model.activities.Activities;
+import cn.yangcy.pzc.viewmodel.MyPageViewModel;
 import cn.yangcy.pzc.viewmodel.StudentUnionViewModel;
 
 public class MyActivitiesRecyclerViewAdapter extends RecyclerView.Adapter<MyActivitiesRecyclerViewAdapter.MyViewHolder> {
 
     private static final String TAG = "MyActivitiesAdapter";
+    private StudentUnionViewModel mStudentUnionViewModel;
+    private MyPageViewModel myPageViewModel;
     private List<Activities> activitiesList = new ArrayList<>();
     private static String infoCreateTime;
     private static String infoStartTime;
     private static String infoHoldOrganization;
+    public String flag = "";
 
+    public MyActivitiesRecyclerViewAdapter(MyPageViewModel myPageViewModel) {
+        this.myPageViewModel = myPageViewModel;
+        flag = "myPage";
+    }
 
-    public MyActivitiesRecyclerViewAdapter() {
-
+    public MyActivitiesRecyclerViewAdapter(StudentUnionViewModel mStudentUnionViewModel) {
+        this.mStudentUnionViewModel = mStudentUnionViewModel;
+        flag = "mStu";
     }
 
     public void setActivitiesList(List<Activities> activitiesList) {
@@ -57,7 +66,13 @@ public class MyActivitiesRecyclerViewAdapter extends RecyclerView.Adapter<MyActi
         holder.tv_title.setText(activities.getName());
         holder.tv_createTime.setText(infoCreateTime + " "+ activities.getCreateOn());
         holder.tv_startTime.setText(infoStartTime +" "+ activities.getStartTime());
-        holder.tv_holdOrganization.setText(infoHoldOrganization +" "+activities.getOrganizationName());
+        if("mStu".equals(flag)){
+            holder.tv_holdOrganization.setText(infoHoldOrganization +" "+mStudentUnionViewModel.getActivitiesHoldOrgNameById(activities.getOrganizationId()));
+        } else if("myPage".equals(flag)){
+            holder.tv_holdOrganization.setText(infoHoldOrganization +" "+myPageViewModel.getActivitiesHoldOrgNameById(activities.getOrganizationId()));
+        }
+
+
         int state = activities.getState();
         if(state == 0){
             holder.bt_activitiesState.setBackgroundResource(R.drawable.btn_state_ongoing_or_long);

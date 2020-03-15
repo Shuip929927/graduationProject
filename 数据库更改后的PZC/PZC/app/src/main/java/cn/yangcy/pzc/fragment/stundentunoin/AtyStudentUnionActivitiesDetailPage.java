@@ -46,7 +46,7 @@ public class AtyStudentUnionActivitiesDetailPage extends AppCompatActivity {
             @Override
             public void onChanged(Activities activities) {
                 binding.tvActivitiesDetailTitle.setText(activities.getName());
-                binding.tvActivitiesDetailOrganization.setText(activities.getOrganizationName());
+                binding.tvActivitiesDetailOrganization.setText(mViewModel.getActivitiesHoldOrgNameById(activities.getOrganizationId()));
                 binding.tvActivitiesDetailCreateTime.setText(activities.getCreateOn());
                 binding.tvActivitiesDetailStartTime.setText(activities.getStartTime());
                 if (activities.getState() == 0) {

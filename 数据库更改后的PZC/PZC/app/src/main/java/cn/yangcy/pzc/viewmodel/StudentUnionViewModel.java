@@ -111,6 +111,15 @@ public class StudentUnionViewModel extends AndroidViewModel {
         }
     }
 
+    public String getActivitiesHoldOrgNameById(int organizationId){
+        Organization organization = organizationRepository.getOrganizationById(organizationId);
+        return organization.getOrganization();
+    }
+
+    public int getOrganizationIdByName(String organizationName){
+        return organizationRepository.getOrganizationIdByName(organizationName);
+    }
+
 
 //Organization
 
@@ -218,6 +227,10 @@ public class StudentUnionViewModel extends AndroidViewModel {
         String department = departmentRepository.getDepartmentNameById(user.getDepartmentId());
         String major = majorRepository.getMajorNameById(user.getMajorId());
         return department + "\n" + year + major + " " + user.getName();
+    }
+
+    public String getMemberInfo(int personInChargeAccount) {
+        return userRepository.getOrganizationMemberInfo(personInChargeAccount);
     }
 }
 

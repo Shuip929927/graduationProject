@@ -24,8 +24,8 @@ public class Activities implements Serializable {
     @ForeignKey(entity = Organization.class,parentColumns = "id",childColumns = "organization_id")
     private int organizationId;
 
-    @ColumnInfo(name = "organization_name")
-    private String organizationName;
+//    @ColumnInfo(name = "organization_name")
+//    private String organizationName;
 
     @ColumnInfo(name = "activity_name")
     private String name;
@@ -54,9 +54,9 @@ public class Activities implements Serializable {
      * 1 代表活动删除
      * */
 
-    public Activities(int organizationId, String organizationName, String name, String createOn,String startTime, String description) {
+    public Activities(int organizationId, /*String organizationName*/ String name, String createOn,String startTime, String description) {
         this.organizationId = organizationId;
-        this.organizationName = organizationName;
+//        this.organizationName = organizationName;
         this.name = name;
         this.createOn = createOn;
         this.startTime = startTime;
@@ -79,13 +79,13 @@ public class Activities implements Serializable {
         this.organizationId = organizationId;
     }
 
-    public String getOrganizationName() {
-        return organizationName;
-    }
-
-    public void setOrganizationName(String organizationName) {
-        this.organizationName = organizationName;
-    }
+//    public String getOrganizationName() {
+//        return organizationName;
+//    }
+//
+//    public void setOrganizationName(String organizationName) {
+//        this.organizationName = organizationName;
+//    }
 
     public String getName() {
         return name;

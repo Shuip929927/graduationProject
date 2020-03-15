@@ -48,7 +48,7 @@ public class UserRepository {
         String department = departmentRepository.getDepartmentNameById(user.getDepartmentId());
         String major = majorRepository.getMajorNameById(user.getMajorId());
     //TODO :未完成修改
-        result = department+major;
+        result = department+ " "+ user.getYear()+"\n"+major +"\n"+user.getName();
         return result;
     }
 
@@ -59,7 +59,7 @@ public class UserRepository {
         String department = departmentRepository.getDepartmentNameById(user.getDepartmentId());
         String major = majorRepository.getMajorNameById(user.getMajorId());
     //TODO :未完成修改
-        result = department+major;
+        result =  user.getYear()+" "+department+" \n "+major;
         return result;
     }
 

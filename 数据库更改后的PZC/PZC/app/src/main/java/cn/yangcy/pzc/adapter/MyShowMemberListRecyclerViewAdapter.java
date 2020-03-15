@@ -47,7 +47,7 @@ public class MyShowMemberListRecyclerViewAdapter extends RecyclerView.Adapter<My
             User user = memberList.get(position);
             holder.tv_icon.setText(user.getName().substring(0,1));
             holder.tv_name.setText(user.getName());
-            holder.tv_info.setText(mViewModel.getPersonInfo(user.getAccount()));
+            holder.tv_info.setText(mViewModel.getMemberInfo(user.getAccount()));
     }
 
     @Override

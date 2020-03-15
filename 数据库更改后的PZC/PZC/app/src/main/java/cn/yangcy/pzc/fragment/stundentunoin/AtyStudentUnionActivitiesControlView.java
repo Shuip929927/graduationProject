@@ -49,7 +49,7 @@ public class AtyStudentUnionActivitiesControlView extends AppCompatActivity {
             public void onChanged(Activities activities) {
                 act = activities;
                 binding.etActivitiesTitle.setText(activities.getName());
-                binding.etActivitiesHoldOrganization.setText(activities.getOrganizationName());
+                binding.etActivitiesHoldOrganization.setText(mViewModel.getActivitiesHoldOrgNameById(activities.getOrganizationId()));
                 binding.etActivitiesStartTime.setText(activities.getStartTime());
                 binding.etActivitiesDescription.setText(activities.getDescription());
                 if(activities.getState() == 0){
@@ -125,7 +125,7 @@ public class AtyStudentUnionActivitiesControlView extends AppCompatActivity {
                                 String activitiesStartTime = binding.etActivitiesStartTime.getText().toString().trim();
                                 String description = binding.etActivitiesDescription.getText().toString();
                                 act.setName(activitiesTitle);
-                                act.setOrganizationName(activitiesHoldOrg);
+                                act.setOrganizationId(mViewModel.getOrganizationIdByName(activitiesHoldOrg));
                                 act.setStartTime(activitiesStartTime);
                                 act.setDescription(description);
                                 mViewModel.updateActivities(act);
