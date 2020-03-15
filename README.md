@@ -12,12 +12,12 @@
 ### APP端 
   - AndoridX
   - Android Jetpack工具
-     -- Data Binding
-     -- LiveData
-     -- Navigation
-     -- Paging
-     -- Room
-     -- ViewModel
+     - Data Binding
+     - LiveData
+     - Navigation
+     - Paging
+     - Room
+     - ViewModel
   - SqLite
 
 ### Web端
