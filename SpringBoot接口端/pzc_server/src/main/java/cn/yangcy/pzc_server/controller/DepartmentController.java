@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping(value = "api/")
 public class DepartmentController {
 
     @Autowired
@@ -21,7 +22,7 @@ public class DepartmentController {
      * @return
      */
     //@PathVariable:用于获取url中的数据
-    @GetMapping(value = "dep/query/{id}")
+    @GetMapping(value = "department/query/id/{id}")
     public Department getDepartmentById(@PathVariable(value = "id") Integer id){
         try {
             Department department = departmentService.getDepartmentById(id);
@@ -37,7 +38,7 @@ public class DepartmentController {
      * 查询所有部门
      * @return
      */
-    @RequestMapping(value = "dep/query",method = RequestMethod.GET)
+    @RequestMapping(value = "department/queryAll",method = RequestMethod.GET)
     public List<Department> getAllInformationList(){
 
         try {
@@ -55,7 +56,7 @@ public class DepartmentController {
      * @param department
      * @return
      */
-    @RequestMapping(value = "dep/add",method = RequestMethod.POST)
+    @RequestMapping(value = "department/add",method = RequestMethod.POST)
     public ResponseEntity<JsonResult> add(@RequestBody Department department){
         JsonResult jsonResult=new JsonResult();
 
@@ -85,7 +86,7 @@ public class DepartmentController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "dep/delete/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "department/delete/{id}",method = RequestMethod.DELETE)
     public ResponseEntity<JsonResult> delete(@PathVariable(value = "id") Integer id){
         JsonResult result = new JsonResult();
 
@@ -109,17 +110,17 @@ public class DepartmentController {
     }
 
     /**
-     * 根据id修改部门信息
+     * 修改部门信息
      * @param department
      * @return
      */
-    @RequestMapping(value = "dep/update/",method = RequestMethod.PUT)
+    @RequestMapping(value = "department/update",method = RequestMethod.PUT)
     public ResponseEntity<JsonResult> update(@RequestBody Department department){
         JsonResult result = new JsonResult();
 
         try {
             int updateResult = departmentService.update(department);
-            if (updateResult < 0){
+            if (updateResult <= 0){
                 result.setResult(updateResult);
                 result.setStatus("fail");
             }else {

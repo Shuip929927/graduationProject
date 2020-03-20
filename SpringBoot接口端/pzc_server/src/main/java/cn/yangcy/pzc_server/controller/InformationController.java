@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping(value = "api/")
 public class InformationController {
 
     @Autowired
@@ -21,7 +22,7 @@ public class InformationController {
      * @return
      */
     //@PathVariable:用于获取url中的数据
-    @GetMapping(value = "info/query/{id}")
+    @GetMapping(value = "information/query/id/{id}")
     public Information getInformationById(@PathVariable(value = "id") Integer id){
         try {
             Information information = informationService.getInformationById(id);
@@ -37,7 +38,7 @@ public class InformationController {
      * 查询所有信息
      * @return
      */
-    @RequestMapping(value = "info/query",method = RequestMethod.GET)
+    @RequestMapping(value = "information/queryAll",method = RequestMethod.GET)
     public List<Information> getAllInformationList(){
 
         try {
@@ -55,10 +56,11 @@ public class InformationController {
      * @param information
      * @return
      */
-    @RequestMapping(value = "info/add",method = RequestMethod.POST)
+    @RequestMapping(value = "information/add",method = RequestMethod.POST)
     public ResponseEntity<JsonResult> add(@RequestBody Information information){
         JsonResult jsonResult=new JsonResult();
 
+        System.out.println(information.toString());
         try {
             int addResult=informationService.add(information);
 
@@ -85,7 +87,7 @@ public class InformationController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "info/delete/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "information/delete/{id}",method = RequestMethod.DELETE)
     public ResponseEntity<JsonResult> delete(@PathVariable(value = "id") Integer id){
         JsonResult result = new JsonResult();
 
@@ -109,11 +111,11 @@ public class InformationController {
     }
 
     /**
-     * 根据id修改信息
+     * 修改信息
      * @param information
      * @return
      */
-    @RequestMapping(value = "info/update/",method = RequestMethod.PUT)
+    @RequestMapping(value = "information/update",method = RequestMethod.PUT)
     public ResponseEntity<JsonResult> update(@RequestBody Information information){
         JsonResult result = new JsonResult();
 

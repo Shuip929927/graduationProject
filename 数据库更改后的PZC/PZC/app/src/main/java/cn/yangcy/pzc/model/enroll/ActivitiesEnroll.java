@@ -38,6 +38,10 @@ public class ActivitiesEnroll {
      *  2 代表通过审核
      * */
 
+    @Ignore
+    public ActivitiesEnroll() {
+    }
+
     public ActivitiesEnroll(int userAccount, int activitiesId) {
         this.userAccount = userAccount;
         this.activitiesId = activitiesId;

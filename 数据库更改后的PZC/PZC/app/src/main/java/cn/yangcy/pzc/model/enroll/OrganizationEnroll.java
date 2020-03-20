@@ -49,6 +49,10 @@ public class OrganizationEnroll {
      *  6 代表管理员
      * */
 
+    @Ignore
+    public OrganizationEnroll() {
+    }
+
     public OrganizationEnroll(int userAccount, int organizationId) {
         this.userAccount = userAccount;
         this.organizationId = organizationId;

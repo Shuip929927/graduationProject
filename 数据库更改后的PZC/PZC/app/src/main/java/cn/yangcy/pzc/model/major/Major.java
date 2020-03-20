@@ -23,6 +23,10 @@ public class Major {
     @ColumnInfo(name = "major_name")
     private String majorName;
 
+    @Ignore
+    public Major() {
+    }
+
     public Major(int departmentId, String majorName) {
         this.departmentId = departmentId;
         this.majorName = majorName;

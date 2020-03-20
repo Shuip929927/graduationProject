@@ -4,15 +4,15 @@ public class Department {
 
     private Integer id;
 
-    private String departmentName;
+    private String department_name;
 
-    public Department(String departmentName) {
-        this.departmentName = departmentName;
+    public Department(String department_name) {
+        this.department_name = department_name;
     }
 
-    public Department(Integer id, String departmentName) {
+    public Department(Integer id, String department_name) {
         this.id = id;
-        this.departmentName = departmentName;
+        this.department_name = department_name;
     }
 
     public Integer getId() {
@@ -23,19 +23,19 @@ public class Department {
         this.id = id;
     }
 
-    public String getDepartmentName() {
-        return departmentName;
+    public String getDepartment_name() {
+        return department_name;
     }
 
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
+    public void setDepartment_name(String department_name) {
+        this.department_name = department_name;
     }
 
     @Override
     public String toString() {
         return "Department[" +
                 "id=" + id +
-                ", departmentName='" + departmentName + '\'' +
+                ", department_name='" + department_name + '\'' +
                 ']';
     }
 

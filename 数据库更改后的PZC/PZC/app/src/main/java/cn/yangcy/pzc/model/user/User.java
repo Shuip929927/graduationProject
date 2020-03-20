@@ -47,6 +47,11 @@ public class User implements Serializable {
      *  5 代表老师
      *  6 代表管理员
      * */
+
+    @Ignore
+    public User() {
+    }
+
     @Ignore
     public User(int account, String password, String name, String phoneNumber, int departmentId, int majorId, String classes) {
         this.account = account;

@@ -2,6 +2,7 @@ package cn.yangcy.pzc.model.imformation;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
@@ -35,6 +36,10 @@ public class Information implements Serializable {
 
     @ColumnInfo(name = "hits",defaultValue = "0")
     private int hits;
+
+    @Ignore
+    public Information() {
+    }
 
     public Information(String type, String title, String author, String createOn, String content) {
         this.type = type;

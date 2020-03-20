@@ -26,7 +26,7 @@
 
     <img class="login-logo" src="/asserts/img/login.png" th:src="@{/asserts/img/login.png}">
 
-    <form class="form-login" th:action="@{/user/login}" th:method="post">
+    <form class="form-login" th:action="@{/admin/login}" th:method="post">
         <h2 class="form-login-heading">Please sign in</h2>
 
         <p class="errMsg" th:text="${errMsg}" th:if="${not #strings.isEmpty(errMsg)}"></p>

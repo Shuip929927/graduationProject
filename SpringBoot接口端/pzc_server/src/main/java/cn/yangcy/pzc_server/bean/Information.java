@@ -12,6 +12,9 @@ public class Information {
     //  0代表未删除 1代表删除
     private Integer hits;
 
+    public Information() {
+    }
+
     public Information(Integer id, String type, String title, String author, String createOn,
                        String content, Integer isDelete, Integer hits) {
         this.id = id;

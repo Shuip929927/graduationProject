@@ -54,7 +54,11 @@ public class Activities implements Serializable {
      * 1 代表活动删除
      * */
 
-    public Activities(int organizationId, /*String organizationName*/ String name, String createOn,String startTime, String description) {
+    @Ignore
+    public Activities() {
+    }
+
+    public Activities(int organizationId, /*String organizationName*/ String name, String createOn, String startTime, String description) {
         this.organizationId = organizationId;
 //        this.organizationName = organizationName;
         this.name = name;

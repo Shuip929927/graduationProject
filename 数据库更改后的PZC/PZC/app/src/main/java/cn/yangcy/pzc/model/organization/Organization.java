@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 import cn.yangcy.pzc.model.user.User;
 
-@Entity(tableName = "tb_organization",indices = {@Index(value = "id")})
+@Entity(tableName = "tb_organization", indices = {@Index(value = "id")})
 public class Organization implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
@@ -24,23 +24,26 @@ public class Organization implements Serializable {
     private String personInCharge;
 
     @ColumnInfo(name = "person_id")
-    @ForeignKey(entity = User.class,parentColumns = "account",childColumns = "person_id",
-            onUpdate = ForeignKey.CASCADE,onDelete = ForeignKey.SET_NULL)
+    @ForeignKey(entity = User.class, parentColumns = "account", childColumns = "person_id",
+            onUpdate = ForeignKey.CASCADE, onDelete = ForeignKey.SET_NULL)
     private int personAccount;
 
-    @ColumnInfo(name = "number_of_people",defaultValue = "0")
+    @ColumnInfo(name = "number_of_people", defaultValue = "0")
     private int numberOfPeople;
 
     @ColumnInfo(name = "description")
     private String description;
 
-    @ColumnInfo(name = "isEnroll",defaultValue = "0")
+    @ColumnInfo(name = "isEnroll", defaultValue = "0")
     private int isEnroll;
     /*
      * 0 代表纳新 进行中
      * 1 代表活动结束
      * */
 
+    @Ignore
+    public Organization() {
+    }
 
     public Organization(String organization, String personInCharge, String description) {
         this.organization = organization;

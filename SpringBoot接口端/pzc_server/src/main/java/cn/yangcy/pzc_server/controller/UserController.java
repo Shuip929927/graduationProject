@@ -11,6 +11,7 @@ import java.util.List;
 
 //@Controller
 @RestController
+@RequestMapping(value = "api/")
 public class UserController {
 
     @Autowired
@@ -21,7 +22,7 @@ public class UserController {
      * @return
      */
     //@PathVariable:用于获取url中的数据
-    @GetMapping(value = "user/query/{account}")
+    @GetMapping(value = "user/query/account/{account}")
     public User getUserByAccount(@PathVariable(value = "account") Integer account){
         try {
             User user = userService.getUserByAccount(account);
@@ -37,7 +38,7 @@ public class UserController {
      * 查询学生列表
      * @return
      */
-    @RequestMapping(value = "user/query",method = RequestMethod.GET)
+    @RequestMapping(value = "user/queryAll",method = RequestMethod.GET)
     public List<User> getAllUserList(){
 
         try {
@@ -58,7 +59,7 @@ public class UserController {
     @RequestMapping(value = "user/add",method = RequestMethod.POST)
     public ResponseEntity<JsonResult> add(@RequestBody User user){
         JsonResult jsonResult=new JsonResult();
-
+        System.out.println(user.toString());
         try {
             int addResult=userService.add(user);
 
@@ -109,11 +110,11 @@ public class UserController {
     }
 
     /**
-     * 根据id修改用户信息
+     * 修改用户信息
      * @param user
      * @return
      */
-    @RequestMapping(value = "user/update/",method = RequestMethod.PUT)
+    @RequestMapping(value = "user/update",method = RequestMethod.PUT)
     public ResponseEntity<JsonResult> update(@RequestBody User user){
         JsonResult result = new JsonResult();
 

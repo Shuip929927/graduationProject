@@ -9,12 +9,26 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.List;
 
+import cn.yangcy.pzc.Config;
 import cn.yangcy.pzc.R;
 import cn.yangcy.pzc.model.user.User;
 import cn.yangcy.pzc.model.user.UserRepository;
+import cn.yangcy.pzc.net.HttpUtil;
+import cn.yangcy.pzc.util.JsonResult;
 import cn.yangcy.pzc.util.MD5Util;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class LoginViewModel extends AndroidViewModel {
 
@@ -24,6 +38,8 @@ public class LoginViewModel extends AndroidViewModel {
     private MutableLiveData<String> account;
     private MutableLiveData<String> password;
     private User resultUser;
+
+
 
     //    测试数据绑定是否成功
 //    private MutableLiveData<String> result;
@@ -93,7 +109,6 @@ public class LoginViewModel extends AndroidViewModel {
             return false;
         }
         User u = userRepository.queryUser(account.getValue());
-
         if (u == null) {
             Log.d(TAG, "doLogin: queryUser Null");
             Toast.makeText(getApplication(), R.string.err_user_no_exist, Toast.LENGTH_SHORT).show();
@@ -108,9 +123,20 @@ public class LoginViewModel extends AndroidViewModel {
                 Toast.makeText(getApplication(), R.string.err_password, Toast.LENGTH_SHORT).show();
                 return false;
             }
-        }
-
     }
+
+}
+    private String getLoginJson(String account,String password) {
+        JSONObject jsonParam=new JSONObject();
+        try {
+            jsonParam.put("account",account);
+            jsonParam.put("password",password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonParam.toString();
+    }
+
 //优化代码后将下列代码移至UserRepository
 // 测试后功能正常
 

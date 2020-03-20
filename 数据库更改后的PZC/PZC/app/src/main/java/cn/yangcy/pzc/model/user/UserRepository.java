@@ -7,16 +7,26 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
+import com.google.gson.Gson;
+
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 import cn.yangcy.pzc.Config;
+import cn.yangcy.pzc.fragment.stundentunoin.OrganizationEnrollPage;
 import cn.yangcy.pzc.model.DataBase;
 import cn.yangcy.pzc.model.department.DepartmentDao;
 import cn.yangcy.pzc.model.department.DepartmentRepository;
 import cn.yangcy.pzc.model.major.MajorRepository;
+import cn.yangcy.pzc.net.HttpUtil;
+import cn.yangcy.pzc.util.JsonResult;
 import cn.yangcy.pzc.viewmodel.LoginViewModel;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 
 public class UserRepository {
@@ -85,30 +95,51 @@ public class UserRepository {
         }
     }
 
-
     public User queryUser(String account){
+//    public MutableLiveData<User> queryUser(String account){
         //异步查询获取数据
 //        QueryAsyncTask queryAsyncTask = new QueryAsyncTask(userDao);
-//        queryAsyncTask.execute(string);
-//        queryAsyncTask.setOnAsyncResponse(new AsyncResponse() {
-//            @Override
-//            public void onDataReceivedSuccess(Object object) {
-//                resultUser = (User) object;
-//                Log.d(TAG, "onDataReceivedSuccess: "+resultUser.toString());
+////        queryAsyncTask.execute(string);
+////        queryAsyncTask.setOnAsyncResponse(new AsyncResponse() {
+////            @Override
+////            public void onDataReceivedSuccess(Object object) {
+////                resultUser = (User) object;
+////                Log.d(TAG, "onDataReceivedSuccess: "+resultUser.toString());
+////
+////            }
+////
+////            @Override
+////            public void onDataReceivedFailed() {
+////                Log.d(TAG, "onDataReceivedFailed: null");
+////                resultUser = null;
+////            }
+////
+////        });
+////        return resultUser;
+
+//        final MutableLiveData<User> resultUser = null;
 //
-//            }
-//
-//            @Override
-//            public void onDataReceivedFailed() {
-//                Log.d(TAG, "onDataReceivedFailed: null");
-//                resultUser = null;
-//            }
-//
-//        });
-//        return resultUser;
+//        HttpUtil.sendOkHttpRequest(Config.USER_QUERY_ACCOUNT + account,
+//                new Callback() {
+//                    @Override
+//                    public void onFailure(Call call, IOException e) {
+//                        resultUser.setValue(null);
+//                    }
+//                    @Override
+//                    public void onResponse(Call call, Response response) throws IOException {
+//                        Gson gson = new Gson();
+//                        String res = response.body().string();
+//                        Log.i(TAG, "onResponse: "+ res);
+//                        JsonResult jsonResult = gson.fromJson(res, JsonResult.class);
+//                        Log.i(TAG, "onResponse: " + jsonResult.getData().toString());
+//                        resultUser.setValue((User) jsonResult.getData());
+//                    }
+//                });
+
         Log.d(TAG, "queryUser: ");
         //主线程执行
         return userDao.queryUser(account);
+//        return resultUser;
     }
 
     public LiveData<List<User>> getUserLiveData(List<Integer> list) {

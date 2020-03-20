@@ -25,13 +25,6 @@ import cn.yangcy.pzc.viewmodel.StudentUnionViewModel;
 public class StudentUnionListPage extends Fragment {
 
     private static final String TAG = "SUListPage";
-    private View view;
-    private StudentUnionViewModel mViewModel;
-
-    private MyStudentUnionFragmentPagerAdapter myStudentUnionFragmentPagerAdapter;
-    private ViewPager2 mViewPager2;
-    private TabLayoutMediator mTabLayoutMediator;
-    private TabLayout mTabLayout;
 
     public static StudentUnionListPage newInstance() {
         return new StudentUnionListPage();
@@ -40,13 +33,16 @@ public class StudentUnionListPage extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.student_union_list_page_fragment, container, false);
-        mViewPager2 = view.findViewById(R.id.student_union_viewPager2);
-        mTabLayout = view.findViewById(R.id.student_union_tabLayout);
-        myStudentUnionFragmentPagerAdapter = new MyStudentUnionFragmentPagerAdapter(this);
+        View view = inflater.inflate(R.layout.student_union_list_page_fragment, container, false);
+        ViewPager2 mViewPager2 = view.findViewById(R.id.student_union_viewPager2);
+        TabLayout mTabLayout = view.findViewById(R.id.student_union_tabLayout);
+        MyStudentUnionFragmentPagerAdapter myStudentUnionFragmentPagerAdapter = new MyStudentUnionFragmentPagerAdapter(this);
         mViewPager2.setAdapter(myStudentUnionFragmentPagerAdapter);
 
-        mTabLayoutMediator = new TabLayoutMediator(mTabLayout, mViewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
+        //                    default:
+        //                        tab.setText(R.string.tab_activities);
+        //                        break;
+        TabLayoutMediator mTabLayoutMediator = new TabLayoutMediator(mTabLayout, mViewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 switch (position) {
@@ -71,7 +67,7 @@ public class StudentUnionListPage extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 //        mViewModel = ViewModelProviders.of(this).get(StudentUnionViewModel.class);
-        mViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(StudentUnionViewModel.class);
+        StudentUnionViewModel mViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(StudentUnionViewModel.class);
     }
 
 }

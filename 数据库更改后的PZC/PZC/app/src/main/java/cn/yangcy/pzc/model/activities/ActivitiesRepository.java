@@ -14,22 +14,19 @@ public class ActivitiesRepository {
 
     private static final String TAG = "ActivitiesRepository";
     private ActivitiesDao activitiesDao;
-    private LiveData<List<Activities>> activitiesLive;
-    private LiveData<Activities> activitiesDetailLive;
 
     public ActivitiesRepository(Context context) {
         DataBase dataBase = DataBase.getDataBase(context.getApplicationContext());
         activitiesDao = dataBase.getActivitiesDao();
-        activitiesLive = activitiesDao.queryAllActivities();
+
     }
 
     public LiveData<List<Activities>> getAllActivities() {
-        return activitiesLive;
+        return activitiesDao.queryAllActivities();
     }
 
     public LiveData<Activities> getActivitiesDetailLive(int activitiesId) {
-        activitiesDetailLive = activitiesDao.queryActivitiesDetail(activitiesId);
-        return activitiesDetailLive;
+        return activitiesDao.queryActivitiesDetail(activitiesId);
     }
 
     public void updateActivities(Activities activities){

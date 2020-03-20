@@ -8,6 +8,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ import cn.yangcy.pzc.model.organization.Organization;
 import cn.yangcy.pzc.model.organization.OrganizationRepository;
 import cn.yangcy.pzc.model.user.User;
 import cn.yangcy.pzc.model.user.UserRepository;
+import cn.yangcy.pzc.net.HttpUtil;
 
 public class StudentUnionViewModel extends AndroidViewModel {
 
@@ -46,6 +48,10 @@ public class StudentUnionViewModel extends AndroidViewModel {
     private List<Integer> memberList;
     private List<Integer> memberEnrollList;
 
+    private MutableLiveData<List<Activities>> activitiesMLiveByNet;
+
+    private LiveData<List<Activities>> activitiesLiveByNet;
+
     public StudentUnionViewModel(@NonNull Application application) {
         super(application);
         sharedPreferences = application.getSharedPreferences(Config.SP_NAME, Context.MODE_PRIVATE);
@@ -56,10 +62,8 @@ public class StudentUnionViewModel extends AndroidViewModel {
         activitiesRepository = new ActivitiesRepository(getApplication());
         organizationRepository = new OrganizationRepository(getApplication());
         enrollRepository = new EnrollRepository(getApplication());
-
         activitiesLiveList = activitiesRepository.getAllActivities();
         organizationLiveList = organizationRepository.getAllOrganization();
-
 
     }
 
@@ -120,8 +124,14 @@ public class StudentUnionViewModel extends AndroidViewModel {
         return organizationRepository.getOrganizationIdByName(organizationName);
     }
 
+    public MutableLiveData<List<Activities>> getActivitiesMLiveByNet() {
+//        HttpUtil.sendOkHttpRequest(Config.API_URL+);
 
-//Organization
+
+        return activitiesMLiveByNet;
+    }
+
+    //Organization
 
     public int getOrganizationId() {
         return organizationId;

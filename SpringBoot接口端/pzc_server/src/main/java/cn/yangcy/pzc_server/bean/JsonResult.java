@@ -6,6 +6,8 @@ public class JsonResult {
 
     private Object result = null;
 
+    private Object data = null;
+
     public JsonResult status(String status) {
         this.status = status;
         return this;
@@ -27,4 +29,11 @@ public class JsonResult {
         this.result = result;
     }
 
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
 }

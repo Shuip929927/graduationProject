@@ -3,12 +3,14 @@ package cn.yangcy.pzc.model.department;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "tb_department",indices = {@Index(value = {"id", "department_name"},
         unique = true)})
 public class Department {
+
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -33,6 +35,10 @@ public class Department {
 
     public void setDepartment(@NonNull String department) {
         this.department = department;
+    }
+
+    @Ignore
+    public Department() {
     }
 
     public Department(@NonNull String department) {

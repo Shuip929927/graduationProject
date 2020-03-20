@@ -1,7 +1,6 @@
 package cn.yangcy.pzc_server.service.impl;
 
 import cn.yangcy.pzc_server.bean.Department;
-import cn.yangcy.pzc_server.bean.User;
 import cn.yangcy.pzc_server.mapper.DepartmentMapper;
 import cn.yangcy.pzc_server.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;

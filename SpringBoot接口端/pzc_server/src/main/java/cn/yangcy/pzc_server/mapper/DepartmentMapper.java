@@ -18,7 +18,7 @@ public interface DepartmentMapper {
 
     //增
     @Insert("insert into tb_department(department_name) " +
-            "values(#{departmentName})")
+            "values(#{department_name})")
     public int addDepartment(Department department);
 
     //删
@@ -28,7 +28,7 @@ public interface DepartmentMapper {
     //Integer id, String type, String title, String author, String createOn,
     //String content, Integer isDelete, Integer hits
     //改
-    @Update("update tb_department set department_name=#{department.departmentName} where" +
-            " id=#{department.id}")
-    public int update(@Param("department") Department department);
+    @Update("update tb_department set department_name=#{department_name} where" +
+            " id=#{id}")
+    public int update(Department department);
 }

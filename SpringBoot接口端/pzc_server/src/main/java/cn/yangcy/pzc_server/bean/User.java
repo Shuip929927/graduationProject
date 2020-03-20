@@ -93,6 +93,7 @@ public class User {
         this.power = power;
     }
 
+
     public User(Integer account, String password, Integer gender, String name,
                 String phoneNumber, Integer departmentId, Integer majorId, String classes, Integer power) {
         this.account = account;
@@ -118,6 +119,16 @@ public class User {
         this.classes = classes;
         this.power = 1;
     }
+
+    public User(){
+
+    }
+
+//    public User(Integer account, String password) {
+//        this.account = account;
+//        this.password = password;
+//    }
+
     @Override
     public String toString() {
         return "User[" +
