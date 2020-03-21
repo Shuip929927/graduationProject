@@ -609,6 +609,24 @@ public abstract class DataBase extends RoomDatabase {
                                     "'4'," +
                                     "'2')");
 
+                            db.execSQL("insert into tb_activities_enroll(user_id,activity_id,activity_enroll_state) values(" +
+                                    "'2111'," +
+                                    "'3'," +
+                                    "'1')");
+                            db.execSQL("insert into tb_activities_enroll(user_id,activity_id,activity_enroll_state) values(" +
+                                    "'2111'," +
+                                    "'4'," +
+                                    "'1')");
+                            db.execSQL("insert into tb_activities_enroll(user_id,activity_id,activity_enroll_state) values(" +
+                                    "'2111'," +
+                                    "'1'," +
+                                    "'2')");
+                            db.execSQL("insert into tb_activities_enroll(user_id,activity_id,activity_enroll_state) values(" +
+                                    "'2111'," +
+                                    "'2'," +
+                                    "'2')");
+
+
 
 //OrganizationEnroll——————————————————————————————————————————————————————————————————————————————————————————————————————
                             db.execSQL("insert into tb_organization_enroll(user_id,organization_id,organization_enroll_state) values(" +
@@ -617,18 +635,38 @@ public abstract class DataBase extends RoomDatabase {
                                     "'2')");
 
                             db.execSQL("insert into tb_organization_enroll(user_id,organization_id,organization_enroll_state) values(" +
+                                    "'2112'," +
+                                    "'1'," +
+                                    "'1')");
+
+                            db.execSQL("insert into tb_organization_enroll(user_id,organization_id,organization_enroll_state) values(" +
                                     "'2111'," +
                                     "'2'," +
                                     "'2')");
+
+                            db.execSQL("insert into tb_organization_enroll(user_id,organization_id,organization_enroll_state) values(" +
+                                    "'2112'," +
+                                    "'2'," +
+                                    "'1')");
+
                             db.execSQL("insert into tb_organization_enroll(user_id,organization_id,organization_enroll_state) values(" +
                                     "'2111'," +
                                     "'3'," +
                                     "'1')");
 
                             db.execSQL("insert into tb_organization_enroll(user_id,organization_id,organization_enroll_state) values(" +
+                                    "'2112'," +
+                                    "'3'," +
+                                    "'2')");
+
+                            db.execSQL("insert into tb_organization_enroll(user_id,organization_id,organization_enroll_state) values(" +
                                     "'2111'," +
                                     "'4'," +
                                     "'1')");
+                            db.execSQL("insert into tb_organization_enroll(user_id,organization_id,organization_enroll_state) values(" +
+                                    "'2112'," +
+                                    "'4'," +
+                                    "'2')");
                         }
 
                         @Override

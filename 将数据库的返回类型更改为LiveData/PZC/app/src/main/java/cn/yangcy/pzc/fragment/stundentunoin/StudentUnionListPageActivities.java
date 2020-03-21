@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,10 +27,9 @@ import cn.yangcy.pzc.viewmodel.StudentUnionViewModel;
 public class StudentUnionListPageActivities extends Fragment {
 
     private static final String TAG = "SU_ActivitiesListPage";
+    public static StudentUnionListPageActivities INSTANCE;
     private StudentUnionViewModel mViewModel;
-    private MyActivitiesRecyclerViewAdapter myActivitiesRecyclerViewAdapter;
-
-    private LiveData<List<Activities>> allActivitiesLive;
+    private MyActivitiesRecyclerViewAdapter mAdapter;
 
 
     public static StudentUnionListPageActivities newInstance() {
@@ -41,12 +39,13 @@ public class StudentUnionListPageActivities extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        INSTANCE = this;
         View view = inflater.inflate(R.layout.student_union_activities_list_page_fragment, container, false);
         mViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(StudentUnionViewModel.class);
         RecyclerView mRecyclerView = view.findViewById(R.id.student_union_activities_recyclerView);
-        myActivitiesRecyclerViewAdapter = new MyActivitiesRecyclerViewAdapter(mViewModel);
+        mAdapter = new MyActivitiesRecyclerViewAdapter(mViewModel);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
-        mRecyclerView.setAdapter(myActivitiesRecyclerViewAdapter);
+        mRecyclerView.setAdapter(mAdapter);
 
         return view;
     }
@@ -61,12 +60,12 @@ public class StudentUnionListPageActivities extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        allActivitiesLive = mViewModel.getAllActivitiesListLive();
+        LiveData<List<Activities>> allActivitiesLive = mViewModel.getAllActivitiesListLive();
         allActivitiesLive.observe(Objects.requireNonNull(getActivity()), new Observer<List<Activities>>() {
             @Override
             public void onChanged(List<Activities> activities) {
-                myActivitiesRecyclerViewAdapter.setActivitiesList(activities);
-                myActivitiesRecyclerViewAdapter.notifyDataSetChanged();
+                mAdapter.setActivitiesList(activities);
+                mAdapter.notifyDataSetChanged();
             }
         });
     }

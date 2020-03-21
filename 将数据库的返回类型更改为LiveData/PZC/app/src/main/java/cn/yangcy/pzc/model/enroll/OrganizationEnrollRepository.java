@@ -40,13 +40,13 @@ public class OrganizationEnrollRepository {
         return organizationEnrollDao.queryOrganizationEnrollLive(userAccount,organizationId);
     }
 
-    public LiveData<List<Integer>> queryOrganizationMember(int organizationId){
-        Log.i(TAG, "查询一个组织的所有报名状态为2的用户ID ");
+    public LiveData<List<OrganizationEnroll>> queryOrganizationMember(int organizationId){
+        Log.i(TAG, "查询一个组织的所有报名状态为2的报名信息 ");
         return organizationEnrollDao.queryOrganizationMember(organizationId);
     }
 
-    public LiveData<List<Integer>> queryOrganizationEnrollMember(int organizationId){
-        Log.i(TAG, "查询一个组织的所有报名状态为1的用户ID ");
+    public LiveData<List<OrganizationEnroll>> queryOrganizationEnrollMember(int organizationId){
+        Log.i(TAG, "查询一个组织的所有报名状态为1的报名信息 ");
         return organizationEnrollDao.queryOrganizationEnrollMember(organizationId);
     }
 
@@ -57,7 +57,7 @@ public class OrganizationEnrollRepository {
     static class AddAsync extends AsyncTask<OrganizationEnroll,Void,Void> {
         private OrganizationEnrollDao organizationEnrollDao;
 
-        public AddAsync(OrganizationEnrollDao organizationEnrollDao) {
+        AddAsync(OrganizationEnrollDao organizationEnrollDao) {
             this.organizationEnrollDao = organizationEnrollDao;
         }
 

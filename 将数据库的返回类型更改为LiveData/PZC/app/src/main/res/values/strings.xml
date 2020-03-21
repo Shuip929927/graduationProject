@@ -108,7 +108,7 @@
     <string name="rb_male">男</string>
     <string name="info_gender">性别</string>
     <string name="info_register_success">注册成功！</string>
-    <string name="info_loading">加载中...</string>
+    <string name="info_loading">加载中…</string>
 
 
 </resources>

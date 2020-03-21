@@ -9,8 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.yangcy.pzc.R;
-import cn.yangcy.pzc.fragment.my.MyEnrollOrganizationPage;
 import cn.yangcy.pzc.fragment.stundentunoin.AtyStudentUnionOrganizationDetailPage;
 import cn.yangcy.pzc.fragment.stundentunoin.StudentUnionListPageOrganization;
 import cn.yangcy.pzc.model.organization.Organization;
@@ -58,14 +55,22 @@ public class MyOrganizationRecyclerViewAdapter extends RecyclerView.Adapter<MyOr
         holder.tv_organization_personInCharge.setText(organization.getPersonInCharge());
         int state = organization.getIsEnroll();
         if (state == 0) {
-            holder.bt_organizationisEnroll.setBackgroundResource(R.drawable.btn_state_ongoing_or_long);
-            holder.bt_organizationisEnroll.setText(R.string.info_activities_state_ongoing);
+            holder.bt_organizationIsEnroll.setBackgroundResource(R.drawable.btn_state_ongoing_or_long);
+            holder.bt_organizationIsEnroll.setText(R.string.info_activities_state_ongoing);
         } else if (state == 1) {
-            holder.bt_organizationisEnroll.setBackgroundResource(R.drawable.btn_state_end);
-            holder.bt_organizationisEnroll.setText(R.string.info_organization_state_end);
+            holder.bt_organizationIsEnroll.setBackgroundResource(R.drawable.btn_state_end);
+            holder.bt_organizationIsEnroll.setText(R.string.info_organization_state_end);
         } else {
-            holder.bt_organizationisEnroll.setVisibility(View.GONE);
+            holder.bt_organizationIsEnroll.setVisibility(View.GONE);
         }
+
+        mViewModel.getUserLiveByAccount(organization.getPersonAccount()).observe(StudentUnionListPageOrganization.INSTANCE,
+                new Observer<User>() {
+                    @Override
+                    public void onChanged(User user) {
+                        holder.tv_organization_personInChargeName.setText(user.getYear()+"  " +user.getName());
+                    }
+                });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,14 +91,14 @@ public class MyOrganizationRecyclerViewAdapter extends RecyclerView.Adapter<MyOr
         private TextView tv_organization_name, tv_organization_personInCharge,
                 tv_organization_personInChargeName;
 
-        private Button bt_organizationisEnroll;
+        private Button bt_organizationIsEnroll;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_organization_name = itemView.findViewById(R.id.tv_student_union_organization_name);
             tv_organization_personInCharge = itemView.findViewById(R.id.tv_student_union_organization_person_in_charge);
             tv_organization_personInChargeName = itemView.findViewById(R.id.tv_student_union_organization_personInCharge_name);
-            bt_organizationisEnroll = itemView.findViewById(R.id.bt_student_union_organization_isEnroll);
+            bt_organizationIsEnroll = itemView.findViewById(R.id.bt_student_union_organization_isEnroll);
         }
     }
 }

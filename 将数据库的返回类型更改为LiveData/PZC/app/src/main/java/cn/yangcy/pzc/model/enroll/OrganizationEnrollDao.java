@@ -29,14 +29,14 @@ public interface OrganizationEnrollDao {
     LiveData<OrganizationEnroll> queryOrganizationEnrollLive(int userAccount, int organizationId);
 
     //查询一个组织的所有报名状态为2的用户ID
-    @Query("SELECT user_id FROM tb_organization_enroll " +
+    @Query("SELECT * FROM tb_organization_enroll " +
             "WHERE organization_id = :organizationId AND organization_enroll_state = 2")
-    LiveData<List<Integer>> queryOrganizationMember(int organizationId);
+    LiveData<List<OrganizationEnroll>> queryOrganizationMember(int organizationId);
 
     //查询一个组织的所有报名状态为1的用户ID
-    @Query("SELECT user_id FROM tb_organization_enroll " +
+    @Query("SELECT * FROM tb_organization_enroll " +
             "WHERE organization_id = :organizationId AND organization_enroll_state = 1")
-    LiveData<List<Integer>> queryOrganizationEnrollMember(int organizationId);
+    LiveData<List<OrganizationEnroll>> queryOrganizationEnrollMember(int organizationId);
 
     //查询某个用户报名的所有学生组织ID
     @Query("SELECT organization_id FROM tb_organization_enroll " +

@@ -10,25 +10,29 @@ import cn.yangcy.pzc.fragment.stundentunoin.OrganizationMemberListPage;
 
 public class MyOrganizationMemberFragmentPagerAdapter extends FragmentStateAdapter {
 
+    private int count = 2;
+
     public MyOrganizationMemberFragmentPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
         switch (position) {
-//            case 0:
-//                return
-            case 1:
-                return OrganizationEnrollPage.newInstance();
-            default:
+            case 0:
                 return OrganizationMemberListPage.newInstance();
+            default:
+                return OrganizationEnrollPage.newInstance();
         }
     }
 
     @Override
     public int getItemCount() {
-        return 2;
+        return count;
     }
 }

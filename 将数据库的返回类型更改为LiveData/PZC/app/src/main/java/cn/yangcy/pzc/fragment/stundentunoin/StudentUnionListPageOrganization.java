@@ -1,5 +1,6 @@
 package cn.yangcy.pzc.fragment.stundentunoin;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
+import java.util.Objects;
 
 import cn.yangcy.pzc.R;
 import cn.yangcy.pzc.adapter.MyOrganizationRecyclerViewAdapter;
@@ -26,10 +28,8 @@ public class StudentUnionListPageOrganization extends Fragment {
 
     private static final String TAG = "SU_OrgListPage";
     private StudentUnionViewModel mViewModel;
-    private View view;
-    private RecyclerView mRecyclerView;
-    private MyOrganizationRecyclerViewAdapter myOrganizationRecyclerViewAdapter;
-    public static StudentUnionListPageOrganization ORGANIZATION_LIST_INSTANCE;
+    private MyOrganizationRecyclerViewAdapter mAdapter;
+    public static StudentUnionListPageOrganization INSTANCE;
 
     public static StudentUnionListPageOrganization newInstance() {
         return new StudentUnionListPageOrganization();
@@ -38,14 +38,13 @@ public class StudentUnionListPageOrganization extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ORGANIZATION_LIST_INSTANCE = this;
-        view = inflater.inflate(R.layout.student_union_organization_list_page_fragment, container, false);
-//        mViewModel = ViewModelProviders.of(this).get(StudentUnionViewModel.class);
-        mViewModel = new ViewModelProvider(getActivity()).get(StudentUnionViewModel.class);
-        mRecyclerView = view.findViewById(R.id.student_union_organization_recyclerView);
-        myOrganizationRecyclerViewAdapter = new MyOrganizationRecyclerViewAdapter(mViewModel);
+        INSTANCE = this;
+        View view = inflater.inflate(R.layout.student_union_organization_list_page_fragment, container, false);
+        mViewModel = new ViewModelProvider(INSTANCE).get(StudentUnionViewModel.class);
+        RecyclerView mRecyclerView = view.findViewById(R.id.student_union_organization_recyclerView);
+        mAdapter = new MyOrganizationRecyclerViewAdapter(mViewModel);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
-        mRecyclerView.setAdapter(myOrganizationRecyclerViewAdapter);
+        mRecyclerView.setAdapter(mAdapter);
         return view;
     }
 
@@ -56,5 +55,13 @@ public class StudentUnionListPageOrganization extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        LiveData<List<Organization>> organizationListLive = mViewModel.getAllOrganizationListLive();
+        organizationListLive.observe(Objects.requireNonNull(getActivity()), new Observer<List<Organization>>() {
+            @Override
+            public void onChanged(List<Organization> organizations) {
+                mAdapter.setOrganizationList(organizations);
+                mAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -16,7 +17,9 @@ import java.util.List;
 
 import cn.yangcy.pzc.R;
 import cn.yangcy.pzc.fragment.stundentunoin.AtyStudentUnionActivitiesDetailPage;
+import cn.yangcy.pzc.fragment.stundentunoin.StudentUnionListPageActivities;
 import cn.yangcy.pzc.model.activities.Activities;
+import cn.yangcy.pzc.model.organization.Organization;
 import cn.yangcy.pzc.viewmodel.MyPageViewModel;
 import cn.yangcy.pzc.viewmodel.StudentUnionViewModel;
 
@@ -62,12 +65,19 @@ public class MyActivitiesRecyclerViewAdapter extends RecyclerView.Adapter<MyActi
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
+        Log.i(TAG, "onBindViewHolder: ");
         final Activities activities = activitiesList.get(position);
         holder.tv_title.setText(activities.getName());
         holder.tv_createTime.setText(infoCreateTime + " "+ activities.getCreateOn());
         holder.tv_startTime.setText(infoStartTime +" "+ activities.getStartTime());
         if("mStu".equals(flag)){
-            holder.tv_holdOrganization.setText(infoHoldOrganization +" ");
+            mStudentUnionViewModel.getOrganizationLiveById(activities.getOrganizationId())
+                    .observe(StudentUnionListPageActivities.INSTANCE, new Observer<Organization>() {
+                        @Override
+                        public void onChanged(Organization organization) {
+                            holder.tv_holdOrganization.setText(infoHoldOrganization +" "+organization.getOrganization());
+                        }
+                    });
         } else if("myPage".equals(flag)){
             holder.tv_holdOrganization.setText(infoHoldOrganization +" ");
         }

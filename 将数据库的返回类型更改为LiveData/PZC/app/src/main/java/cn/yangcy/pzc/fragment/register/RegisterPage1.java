@@ -91,9 +91,9 @@ public class RegisterPage1 extends Fragment {
                                     Log.i(TAG, "跳转界面至Register2");
                                     NavController mNavController = Navigation.findNavController(v);
                                     mNavController.navigate(R.id.action_registerPage1_to_registerPage2);
-                                    Log.i(TAG, " queryUserExist 移除观察者");
                                     if(queryUserExist.hasObservers()){
-                                        queryUserExist.removeObservers(getActivity());
+                                        Log.i(TAG, " queryUserExist 移除观察者");
+                                        queryUserExist.removeObserver(this);
                                     }
                                 }
                             }

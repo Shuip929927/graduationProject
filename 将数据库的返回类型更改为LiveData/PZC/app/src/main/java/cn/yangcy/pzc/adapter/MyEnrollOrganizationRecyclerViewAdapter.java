@@ -83,7 +83,7 @@ public class MyEnrollOrganizationRecyclerViewAdapter extends RecyclerView.Adapte
 
         private Button bt_organizationIsEnroll;
 
-        public MyViewHolder(@NonNull View itemView) {
+        MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_organization_name = itemView.findViewById(R.id.tv_student_union_organization_name);
             tv_organization_personInCharge = itemView.findViewById(R.id.tv_student_union_organization_person_in_charge);

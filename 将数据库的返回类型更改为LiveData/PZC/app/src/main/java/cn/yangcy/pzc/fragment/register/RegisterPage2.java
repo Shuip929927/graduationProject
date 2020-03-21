@@ -73,7 +73,7 @@ public class RegisterPage2 extends Fragment {
             public void onChanged(final List<Department> strings) {
                 int departmentSelectPosition = 0;
                 for (int i = 0; i < strings.size(); i++) {
-                    if(strings.get(1).getId() == departmentId.getValue()){
+                    if(strings.get(i).getId() == departmentId.getValue()){
                         departmentSelectPosition = i;
                     }
                     departmentList.add(strings.get(i).getDepartment());

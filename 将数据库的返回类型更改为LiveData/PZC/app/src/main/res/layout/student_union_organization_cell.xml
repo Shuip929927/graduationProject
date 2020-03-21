@@ -71,14 +71,14 @@
                 android:id="@+id/tv_student_union_organization_personInCharge_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="3"
-                android:minLines="2"
                 android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline48"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guideline46"
-                tools:text="机械工程系\n2018级车辆工程 邓力文" />
+                app:layout_constraintVertical_bias="0.5"
+                tools:text="2018级 邓力文" />
 
             <TextView
                 android:id="@+id/tv_organization_enroll_title"

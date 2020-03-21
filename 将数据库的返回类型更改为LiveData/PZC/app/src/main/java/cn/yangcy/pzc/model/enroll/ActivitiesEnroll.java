@@ -84,4 +84,14 @@ public class ActivitiesEnroll {
     public void setState(int state) {
         this.state = state;
     }
+
+    @Override
+    public String toString() {
+        return "ActivitiesEnroll{" +
+                "id=" + id +
+                ", userAccount=" + userAccount +
+                ", activitiesId=" + activitiesId +
+                ", state=" + state +
+                '}';
+    }
 }

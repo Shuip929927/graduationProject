@@ -12,27 +12,27 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import cn.yangcy.pzc.R;
 import cn.yangcy.pzc.adapter.MyShowMemberListRecyclerViewAdapter;
+import cn.yangcy.pzc.model.enroll.ActivitiesEnroll;
 import cn.yangcy.pzc.model.user.User;
 import cn.yangcy.pzc.viewmodel.StudentUnionViewModel;
 
 public class ActivitiesMemberListPage extends Fragment {
 
     private static final String TAG = "ActivitiesMemberListPag";
+    public static ActivitiesMemberListPage INSTANCE;
     private StudentUnionViewModel mViewModel;
-    private MyShowMemberListRecyclerViewAdapter myShowMemberListRecyclerViewAdapter;
-    private List<Integer> memberAccountList;
-    private LiveData<List<User>> memberLiveData;
-
+    private MyShowMemberListRecyclerViewAdapter mAdapter;
+    private int i = 0;
     public static ActivitiesMemberListPage newInstance() {
         return new ActivitiesMemberListPage();
     }
@@ -40,25 +40,43 @@ public class ActivitiesMemberListPage extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
+        INSTANCE = this;
         View view = inflater.inflate(R.layout.show_member_list_page_fragment, container, false);
         mViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(StudentUnionViewModel.class);
+
         RecyclerView mRecyclerView = view.findViewById(R.id.show_member_list_recyclerView);
-        myShowMemberListRecyclerViewAdapter = new MyShowMemberListRecyclerViewAdapter(mViewModel);
+        mAdapter = new MyShowMemberListRecyclerViewAdapter("activities",mViewModel);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
-        mRecyclerView.setAdapter(myShowMemberListRecyclerViewAdapter);
+        mRecyclerView.setAdapter(mAdapter);
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        mViewModel = ViewModelProviders.of(this).get(StudentUnionViewModel.class);
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        mViewModel.getActivitiesMemberListLive(mViewModel.getActivitiesId()).observe(INSTANCE, new Observer<List<ActivitiesEnroll>>() {
+            @Override
+            public void onChanged(List<ActivitiesEnroll> activitiesEnrolls) {
+                List<Integer> memberIdList = new ArrayList<>();
+                for (int i = 0; i < activitiesEnrolls.size(); i++) {
+                    memberIdList.add(activitiesEnrolls.get(i).getUserAccount());
+                }
+                LiveData<List<User>> userListLive  =mViewModel.queryUserLiveData(memberIdList);
+                userListLive.observe(INSTANCE, new Observer<List<User>>() {
+                    @Override
+                    public void onChanged(List<User> users) {
+                        mAdapter.setMemberList(users);
+                        System.out.println("act state 2  :"+ i++);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
     }
 }
