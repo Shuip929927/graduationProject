@@ -13,6 +13,17 @@ public interface UserMapper {
     @Select("SELECT * FROM tb_user WHERE account = #{account}")
     User getUserByAccount(Integer account);
 
+    //根据accounts列表查询
+    @Select({
+            "<script>",
+            "SELECT * FROM tb_user where account in",
+            "<foreach collection='accounts' item='item' open='(' separator=',' close=')'>",
+            "#{item}",
+            "</foreach>",
+            "</script>"
+    })
+    List<User> getUserListByAccounts(@Param("accounts") List<Integer> accounts);
+
     //查全部
     @Select("SELECT * FROM tb_user")
     public List<User> getAllUserList();

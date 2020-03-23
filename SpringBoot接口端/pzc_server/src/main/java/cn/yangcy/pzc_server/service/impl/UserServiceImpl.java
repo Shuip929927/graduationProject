@@ -22,6 +22,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getUserListByAccounts(List<Integer> accounts) {
+        return userMapper.getUserListByAccounts(accounts);
+    }
+
+    @Override
     public List<User> getUserList() {
         return userMapper.getAllUserList();
     }

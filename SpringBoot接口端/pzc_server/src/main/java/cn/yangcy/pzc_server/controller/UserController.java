@@ -3,11 +3,14 @@ package cn.yangcy.pzc_server.controller;
 import cn.yangcy.pzc_server.bean.JsonResult;
 import cn.yangcy.pzc_server.bean.User;
 import cn.yangcy.pzc_server.service.UserService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 //@Controller
 @RestController
@@ -52,6 +55,44 @@ public class UserController {
     }
 
     /**
+     * 查询accounts列表里的用户
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "user/query/accounts",method = RequestMethod.POST)
+    public ResponseEntity<JsonResult> add(@RequestBody Map<String,Integer[]> map){
+        JsonResult jsonResult=new JsonResult();
+        List<Integer> accountsList = new ArrayList<>();
+        if(map == null){
+            System.out.println("error");
+        } else{
+            Integer[] accounts = map.get("accounts");
+            for (int i = 0; i < accounts.length; i++) {
+                accountsList.add(accounts[i]);
+                System.out.println(accounts[i]);
+            }
+        }
+        try {
+            List<User> resultUsersList = userService.getUserListByAccounts(accountsList);
+            if (resultUsersList.size()<0){
+                jsonResult.setResult("失败");
+                jsonResult.setStatus("failed");
+            } else {
+                jsonResult.setResult("成功");
+                jsonResult.setData(resultUsersList);
+                jsonResult.setStatus("ok");
+            }
+
+        }catch (Exception e){
+            jsonResult.setResult(e.getClass().getName()+":"+e.getMessage());
+            jsonResult.setStatus("error");
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.ok(jsonResult);
+    }
+
+    /**
      * 添加用户
      * @param user
      * @return
@@ -78,7 +119,6 @@ public class UserController {
         }
 
         return ResponseEntity.ok(jsonResult);
-
     }
 
     /**
