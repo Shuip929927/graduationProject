@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_home_detail"
+    app:startDestination="@id/home_list_page">
+    <fragment
+        android:id="@+id/home_list_page"
+        android:name="cn.yangcy.pzc.fragment.home.HomeListPage"
+        android:label="home_page_list_fragment">
+        <action
+            android:id="@+id/action_home_list_page_to_home_detail_page"
+            app:destination="@id/home_detail_page"
+            app:enterAnim="@anim/fragment_close_enter"
+            app:exitAnim="@anim/fragment_close_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/home_detail_page"
+        android:name="cn.yangcy.pzc.fragment.home.HomeDetailPage"
+        android:label="home_detail_page_fragment"
+        tools:layout="@layout/home_detail_page_fragment">
+        <action
+            android:id="@+id/action_home_detail_page_to_home_list_page"
+            app:destination="@id/home_list_page"
+            app:enterAnim="@anim/fragment_close_enter"
+            app:exitAnim="@anim/fragment_close_exit" />
+    </fragment>
+</navigation>
