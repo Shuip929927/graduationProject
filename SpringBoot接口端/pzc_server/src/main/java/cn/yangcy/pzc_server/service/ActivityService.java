@@ -6,13 +6,17 @@ import java.util.List;
 
 public interface ActivityService {
 
-    public Activity getActivityById(Integer id);
+    Activity getActivityById(Integer id);
 
-    public List<Activity> getActivitiesList();
+    List<Activity> getActivitiesList();
 
-    public int add(Activity activity);
+    List<Activity> getUserEnrollState2ActivityListByUserId(Integer userId);
 
-    public int delete(Integer id);
+    List<Activity> getOrganizationHoldActivityByUserId(Integer userId);
 
-    public int update(Activity activity);
+    int add(Activity activity);
+
+    int delete(Integer id);
+
+    int update(Activity activity);
 }

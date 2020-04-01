@@ -17,13 +17,14 @@ public class MajorController {
     private MajorService majorService;
 
     /**
-     * 根据ID查询zhuanye
+     * 根据ID查询专业
      * @param id
      * @return
      */
     //@PathVariable:用于获取url中的数据
     @GetMapping(value = "major/query/id/{id}")
     public Major getMajorById(@PathVariable(value = "id") Integer id){
+        System.out.println(" 根据ID查询专业");
         try {
             return majorService.getMajorById(id);
         }catch (Exception e){
@@ -34,6 +35,7 @@ public class MajorController {
 
     @GetMapping(value = "major/query/departmentId/{department_id}")
     public List<Major> getDepartmentMajorList(@PathVariable(value = "department_id") Integer department_id){
+        System.out.println(" 根据部门ID查询专业");
         try {
             return majorService.getDepartmentMajorList(department_id);
         }catch (Exception e){
@@ -43,12 +45,12 @@ public class MajorController {
     }
 
     /**
-     * 查询学生组织列表
+     * 查询所有专业
      * @return
      */
     @RequestMapping(value = "major/queryAll",method = RequestMethod.GET)
     public List<Major> getAllMajorList(){
-
+        System.out.println(" 查询所有专业");
         try {
             return majorService.getMajorList();
         }catch (Exception e){
@@ -59,14 +61,14 @@ public class MajorController {
     }
 
     /**
-     * 添加学生组织
+     * 添加专业
      * @param major
      * @return
      */
     @RequestMapping(value = "major/add",method = RequestMethod.POST)
     public ResponseEntity<JsonResult> add(@RequestBody Major major){
         JsonResult jsonResult=new JsonResult();
-
+        System.out.println(" 添加专业");
         try {
             int addResult=majorService.add(major);
 
@@ -89,14 +91,14 @@ public class MajorController {
     }
 
     /**
-     * 根据id删除学生组织
+     * 根据id删除专业
      * @param id
      * @return
      */
     @RequestMapping(value = "major/delete/{id}",method = RequestMethod.DELETE)
     public ResponseEntity<JsonResult> delete(@PathVariable(value = "id") Integer id){
         JsonResult result = new JsonResult();
-
+        System.out.println(" 根据id删除专业");
         try {
             int deleteResult = majorService.delete(id);
             if (deleteResult < 0){
@@ -117,14 +119,14 @@ public class MajorController {
     }
 
     /**
-     * 修改学生组织信息
+     * 修改专业信息
      * @param major
      * @return
      */
     @RequestMapping(value = "major/update",method = RequestMethod.PUT)
     public ResponseEntity<JsonResult> update(@RequestBody Major major){
         JsonResult result = new JsonResult();
-
+        System.out.println(" 修改专业信息");
         try {
             int updateResult = majorService.update(major);
             if (updateResult < 0){

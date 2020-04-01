@@ -25,6 +25,11 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
+    public List<Organization> getUserEnrollOrganizationListByUserId(int userId) {
+        return mapper.getUserEnrollOrganizationListByUserId(userId);
+    }
+
+    @Override
     public int add(Organization organization) {
         return mapper.addOrganization(organization);
     }

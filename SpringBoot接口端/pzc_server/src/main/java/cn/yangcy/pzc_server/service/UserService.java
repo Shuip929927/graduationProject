@@ -11,7 +11,19 @@ public interface UserService {
     User getUserByAccount(Integer account);
 
     //通过Id列表查询
-    List<User> getUserListByAccounts(@Param("accounts") List<Integer> accounts);
+//    List<User> getUserListByAccounts(@Param("accounts") List<Integer> accounts);
+
+    //获取活动报名状态为2的用户列表
+    List<User> getActivityEnrollState2UserList(Integer activityId);
+
+    //获取活动报名状态为1的用户列表
+    List<User> getActivityEnrollState1UserList(Integer activityId);
+
+    //获取学生组织报名状态为2的用户列表
+    List<User> getOrganizationEnrollState2UserList(Integer organizationId);
+
+    //获取学生组织报名状态为1的用户列表
+    List<User> getOrganizationEnrollState1UserList(Integer organizationId);
 
     //获取用户列表
     public List<User> getUserList();

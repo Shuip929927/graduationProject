@@ -16,6 +16,11 @@ public interface OrganizationMapper {
     @Select("SELECT * FROM tb_organization")
     List<Organization> getAllOrganizationList();
 
+    @Select("SELECT * FROM tb_organization WHERE person_id = #{userId} OR id IN " +
+            "(SELECT organization_id FROM tb_organization_enroll WHERE organization_enroll_state = 2 " +
+            "AND user_id = #{userId})")
+    List<Organization> getUserEnrollOrganizationListByUserId(int userId);
+
     //增
     @Insert("insert into tb_organization(organization_name,person_in_charge,person_id,number_of_people," +
             "description,isEnroll) " +

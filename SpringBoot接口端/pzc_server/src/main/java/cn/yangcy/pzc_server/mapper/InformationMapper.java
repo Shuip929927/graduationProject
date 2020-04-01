@@ -13,7 +13,7 @@ public interface InformationMapper {
     Information getInformationById(Integer id);
 
     //查全部
-    @Select("SELECT * FROM tb_information")
+    @Select("SELECT * FROM tb_information WHERE isDelete = 0 ORDER BY createOn DESC")
     public List<Information> getAllInformationList();
 
     //增

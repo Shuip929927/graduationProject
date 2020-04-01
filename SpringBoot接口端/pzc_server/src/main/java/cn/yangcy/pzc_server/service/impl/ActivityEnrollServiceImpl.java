@@ -30,8 +30,13 @@ public class ActivityEnrollServiceImpl implements ActivityEnrollService {
     }
 
     @Override
-    public List<ActivityEnroll> getActivityEnrollByActivityId(Integer activityId) {
-        return mapper.getActivityEnrollByActivityId(activityId);
+    public List<ActivityEnroll> getActivityEnrollState2ByActivityId(Integer activityId) {
+        return mapper.getActivityEnrollState2ByActivityId(activityId);
+    }
+
+    @Override
+    public List<ActivityEnroll> getActivityEnrollState1ByActivityId(Integer activityId) {
+        return mapper.getActivityEnrollState1ByActivityId(activityId);
     }
 
     @Override

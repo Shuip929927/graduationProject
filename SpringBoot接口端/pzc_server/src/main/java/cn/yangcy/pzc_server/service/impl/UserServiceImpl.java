@@ -21,9 +21,29 @@ public class UserServiceImpl implements UserService {
         return userMapper.getUserByAccount(account);
     }
 
+//    @Override
+//    public List<User> getUserListByAccounts(List<Integer> accounts) {
+//        return userMapper.getUserListByAccounts(accounts);
+//    }
+
     @Override
-    public List<User> getUserListByAccounts(List<Integer> accounts) {
-        return userMapper.getUserListByAccounts(accounts);
+    public List<User> getActivityEnrollState2UserList(Integer activityId) {
+        return userMapper.getActivityEnrollState2UserList(activityId);
+    }
+
+    @Override
+    public List<User> getActivityEnrollState1UserList(Integer activityId) {
+        return userMapper.getActivityEnrollState1UserList(activityId);
+    }
+
+    @Override
+    public List<User> getOrganizationEnrollState2UserList(Integer organizationId) {
+        return userMapper.getOrganizationEnrollState2UserList(organizationId);
+    }
+
+    @Override
+    public List<User> getOrganizationEnrollState1UserList(Integer organizationId) {
+        return userMapper.getOrganizationEnrollState1UserList(organizationId);
     }
 
     @Override

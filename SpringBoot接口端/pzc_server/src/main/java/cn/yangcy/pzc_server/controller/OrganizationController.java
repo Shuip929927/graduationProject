@@ -23,6 +23,7 @@ public class OrganizationController {
     //@PathVariable:用于获取url中的数据
     @GetMapping(value = "organization/query/id/{id}")
     public Organization getOrganizationById(@PathVariable(value = "id") Integer id){
+        System.out.println("根据ID查询学生组织");
         try {
             return organizationService.getOrganizationById(id);
         }catch (Exception e){
@@ -31,14 +32,13 @@ public class OrganizationController {
         return null;
     }
 
-
     /**
      * 查询学生组织列表
      * @return
      */
     @RequestMapping(value = "organization/queryAll",method = RequestMethod.GET)
     public List<Organization> getAllOrganizationList(){
-
+        System.out.println("查询学生组织列表");
         try {
             return organizationService.getOrganizationList();
         }catch (Exception e){
@@ -49,6 +49,24 @@ public class OrganizationController {
     }
 
     /**
+     * 根据UserId获取用户报名成功的学生组织列表
+     * @param userId
+     * @return
+     */
+    //@PathVariable:用于获取url中的数据
+    @GetMapping(value = "organization/queryUserEnrollState2/userId/{userId}")
+    public List<Organization> getUserEnrollOrganizationListByUserId(@PathVariable(value = "userId") Integer userId){
+        System.out.println("根据UserId获取用户报名成功的学生组织列表");
+        try {
+            return organizationService.getUserEnrollOrganizationListByUserId(userId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    /**
      * 添加学生组织
      * @param organization
      * @return
@@ -56,7 +74,7 @@ public class OrganizationController {
     @RequestMapping(value = "organization/add",method = RequestMethod.POST)
     public ResponseEntity<JsonResult> add(@RequestBody Organization organization){
         JsonResult jsonResult=new JsonResult();
-
+        System.out.println("添加学生组织");
         try {
             int addResult=organizationService.add(organization);
 
@@ -86,7 +104,7 @@ public class OrganizationController {
     @RequestMapping(value = "organization/delete/{id}",method = RequestMethod.DELETE)
     public ResponseEntity<JsonResult> delete(@PathVariable(value = "id") Integer id){
         JsonResult result = new JsonResult();
-
+        System.out.println("根据id删除学生组织");
         try {
             int deleteResult = organizationService.delete(id);
             if (deleteResult < 0){
@@ -114,7 +132,7 @@ public class OrganizationController {
     @RequestMapping(value = "organization/update",method = RequestMethod.PUT)
     public ResponseEntity<JsonResult> update(@RequestBody Organization organization){
         JsonResult result = new JsonResult();
-
+        System.out.println("修改学生组织信息");
         try {
             int updateResult = organizationService.update(organization);
             if (updateResult < 0){

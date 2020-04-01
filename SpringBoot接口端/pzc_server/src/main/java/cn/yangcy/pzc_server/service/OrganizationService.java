@@ -12,6 +12,9 @@ public interface OrganizationService {
     //获取学生组织列表
     public List<Organization> getOrganizationList();
 
+    //获取用户报名成功的学生组织列表
+    List<Organization> getUserEnrollOrganizationListByUserId(int userId);
+
     //增
     public int add(Organization organization);
 

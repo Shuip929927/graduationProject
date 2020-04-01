@@ -25,6 +25,16 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
+    public List<Activity> getUserEnrollState2ActivityListByUserId(Integer userId) {
+        return mapper.getUserEnrollState2ActivityListByUserId(userId);
+    }
+
+    @Override
+    public List<Activity> getOrganizationHoldActivityByUserId(Integer userId) {
+        return mapper.getOrganizationHoldActivityByUserId(userId);
+    }
+
+    @Override
     public int add(Activity activity) {
         return mapper.addStudentActivity(activity);
     }

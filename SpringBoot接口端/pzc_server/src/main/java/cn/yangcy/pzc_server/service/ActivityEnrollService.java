@@ -16,8 +16,11 @@ public interface ActivityEnrollService {
     //获取User 报名 activity的列表
     List<ActivityEnroll> getActivityEnrollByUserId(Integer userId);
 
-    //获取activity 报名人员的列表
-    List<ActivityEnroll> getActivityEnrollByActivityId(Integer activityId);
+    //获取activity 报名成功人员的列表
+    List<ActivityEnroll> getActivityEnrollState2ByActivityId(Integer activityId);
+
+    //获取activity 报名待审核人员的列表
+    List<ActivityEnroll> getActivityEnrollState1ByActivityId(Integer activityId);
 
     //获取所有列表
     List<ActivityEnroll> getAllActivityEnroll();

@@ -24,6 +24,7 @@ public class InformationController {
     //@PathVariable:用于获取url中的数据
     @GetMapping(value = "information/query/id/{id}")
     public Information getInformationById(@PathVariable(value = "id") Integer id){
+        System.out.println("根据ID查询信息");
         try {
             Information information = informationService.getInformationById(id);
             return information;
@@ -40,7 +41,7 @@ public class InformationController {
      */
     @RequestMapping(value = "information/queryAll",method = RequestMethod.GET)
     public List<Information> getAllInformationList(){
-
+        System.out.println("查询所有信息");
         try {
             List<Information> informations=informationService.getInformationList();
             return informations;
@@ -59,7 +60,7 @@ public class InformationController {
     @RequestMapping(value = "information/add",method = RequestMethod.POST)
     public ResponseEntity<JsonResult> add(@RequestBody Information information){
         JsonResult jsonResult=new JsonResult();
-
+        System.out.println("添加信息");
         System.out.println(information.toString());
         try {
             int addResult=informationService.add(information);
@@ -90,7 +91,7 @@ public class InformationController {
     @RequestMapping(value = "information/delete/{id}",method = RequestMethod.DELETE)
     public ResponseEntity<JsonResult> delete(@PathVariable(value = "id") Integer id){
         JsonResult result = new JsonResult();
-
+        System.out.println("根据id删除信息");
         try {
             int deleteResult = informationService.delete(id);
             if (deleteResult < 0){
@@ -118,7 +119,7 @@ public class InformationController {
     @RequestMapping(value = "information/update",method = RequestMethod.PUT)
     public ResponseEntity<JsonResult> update(@RequestBody Information information){
         JsonResult result = new JsonResult();
-
+        System.out.println("修改信息");
         try {
             int updateResult = informationService.update(information);
             if (updateResult < 0){

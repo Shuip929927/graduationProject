@@ -24,6 +24,7 @@ public class ActivityController {
     //@PathVariable:用于获取url中的数据
     @GetMapping(value = "activity/query/id/{id}")
     public Activity getActivityById(@PathVariable(value = "id") Integer id){
+        System.out.println("根据ID查询学生组织活动");
         try {
             return activityService.getActivityById(id);
         }catch (Exception e){
@@ -39,9 +40,44 @@ public class ActivityController {
      */
     @RequestMapping(value = "activity/queryAll",method = RequestMethod.GET)
     public List<Activity> getAllStudentActivitiesList(){
-
+        System.out.println("请求活动信息列表");
         try {
             return activityService.getActivitiesList();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * 通过UserId查询该用户报名成功的所有活动
+     *  @param userId
+     * @return
+     */
+    @RequestMapping(value = "activity/queryActState2/userId/{userId}",method = RequestMethod.GET)
+    public List<Activity> getUserEnrollState2ActivityListByUserId(@PathVariable(value = "userId")Integer userId){
+        System.out.println("通过UserId查询该用户报名成功的所有活动");
+        try {
+            List<Activity> activities = activityService.getUserEnrollState2ActivityListByUserId(userId);
+            return activities;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * 通过UserId查询该用户为部门负责人时举办的活动
+     *  @param userId
+     * @return
+     */
+    @RequestMapping(value = "activity/queryOrgHold/userId/{userId}",method = RequestMethod.GET)
+    public List<Activity> getOrganizationHoldActivityByUserId(@PathVariable(value = "userId")Integer userId){
+        System.out.println("通过UserId查询该用户为部门负责人时举办的活动");
+        try {
+            return activityService.getOrganizationHoldActivityByUserId(userId);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -56,7 +92,8 @@ public class ActivityController {
      */
     @RequestMapping(value = "activity/add",method = RequestMethod.POST)
     public ResponseEntity<JsonResult> add(@RequestBody Activity activity){
-        JsonResult jsonResult=new JsonResult();
+        JsonResult jsonResult = new JsonResult();
+        System.out.println("添加学生组织活动");
         System.out.println(activity.toString());
         try {
             int addResult= activityService.add(activity);
@@ -87,7 +124,7 @@ public class ActivityController {
     @RequestMapping(value = "activity/delete/{id}",method = RequestMethod.DELETE)
     public ResponseEntity<JsonResult> delete(@PathVariable(value = "id") Integer id){
         JsonResult result = new JsonResult();
-
+        System.out.println("根据id删除学生组织活动");
         try {
             int deleteResult = activityService.delete(id);
             if (deleteResult < 0){
@@ -115,7 +152,7 @@ public class ActivityController {
     @RequestMapping(value = "activity/update",method = RequestMethod.PUT)
     public ResponseEntity<JsonResult> update(@RequestBody Activity activity){
         JsonResult result = new JsonResult();
-
+        System.out.println("修改学生组织活动信息");
         try {
             int updateResult = activityService.update(activity);
             if (updateResult < 0){

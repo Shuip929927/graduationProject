@@ -24,6 +24,7 @@ public class DepartmentController {
     //@PathVariable:用于获取url中的数据
     @GetMapping(value = "department/query/id/{id}")
     public Department getDepartmentById(@PathVariable(value = "id") Integer id){
+        System.out.println("根据ID查询部门");
         try {
             Department department = departmentService.getDepartmentById(id);
             return department;
@@ -40,7 +41,7 @@ public class DepartmentController {
      */
     @RequestMapping(value = "department/queryAll",method = RequestMethod.GET)
     public List<Department> getAllInformationList(){
-
+        System.out.println("查询所有部门");
         try {
             List<Department> departments=departmentService.getDepartmentList();
             return departments;
@@ -59,7 +60,7 @@ public class DepartmentController {
     @RequestMapping(value = "department/add",method = RequestMethod.POST)
     public ResponseEntity<JsonResult> add(@RequestBody Department department){
         JsonResult jsonResult=new JsonResult();
-
+        System.out.println("添加部门");
         try {
             int addResult=departmentService.add(department);
 
@@ -89,7 +90,7 @@ public class DepartmentController {
     @RequestMapping(value = "department/delete/{id}",method = RequestMethod.DELETE)
     public ResponseEntity<JsonResult> delete(@PathVariable(value = "id") Integer id){
         JsonResult result = new JsonResult();
-
+        System.out.println("根据id删除部门");
         try {
             int deleteResult = departmentService.delete(id);
             if (deleteResult < 0){
@@ -117,7 +118,7 @@ public class DepartmentController {
     @RequestMapping(value = "department/update",method = RequestMethod.PUT)
     public ResponseEntity<JsonResult> update(@RequestBody Department department){
         JsonResult result = new JsonResult();
-
+        System.out.println("修改部门信息");
         try {
             int updateResult = departmentService.update(department);
             if (updateResult <= 0){

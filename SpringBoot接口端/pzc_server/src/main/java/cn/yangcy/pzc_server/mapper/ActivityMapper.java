@@ -12,8 +12,19 @@ public interface ActivityMapper {
     Activity getStudentActivityById(Integer id);
 
     //查全部
-    @Select("SELECT * FROM tb_activities")
-    public List<Activity> getAllStudentActivityList();
+    @Select("SELECT * FROM tb_activities WHERE isDelete = 0 ORDER BY create_time DESC")
+    List<Activity> getAllStudentActivityList();
+
+    //查找用户报名成功的活动
+    @Select("SELECT * FROM tb_activities WHERE isDelete = 0 AND id IN " +
+            "(SELECT activity_id from tb_activities_enroll where activity_enroll_state = 2 AND user_id = :#{userId)")
+    List<Activity> getUserEnrollState2ActivityListByUserId(Integer userId);
+
+    //查找该用户为部门管理员时所在部门举办的活动
+    @Select("SELECT * FROM tb_activities " +
+            "WHERE organization_id = (SELECT id FROM tb_organization WHERE person_id = #{userId}) " +
+            "ORDER BY create_time DESC")
+   List<Activity> getOrganizationHoldActivityByUserId(Integer userId);
 
     //增
     @Insert("insert into tb_activities(organization_id,activity_name," +
