@@ -1,0 +1,429 @@
+<!--查询开始-->
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>搜索</legend>
+</fieldset>
+
+<form class="layui-form" action="" id="search" lay-filter="searchForm">
+    <div class="layui-form-item layui-input-block">
+        <div class="">
+            <label class="layui-form-label">学生组织</label>
+            <div class="layui-input-inline">
+                <select name="organization_id" lay-filter="organization_id" id="organization_id"></select>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">状态</label>
+                <input type="radio" name="activity_state" value="0" title="进行中">
+                <input type="radio" name="activity_state" value="1" title="已结束">
+                <input type="radio" name="activity_state" value="2" title="长期有效">
+            </div>
+            <div class="layui-inline">
+                <button type="button" class="layui-btn " id="doSearch">查询</button>
+                <button type="reset" class="layui-btn layui-btn-primary" id="doRest">重置</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!--查询结束-->
+
+<script type="text/html" id="toolbarAct">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加数据</button>
+    </div>
+</script>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
+    <legend>学生组织活动信息</legend>
+</fieldset>
+
+<table id="act-list" lay-filter="act-list"></table>
+
+<script type="text/html" id="barActList">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script>
+    layui.use(['table', 'jquery', 'form', 'laydate'], function () {
+        var table = layui.table;
+        var $ = layui.jquery;
+        var form = layui.form;
+        var laydate = layui.laydate;
+        var index;
+
+        form.render();
+
+        $(function () {
+            var depHtml = "<option value=''>" +"请选择学生组织" + "</option>";
+            $.ajax({
+                url: '/api/organization/queryAll',
+                dataType: 'json',
+                type: 'get',
+                async: false,
+                success: function (data) {
+                    for (i = 0; i < data.length; i++) {
+                        depHtml += ("<option value='" + data[i].id + "'>" + data[i].organization_name + "</option>")
+                    }
+                    $("#organization_id").html(depHtml);
+                    form.render();
+                }
+            });
+        });
+
+        //表格查询
+        $('#doSearch').click(function () {
+            var data1 = form.val("searchForm");
+            table.reload('activities', {
+                where: {
+                    organization_id: data1.organization_id,
+                    activity_state: data1.activity_state,
+                },
+                page: 1
+                //,height: 300
+            });
+        });
+
+        //表格重置
+        $('#doRest').click(function () {
+            table.reload('activities', {
+                where: {
+                    organization_id: null,
+                    activity_state: null,
+                },
+                page: 1
+                //,height: 300
+            });
+        });
+
+        //第一个实例
+        table.render({
+            elem: '#act-list'
+            , url: '/bg/activity/queryAll' //数据接口
+            , height: 450
+            , title: '学生组织活动列表'
+            , page: true
+            , cellMinWidth: 30
+            , toolbar: '#toolbarAct'
+            , defaultToolbar: ['filter']
+            , cols: [
+                [ //表头
+                    {type: 'numbers', field: 'left'}
+                    , {field: 'id', title: 'ID', sort: true, align: 'center',}
+                    , {field: 'organization_id', title: '学生组织ID', align: 'center', hide: true, event: 'orgId'}
+                    , {
+                    field: 'organization_name', title: '学生组织名', align: 'center', templet: function (d) {
+                        var result = 'loading';
+                        $.ajax({
+                            url: '/api/organization/query/id/' + d.organization_id,
+                            dataType: 'json',
+                            async: false,
+                            // data:{'state': 0},	//查询状态为正常的所有机构类型
+                            type: 'get',
+                            success: function (data) {
+                                console.log(data.id);
+                                console.log(data.organization_name);
+                                result = data.organization_name;
+                            }
+
+                        });
+                        return result;
+                    }
+                }
+                    , {field: 'activity_name', title: '活动名称', align: 'center'}
+                    , {field: 'create_time', title: '创建时间', align: 'center'}
+                    , {field: 'start_time', title: '活动开始时间', align: 'center'}
+                    , {
+                    field: 'activity_state', title: '活动状态', sort: true, align: 'center', templet: function (d) {
+                        return d.activity_state === 0 ? '进行中' : d.activity_state === 1 ? '已结束' : '长期有效';
+                    }
+                }
+                    , {field: 'description', title: '活动简介', sort: true, align: 'center'}
+                    , {fixed: 'right', align: 'center', toolbar: '#barActList'}
+                ]
+            ]
+            , id: 'activities'
+            , done: function () {
+            }
+        });
+
+        //头工具栏事件
+        table.on('toolbar(act-list)', function (obj) {
+            switch (obj.event) {
+                case 'add':
+                    openAddActivity();
+                    break;
+            }
+        });
+
+        //监听行工具事件
+        table.on('tool(act-list)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data //获得当前行数据
+                , layEvent = obj.event; //获得 lay-event 对应的值
+            if (layEvent === 'del') {
+                layer.confirm('真的删除行么?', function (index) {
+                    obj.del(); //删除对应行（tr）的DOM结构
+                    layer.close(index);
+                    var actDelete = data;
+                    actDelete.isDelete = 1;
+                    // 向服务端发送删除指令
+                    $.ajax({
+                        url: '/api/activity/update',
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        method: 'put',
+                        data: JSON.stringify(actDelete),
+                        success: function (res) {
+                            layer.msg(res.status==="ok"?"删除成功":"删除失败");
+                            table.reload('activities');
+                        },
+                        error: function (res) {
+                            layer.msg("删除失败");
+                        }
+                    });
+                });
+            } else if (layEvent === 'edit') {
+                // layer.msg(data.description);
+                openUpdateActivity(data);
+            }
+        });
+
+        function openAddActivity() {
+            index = layer.open({
+                type: 1,
+                title: '添加活动',
+                //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                content: '' +
+                    '    <form class="layui-form" style="padding: 20px" lay-filter="activityAddForm" action="javascript:;" id="activityAddForm">\n' +
+                    '        <div class="layui-form-item">\n' +
+                    '            <label class="layui-form-label">活动名称</label>\n' +
+                    '            <div class="layui-input-block">\n' +
+                    '            <input type="text" name="activity_name" autocomplete="off" lay-verify="required" placeholder="请输入活动名称" class="layui-input">\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '        <div class="layui-form-item">\n' +
+                    '            <div class="layui-inline">\n' +
+                    '                <label class="layui-form-label">举办组织</label>\n' +
+                    '                <div class="layui-input-inline">\n' +
+                    '                    <select name="organization_id" lay-filter="organization_id" id="organization_id">\n' +
+                    '                    </select>\n' +
+                    '                </div>\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '        <div class="layui-form-item" style="display:none;">\n' +
+                    '            <label class="layui-form-label">创建时间</label>\n' +
+                    '            <div class="layui-input-block">\n' +
+                    '                <input type="text" name="create_time" id="create_time" readonly="" class="layui-input">\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '        <div class="layui-form-item">\n' +
+                    '            <label class="layui-form-label">开始时间</label>\n' +
+                    '            <div class="layui-input-block">\n' +
+                    '                <input type="text" name="start_time" id="start_time" readonly="" placeholder="请选择活动开始时间" lay-verify="required"\n' +
+                    '                       class="layui-input">\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '        <div class="layui-form-item">\n' +
+                    '            <label class="layui-form-label">活动状态</label>\n' +
+                    '            <div class="layui-input-block">\n' +
+                    '                <input type="radio" name="activity_state" value="0" title="进行中">\n' +
+                    '                <input type="radio" name="activity_state" value="1" title="已结束">\n' +
+                    '                <input type="radio" name="activity_state" value="2" title="长期有效">\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '        <div class="layui-form-item" style="display:none;">\n' +
+                    '            <label class="layui-form-label">删除状态</label>\n' +
+                    '            <div class="layui-input-block">\n' +
+                    '                <input type="text" name="isDelete" id="isDelete" value="0" autocomplete="off" class="layui-input">\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '        <div class="layui-form-item layui-form-text">\n' +
+                    '            <label class="layui-form-label">活动简介</label>\n' +
+                    '            <div class="layui-input-block">\n' +
+                    '                <textarea name="description" placeholder="请输入活动简介" class="layui-textarea"></textarea>\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '        <div class="layui-form-item">\n' +
+                    '            <div class="layui-input-block">\n' +
+                    '                <button type="submit" class="layui-btn" lay-filter="activityAdd" lay-submit="" id="activityAdd">提交</button>\n' +
+                    '                <button type="reset" class="layui-btn layui-btn-primary">重置</button>\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '    </form>',
+                area:  ['800px'],
+                success: function () {
+                    var create_time = laydate.render({
+                        elem: '#create_time',
+                        type: 'datetime',
+                        value: new Date()
+                    });
+
+                    var startTime = laydate.render({
+                        elem: '#start_time',
+                        type: 'datetime',
+                        min: $('#create_time').val(),
+                        btns: ['clear', 'confirm']
+                    });
+                    //获取学生组织的内容
+                    var orgHtml = "";
+                    $.ajax({
+                        url: '/api/organization/queryAll',
+                        dataType: 'json',
+                        type: 'get',
+                        async: false,
+                        success: function (res) {
+                            for (i = 0; i < res.length; i++) {
+                                orgHtml += ("<option value='" + res[i].id + "'>" + res[i].organization_name + "</option>");
+                            }
+                            $("#organization_id").html(orgHtml);
+                            form.render();
+                        }
+                    })
+                }
+            });
+        }
+
+
+        function openUpdateActivity(data) {
+            index = layer.open({
+                type: 1,
+                title: '编辑活动信息',
+                //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                content: '' +
+                    '    <form class="layui-form" style="padding: 20px" lay-filter="activityUpdateForm" action="javascript:;" id="activityUpdateForm">\n' +
+                    '        <div class="layui-form-item" style="display: none">\n' +
+                    '            <label class="layui-form-label">活动ID</label>\n' +
+                    '            <div class="layui-input-block">\n' +
+                    '            <input type="text" name="id" autocomplete="off" lay-verify="required" class="layui-input">\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '        <div class="layui-form-item">\n' +
+                    '            <label class="layui-form-label">活动名称</label>\n' +
+                    '            <div class="layui-input-block">\n' +
+                    '            <input type="text" name="activity_name" autocomplete="off" lay-verify="required" placeholder="请输入活动名称" class="layui-input">\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '        <div class="layui-form-item">\n' +
+                    '            <div class="layui-inline">\n' +
+                    '                <label class="layui-form-label">举办组织</label>\n' +
+                    '                <div class="layui-input-inline">\n' +
+                    '                    <select name="organization_id" lay-filter="organization_id" id="organization_id">\n' +
+                    '                    </select>\n' +
+                    '                </div>\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '        <div class="layui-form-item" style="display:none;">\n' +
+                    '            <label class="layui-form-label">创建时间</label>\n' +
+                    '            <div class="layui-input-block">\n' +
+                    '                <input type="text" name="create_time" id="create_time" readonly="" class="layui-input">\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '        <div class="layui-form-item">\n' +
+                    '            <label class="layui-form-label">开始时间</label>\n' +
+                    '            <div class="layui-input-block">\n' +
+                    '                <input type="text" name="start_time" id="start_time" readonly="" placeholder="请选择活动开始时间" lay-verify="required"\n' +
+                    '                       class="layui-input">\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '        <div class="layui-form-item">\n' +
+                    '            <label class="layui-form-label">活动状态</label>\n' +
+                    '            <div class="layui-input-block">\n' +
+                    '                <input type="radio" name="activity_state" value="0" title="进行中">\n' +
+                    '                <input type="radio" name="activity_state" value="1" title="已结束">\n' +
+                    '                <input type="radio" name="activity_state" value="2" title="长期有效">\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '        <div class="layui-form-item" style="display:none;">\n' +
+                    '            <label class="layui-form-label">删除状态</label>\n' +
+                    '            <div class="layui-input-block">\n' +
+                    '                <input type="text" name="isDelete" id="isDelete" autocomplete="off" class="layui-input">\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '        <div class="layui-form-item layui-form-text">\n' +
+                    '            <label class="layui-form-label">活动简介</label>\n' +
+                    '            <div class="layui-input-block">\n' +
+                    '                <textarea name="description" placeholder="请输入活动简介" class="layui-textarea"></textarea>\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '        <div class="layui-form-item">\n' +
+                    '            <div class="layui-input-block">\n' +
+                    '                <button type="submit" class="layui-btn" lay-filter="activityUpdate" lay-submit="" id="activityUpdate">提交</button>\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '    </form>',
+                area:  ['800px'],
+                success: function () {
+                    //获取学生组织的内容
+                    var orgHtml = "";
+                    $.ajax({
+                        url: '/api/organization/queryAll',
+                        dataType: 'json',
+                        type: 'get',
+                        async: false,
+                        success: function (res) {
+                            for (i = 0; i < res.length; i++) {
+                                orgHtml += ("<option value='" + res[i].id + "'>" + res[i].organization_name + "</option>");
+                            }
+                            $("#organization_id").html(orgHtml);
+                        }
+                    });
+                    form.val('activityUpdateForm',data);
+                    var create_time = laydate.render({
+                        elem: '#create_time',
+                        type: 'datetime',
+                    });
+
+                    var startTime = laydate.render({
+                        elem: '#start_time',
+                        type: 'datetime',
+                        min: $('#create_time').val(),
+                        btns: ['clear', 'confirm']
+                    });
+                }
+            });
+        }
+
+        //监听添加用户的提交事件
+        form.on('submit(activityAdd)', function (data) {
+            // layer.msg(JSON.stringify(data.field));
+            $.ajax({
+                url: '/api/activity/add',
+                dataType: 'json',
+                contentType: 'application/json',
+                method: 'post',
+                data: JSON.stringify(data.field),
+                success: function (res) {
+                    layer.msg(res.status==="ok"?"添加成功":"添加失败");
+                    table.reload('activities');
+                },
+                error: function (res) {
+                    layer.msg("添加失败");
+                }
+            });
+            layer.close(index);
+            return false;
+
+        });
+
+        //监听修改用户的提交事件
+        form.on('submit(activityUpdate)', function (data) {
+            // layer.msg(JSON.stringify(data.field));
+            $.ajax({
+                url: '/api/activity/update',
+                dataType: 'json',
+                contentType: 'application/json',
+                method: 'put',
+                data: JSON.stringify(data.field),
+                success: function (res) {
+                    layer.msg(res.status==="ok"?"修改成功":"修改失败");
+                    table.reload('activities');
+                },
+                error: function (res) {
+                    layer.msg("修改失败");
+                }
+            });
+            layer.close(index);
+            return false;
+
+        });
+    });
+</script>

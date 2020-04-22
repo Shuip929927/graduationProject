@@ -1,0 +1,102 @@
+
+
+<div class="layui-carousel" id="test10">
+    <div carousel-item="">
+        <div><img src="/asserts/loopager/img1.jpg"></div>
+        <div><img src="/asserts/loopager/img2.jpg"></div>
+        <div><img src="/asserts/loopager/img3.png"></div>
+        <div><img src="/asserts/loopager/img4.png"></div>
+
+    </div>
+</div>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+    <legend>基本情况</legend>
+</fieldset>
+
+<div class="layui-col-sm6 layui-col-md3">
+    <div class="layui-card">
+        <div class="layui-card-header">
+            学院通知
+            <span class="layui-badge layui-bg-cyan " style="left: 60%">条</span>
+        </div>
+        <div class="layui-card-body ">
+            <p class="font-italic" style="font-size: 28px" id="info">12</p>
+            <p align="right">  <i class="layui-inline layui-icon layui-icon-face-smile-b"></i></p>
+        </div>
+    </div>
+</div>
+
+<div class="layui-col-sm6 layui-col-md3">
+    <div class="layui-card">
+        <div class="layui-card-header">
+            用户人数
+            <span class="layui-badge layui-bg-cyan " style="left: 60%">人</span>
+        </div>
+        <div class="layui-card-body ">
+            <p class="font-italic" style="font-size: 28px" id="user">12</p>
+            <p align="right">  <span class=""><i class="layui-inline layui-icon layui-icon-user"></i></span></p>
+        </div>
+    </div>
+</div>
+
+<div class="layui-col-sm6 layui-col-md3">
+    <div class="layui-card">
+        <div class="layui-card-header">
+            学生组织
+            <span class="layui-badge layui-bg-cyan " style="left: 60%">个</span>
+        </div>
+        <div class="layui-card-body ">
+            <p class="font-italic" style="font-size: 28px" id="org">12</p>
+            <p align="right">  <span class=""><i class="layui-inline layui-icon layui-icon-face-smile-b"></i></span></p>
+        </div>
+    </div>
+</div>
+
+<div class="layui-col-sm6 layui-col-md3">
+    <div class="layui-card">
+        <div class="layui-card-header">
+            学生活动
+            <span class="layui-badge layui-bg-cyan " style="left: 60%">个</span>
+        </div>
+        <div class="layui-card-body ">
+            <p class="font-italic" style="font-size: 28px" id="act">12</p>
+            <p align="right">  <span class=""><i class="layui-inline layui-icon layui-icon-face-smile-b"></i></span></p>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    layui.use(['carousel', 'form','layedit','jquery'], function(){
+        var carousel = layui.carousel
+            ,form = layui.form;
+        var $ = layui.jquery;
+        //图片轮播
+        carousel.render({
+            elem: '#test10'
+            ,width: '1200px'
+            ,height: '260px'
+            ,interval: 2000
+        });
+
+        $(function () {
+            $.ajax({
+                url: '/bg/count',
+                dataType: 'json',
+                async:false,
+                contentType: 'application/json',
+                method: 'get',
+                success: function (data) {
+                    console.log(data);
+                    $('#info').html(data.data.info);
+                    $('#user').html(data.data.user);
+                    $('#org').html(data.data.org);
+                    $('#act').html(data.data.act);
+                }
+            })
+        })
+
+    });
+</script>

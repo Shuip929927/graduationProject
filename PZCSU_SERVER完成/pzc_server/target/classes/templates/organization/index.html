@@ -1,0 +1,295 @@
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>学生组织信息</legend>
+</fieldset>
+
+<script type="text/html" id="toolbarOrg">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加数据</button>
+    </div>
+</script>
+<table id="org-list" lay-filter="org-list"></table>
+
+<script type="text/html" id="barOrgList">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script>
+    layui.use(['table','jquery','form','layer'], function(){
+        var table = layui.table;
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var form = layui.form;
+        var index ;
+
+        form.render();
+        form.verify({
+            stuId: function (value,item) {
+                if(value !== ''){
+                    if(value.length !== 9 ){
+                        return '请输入9位学号'
+                    }
+                }
+            }
+        });
+        //第一个实例
+        table.render({
+            elem: '#org-list'
+            ,url: '/bg/organization/queryAll' //数据接口
+            ,height: 450
+            ,title: '学生组织列表'
+            ,page: true
+            ,cellMinWidth: 40
+            ,toolbar: '#toolbarOrg'
+            ,defaultToolbar: ['filter']
+            ,cols: [
+                [ //表头
+                    {type: 'numbers', field: 'left'}
+                    ,{field: 'id', title: 'ID', sort: true, align: 'center'}
+                    ,{field: 'organization_name', title: '学生组织', align: 'center'}
+                    ,{field: 'person_in_charge', title: '负责人职位', align: 'center', hide: true}
+                    ,{field: 'person_id', title: '负责人ID', align: 'center', hide: true}
+                    ,{field: 'person_name', title: '负责人', align: 'center', templet:function (d) {
+                        var result = 'loading';
+                        $.ajax({
+                            url: '/api/user/query/account/'+d.person_id,
+                            dataType: 'json',
+                            async: false,
+                            // data:{'state': 0},	//查询状态为正常的所有机构类型
+                            type: 'get',
+                            success: function (data) {
+                                console.log(data.account);
+                                console.log(data.name);
+                                result = data.name;
+                            }
+
+                        });
+                        return result;
+                    }}
+                    ,{field: 'number_of_people', title: '组织人数', align: 'center'}
+                    ,{field: 'isEnroll', title: '纳新状态', sort: true, align: 'center', templet:function (d) {
+                        return d.isEnroll===0?'纳新中':'未纳新';
+                    }}
+                    ,{field: 'description', title: '组织简介', sort: true, align: 'center'}
+                    ,{fixed: 'right', align:'center', toolbar: '#barOrgList'}
+                ]
+            ]
+            ,id: 'organizations'
+        });
+
+        //头工具栏事件
+        table.on('toolbar(org-list)', function (obj) {
+            switch (obj.event) {
+                case 'add':
+                    openAddOrg();
+                    break;
+            }
+        });
+
+        //监听行工具事件
+        table.on('tool(org-list)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data //获得当前行数据
+                ,layEvent = obj.event; //获得 lay-event 对应的值
+            if(layEvent === 'del'){
+                layer.confirm('真的删除行么?', function(index){
+                    obj.del(); //删除对应行（tr）的DOM结构
+                    layer.close(index);
+                    //向服务端发送删除指令
+                    $.ajax({
+                        url: '/api/organization/delete/' + data.id,
+                        dataType: 'json',
+                        // data:{'state': 0},	//查询状态为正常的所有机构类型
+                        type: 'DELETE',
+                        success: function (res) {
+                            layer.msg(res.status==="ok"?"删除成功":"删除失败");
+                            table.reload('organizations', {
+                                url: '/bg/organization/queryAll'
+                                //,height: 300
+                            });
+                        },
+                        error: function (res) {
+                            layer.msg("删除失败");
+                        }
+                    })
+                });
+            } else if(layEvent === 'edit'){
+                // layer.msg(data.organization_name);
+                // console.log(data.organization_name);
+                openUpdateOrg(data);
+            }
+        });
+        
+        function openAddOrg() {
+            index = layer.open({
+                type: 1,
+                title: '添加学生组织',
+                //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                content: '   ' +
+                    '<form class="layui-form" style="padding: 20px" lay-filter="orgAddForm" action="javascript:;" id="orgAddForm">\n' +
+                    '   <div class="layui-form-item">\n' +
+                    '       <label class="layui-form-label">组织名称</label>\n' +
+                    '           <div class="layui-input-block">\n' +
+                    '               <input type="text" name="organization_name" autocomplete="off" lay-verify="required"  placeholder="请输入学生组织名称" class="layui-input">\n' +
+                    '           </div>\n' +
+                    '       </div>\n' +
+                    '   <div class="layui-form-item">\n' +
+                    '       <label class="layui-form-label">负责人职位</label>\n' +
+                    '       <div class="layui-input-block">\n' +
+                    '           <input type="text" name="person_in_charge" placeholder="请输入负责人职位" lay-verify="required"  autocomplete="off" class="layui-input">\n' +
+                    '       </div>\n' +
+                    '   </div>\n' +
+                    '   <div class="layui-form-item">\n' +
+                    '       <div class="layui-inline">\n' +
+                    '           <label class="layui-form-label">负责人ID</label>\n' +
+                    '           <div class="layui-input-inline">\n' +
+                    '               <input type="nuber" name="person_id" placeholder="请输入负责人ID" lay-verify="required|stuId" autocomplete="off" class="layui-input">\n' +
+                    '           </div>\n' +
+                    '       </div>\n' +
+                    '       <div class="layui-inline" style="display: none">\n' +
+                    '           <label class="layui-form-label">人数</label>\n' +
+                    '           <div class="layui-input-inline">\n' +
+                    '               <input type="number" name="number_of_people" placeholder="人数" autocomplete="off" class="layui-input" value="0">\n' +
+                    '           </div>\n' +
+                    '       </div>\n' +
+                    '   </div>\n' +
+                    '   <div class="layui-form-item">\n' +
+                    '       <label class="layui-form-label">纳新状态</label>\n' +
+                    '       <div class="layui-input-block">\n' +
+                    '           <input type="radio" name="isEnroll" value="0" title="纳新中" checked="">\n' +
+                    '           <input type="radio" name="isEnroll" value="1" title="未纳新">\n' +
+                    '       </div>\n' +
+                    '   </div>\n' +
+                    '   <div class="layui-form-item layui-form-text">\n' +
+                    '       <label class="layui-form-label">组织简介</label>\n' +
+                    '       <div class="layui-input-block">\n' +
+                    '           <textarea name="description" placeholder="请输入内容" class="layui-textarea"></textarea>\n' +
+                    '       </div>\n' +
+                    '   </div> '+
+                    '   <div class="layui-form-item">\n' +
+                    '       <div class="layui-input-block">\n' +
+                    '           <button type="submit" class="layui-btn" lay-filter="orgAdd" lay-submit="" id="orgAdd">提交</button>\n' +
+                    '           <button type="reset" class="layui-btn layui-btn-primary">重置</button>\n' +
+                    '       </div>\n' +
+                    '   </div>\n' +
+                    '</form>',
+                area: ['800px'],
+                success:function () {
+                    form.render();
+                }
+            })
+        }
+
+        function openUpdateOrg(data) {
+            index = layer.open({
+                type: 1,
+                title: '编辑学生组织信息',
+                //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                content: '   ' +
+                    '<form class="layui-form" style="padding: 20px" lay-filter="orgUpdateForm" action="javascript:;" id="orgUpdateForm">\n' +
+                    '   <div class="layui-form-item" style="display:none;">\n' +
+                    '       <label class="layui-form-label">学生组织ID</label>\n' +
+                    '       <div class="layui-input-block">\n' +
+                    '           <input type="number" name="id" autocomplete="off" lay-verify="required"  class="layui-input">\n' +
+                    '       </div>\n' +
+                    '   </div>\n' +
+                    '   <div class="layui-form-item">\n' +
+                    '       <label class="layui-form-label">组织名称</label>\n' +
+                    '       <div class="layui-input-block">\n' +
+                    '           <input type="text" name="organization_name" autocomplete="off" lay-verify="required"  placeholder="请输入学生组织名称" class="layui-input">\n' +
+                    '       </div>\n' +
+                    '   </div>\n' +
+                    '   <div class="layui-form-item">\n' +
+                    '       <label class="layui-form-label">负责人职位</label>\n' +
+                    '       <div class="layui-input-block">\n' +
+                    '           <input type="text" name="person_in_charge" placeholder="请输入负责人职位" lay-verify="required"  autocomplete="off" class="layui-input">\n' +
+                    '       </div>\n' +
+                    '   </div>\n' +
+                    '   <div class="layui-form-item">\n' +
+                    '       <div class="layui-inline">\n' +
+                    '           <label class="layui-form-label">负责人ID</label>\n' +
+                    '           <div class="layui-input-inline">\n' +
+                    '               <input type="nuber" name="person_id" placeholder="请输入负责人ID" lay-verify="required|stuId" autocomplete="off" class="layui-input">\n' +
+                    '           </div>\n' +
+                    '       </div>\n' +
+                    '       <div class="layui-inline" style="display: none">\n' +
+                    '           <label class="layui-form-label">人数</label>\n' +
+                    '           <div class="layui-input-inline">\n' +
+                    '               <input type="number" name="number_of_people" placeholder="人数" autocomplete="off" class="layui-input">\n' +
+                    '           </div>\n' +
+                    '       </div>\n' +
+                    '   </div>\n' +
+                    '   <div class="layui-form-item">\n' +
+                    '       <label class="layui-form-label">纳新状态</label>\n' +
+                    '       <div class="layui-input-block">\n' +
+                    '           <input type="radio" name="isEnroll" value="0" title="纳新中" checked="">\n' +
+                    '           <input type="radio" name="isEnroll" value="1" title="未纳新">\n' +
+                    '       </div>\n' +
+                    '   </div>\n' +
+                    '   <div class="layui-form-item layui-form-text">\n' +
+                    '       <label class="layui-form-label">组织简介</label>\n' +
+                    '       <div class="layui-input-block">\n' +
+                    '           <textarea name="description" placeholder="请输入内容" class="layui-textarea"></textarea>\n' +
+                    '       </div>\n' +
+                    '   </div> '+
+                    '   <div class="layui-form-item">\n' +
+                    '       <div class="layui-input-block">\n' +
+                    '           <button type="submit" class="layui-btn" lay-filter="orgUpdate" lay-submit="" id="orgUpdate">提交</button>\n' +
+                    '       </div>\n' +
+                    '   </div>\n' +
+                    '</form>',
+                area: ['800px'],
+                success:function () {
+                    console.log(data);
+                    form.val("orgUpdateForm", data);
+                    // form.render();
+                }
+            })
+        }
+        //监听添加用户的提交事件
+        form.on('submit(orgAdd)', function (data) {
+            // layer.msg(JSON.stringify(data.field));
+            $.ajax({
+                url: '/bg/organization/add',
+                dataType: 'json',
+                contentType: 'application/json',
+                method: 'post',
+                data: JSON.stringify(data.field),
+                success: function (data) {
+                    layer.msg(data.msg);
+                    table.reload('organizations');
+                },
+                error: function () {
+                    layer.msg(data.msg);
+                }
+            });
+            layer.close(index);
+            return false;
+
+        });
+
+        //监听修改用户的提交事件
+        form.on('submit(orgUpdate)', function (data) {
+            layer.msg(JSON.stringify(data.field));
+            $.ajax({
+                url: '/bg/organization/update',
+                dataType: 'json',
+                contentType: 'application/json',
+                method: 'put',
+                data: JSON.stringify(data.field),
+                success: function (data) {
+                    layer.msg(data.msg);
+                    table.reload('organizations');
+                },
+                error: function () {
+                    layer.msg(data.msg);
+                }
+            });
+            layer.close(index);
+            return false;
+
+        });
+
+
+    });
+</script>
